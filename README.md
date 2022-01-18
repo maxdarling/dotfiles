@@ -7,7 +7,7 @@
 ## Vim
 - 'Ultimate' vimrc from [here] (https://github.com/amix/vimrc)
 - tweaks: 
-    1. setnumber? (todo)
+    1. set number
     2. 
 
 
@@ -24,3 +24,8 @@ See bash_profile
   
 - 
 
+
+## Misc
+- last tab mapped to cmd+E (["recent tabs"](https://chrome.google.com/webstore/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?hl=en) chrome extension)
+
+- iterm2 preserved window + font sizing via View -> Size Changes Update Profile
