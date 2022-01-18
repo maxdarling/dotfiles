@@ -5,7 +5,7 @@
 
 
 ## Vim
-- 'Ultimate' vimrc from [here] (https://github.com/amix/vimrc)
+- 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
 - tweaks: 
     1. set number
     2. 
