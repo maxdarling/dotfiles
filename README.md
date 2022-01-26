@@ -8,7 +8,7 @@
 - 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
 - tweaks: 
     1. set number
-    2. 
+    2. **todo: remove auto-stuff (newline at end of file stuff, typing " yields "", etc)**
 
 
 
