@@ -5,7 +5,8 @@
 
 
 ## Vim
-- 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
+- [ongoing] start from scratch. create my own vimrc and directory structure. (todo: upload)
+- [deprecated] 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
 - tweaks: 
     1. set number
     2. **todo: remove auto-stuff (newline at end of file stuff, typing " yields "", etc)**
