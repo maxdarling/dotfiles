@@ -3,6 +3,8 @@
 - bash scripts/aliases (including git)
 - misc (keyboard shortcuts, macos)
 
+## todo
+- increase key-repeat speed in OS
 
 ## Vim
 - [ongoing] start from scratch. create my own vimrc and directory structure. (todo: upload)
