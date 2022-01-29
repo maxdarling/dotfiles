@@ -9,6 +9,7 @@
 ## Vim
 - [ongoing] start from scratch. create my own vimrc and directory structure. (todo: upload)
 - cool vid ([primeagen](https://www.youtube.com/watch?v=Iid1Ms14Om4))
+- vimgod derek wyatt [command line stuff](https://vimeo.com/15443936)
 - [deprecated] 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
 - tweaks: 
     1. set number
