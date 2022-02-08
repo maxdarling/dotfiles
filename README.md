@@ -1,24 +1,16 @@
-# Contents
-- vim config
-- bash scripts/aliases (including git)
-- misc (keyboard shortcuts, macos)
-
-## todo
+## Todo
 - increase key-repeat speed in OS
+- more bash macros (functions)
 
 ## Vim
-- [ongoing] start from scratch. create my own vimrc and directory structure. (todo: upload)
-- cool vid ([primeagen](https://www.youtube.com/watch?v=Iid1Ms14Om4))
-- vimgod derek wyatt [command line stuff](https://vimeo.com/15443936)
-- [deprecated] 'Ultimate' vimrc from [here](https://github.com/amix/vimrc)
-- tweaks: 
-    1. set number
-    2. **todo: remove auto-stuff (newline at end of file stuff, typing " yields "", etc)**
-
+- start from scratch. create my own vimrc and directory structure.
+- Videos
+    - cool vid ([primeagen](https://www.youtube.com/watch?v=Iid1Ms14Om4))
+    - vimgod derek wyatt [command line stuff](https://vimeo.com/15443936)
 
 
 ## Bash
-See bash_profile
+- See bash_profile
 
 
 
