@@ -42,6 +42,11 @@ set number
 set ignorecase
 set smartcase
 
+" search highlight
+set hlsearch
+set incsearch
+" add :nohlsearch to the default <C-l> redraw functionality (practical vim book)
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 "==================== TESTING  ==================== 
 set history=500
@@ -85,15 +90,10 @@ set expandtab
 "set backspace=eol,start,indent
 "set whichwrap+=<,>,h,l
 
-"set hlsearch
-
-"" Makes search act like search in modern browsers
-"set incsearch
-
 "" Don't redraw while executing macros (good performance config)
 "set lazyredraw
 
-"" For regular expressions turn magic on
+"" For regular expressions turn magic on -- on by default though...
 "set magic
 
 "" Show matching brackets when text indicator is over them
