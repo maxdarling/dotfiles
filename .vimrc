@@ -12,7 +12,8 @@ Plug 'morhetz/gruvbox'
 Plug 'https://github.com/udalov/kotlin-vim'
 " markdown preview in browser
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
+" * search on visual selection
+Plug 'https://github.com/nelstrom/vim-visual-star-search'
 
 " == todo == 
 " Valloric/YouCompleteMe
@@ -21,6 +22,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " scrooloose/nerdtree
 " use ag (tell ctrlp to use ag to do file searching)
 " https://github.com/tpope/vim-unimpaired
+" abolish.vim
 call plug#end()
 
 
@@ -38,6 +40,13 @@ autocmd vimenter * ++nested colorscheme gruvbox "load all plugins before using g
 " line numbers
 set number
 
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
+
 " When searching try to be smart about cases
 set ignorecase
 set smartcase
@@ -49,17 +58,18 @@ set incsearch
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 "==================== TESTING  ==================== 
+" relative number
+set relativenumber
+set number
+
 set history=500
 
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
-" show existing tab with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
-set expandtab
+
+" hidden buffers (for now, using :set hidden manually, works fine)
+" set hidden
 
 
 
