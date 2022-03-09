@@ -65,6 +65,7 @@ set number
 set history=500
 
 " Enable filetype plugins
+set nocompatible
 filetype plugin on
 filetype indent on
 
