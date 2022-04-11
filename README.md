@@ -1,6 +1,6 @@
 ## Todo
-- increase key-repeat speed in OS
 - more bash macros (functions)
+- investigate terminal autocomplete (trying Fig, but oh-my-zsh is a classic too)
 
 ## Vim
 - start from scratch. create my own vimrc and directory structure.
