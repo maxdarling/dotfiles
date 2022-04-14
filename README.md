@@ -19,7 +19,10 @@
     - helpful for vim ctrl+{ 
     - ctrl+[aek] commands
   
-- 
+- emacs keys (terminal, chrome, etc)
+    - ctrl-a and ctrl-e for jumping to start/end of line
+    - ctrl-k to delete right of cursor
+    - ctrl-p and ctrl-n to go prev/next (way better than up/down arrows for terminal history!)
 
 
 ## Misc
