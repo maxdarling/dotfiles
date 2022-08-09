@@ -10,10 +10,13 @@ Plug 'tpope/vim-commentary'
 Plug 'morhetz/gruvbox'
 " kotlin syntax highlighting
 Plug 'https://github.com/udalov/kotlin-vim'
-" markdown preview in browser
+" markdown preview in browser (:MarkdownPreview)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " * search on visual selection
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
+" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " == todo == 
 " Valloric/YouCompleteMe
@@ -57,10 +60,16 @@ set incsearch
 " add :nohlsearch to the default <C-l> redraw functionality (practical vim book)
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
-"==================== TESTING  ==================== 
 " relative number
 set relativenumber
 set number
+
+"==================== TESTING  ==================== 
+" leader
+let mapleader=" "
+
+" open files with fzf
+nnoremap <silent> <leader>o :Files<CR>
 
 set history=500
 
@@ -69,10 +78,15 @@ set nocompatible
 filetype plugin on
 filetype indent on
 
+" autoindent (good for markdown bulleted lists)
+set autoindent
+
 " hidden buffers (for now, using :set hidden manually, works fine)
 " set hidden
 
-
+" put all swap files in a single folder 
+" source: https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files
+set directory^=$HOME/.vim/tmp//
 
 
 "==================== TO TEST  ==================== 
