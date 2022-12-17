@@ -13,7 +13,6 @@
 - See bash_profile
 
 
-
 ## Keyboard shortcuts
 - MacOS: remap capslock to ctrl (via modifier keys)
     - helpful for vim ctrl+{ 
@@ -28,4 +27,6 @@
 ## Misc
 - last tab mapped to cmd+E (["recent tabs"](https://chrome.google.com/webstore/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?hl=en) chrome extension)
 
-- iterm2 preserved window + font sizing via View -> Size Changes Update Profile
+- iterm2 preserved window + font sizing via View -> Size Changes Update Profile 
+
+- 'linearmouse' program to disable mouse acceleration in macOS
