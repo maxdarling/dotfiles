@@ -14,14 +14,7 @@
 
 
 ## Keyboard shortcuts
-- MacOS: remap capslock to ctrl (via modifier keys)
-    - helpful for vim ctrl+{ 
-    - ctrl+[aek] commands
-  
-- emacs keys (terminal, chrome, etc)
-    - ctrl-a and ctrl-e for jumping to start/end of line
-    - ctrl-k to delete right of cursor
-    - ctrl-p and ctrl-n to go prev/next (way better than up/down arrows for terminal history!)
+See kinesis and hammerspoon configs
 
 
 ## Misc
@@ -30,3 +23,8 @@
 - iterm2 preserved window + font sizing via View -> Size Changes Update Profile 
 
 - 'linearmouse' program to disable mouse acceleration in macOS
+
+- emacs keys (terminal, chrome, etc)
+    - ctrl-a and ctrl-e for jumping to start/end of line
+    - ctrl-k to delete right of cursor
+    - ctrl-p and ctrl-n to go prev/next (way better than up/down arrows for terminal history!)
