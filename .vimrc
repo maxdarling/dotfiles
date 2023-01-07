@@ -29,16 +29,37 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 
-"==================== remaps (todo) (the magic of vim!==================== 
-" use leader as <space>
-" YcmCompleter GoTo
+"==================== remaps: the magic of vim!==================== 
+let mapleader=" "
+set showcmd
 
+" dotfile editing (matches bash_profile)
+nnoremap <silent> <leader>dvp :e $MYVIMRC<CR>
+nnoremap <silent> <leader>dbp :e $MYBASHPROFILE<CR>
 
+" fzf
+nnoremap <silent> <leader>fo :Files<CR>
+nnoremap <silent> <leader>fb :Buffers<CR>
+nnoremap <silent> <leader>fg :GFiles<CR>
+nnoremap <silent> <leader>fh :History<CR>
+
+" open ftplugin file for current filetype (todo)
+" nnoremap <silent> <leader>q :exe ':echo ~/.vim/ftplugin/&ft.vim'
+
+" ~~~ AUTOCMDs ~~~
+" necessary for autocmds to just be included 1x
+augroup vimrc
+  " Remove all vimrc autocommands
+  autocmd!
+  "misc
+  au vimenter * ++nested colorscheme gruvbox
+augroup END
 
 "==================== GOOD ==================== 
+set history=500
+
 " colorscheme
 set bg=dark "override lightmode Terminal
-autocmd vimenter * ++nested colorscheme gruvbox "load all plugins before using gruvbox (wiki recommends)
 
 " line numbers
 set number
@@ -59,35 +80,34 @@ set hlsearch
 set incsearch
 " add :nohlsearch to the default <C-l> redraw functionality (practical vim book)
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" clear search when sourcing (otherwise higlights last search)
+let @/ = ""
 
 " relative number
-set relativenumber
+" set relativenumber
 set number
-
-"==================== TESTING  ==================== 
-" leader
-let mapleader=" "
-
-" open files with fzf
-nnoremap <silent> <leader>o :Files<CR>
-
-set history=500
 
 " Enable filetype plugins
 set nocompatible
 filetype plugin on
 filetype indent on
 
+"==================== TESTING  ==================== 
+" speed up pasting?
+set noswapfile
+
 " autoindent (good for markdown bulleted lists)
 set autoindent
 
-" hidden buffers (for now, using :set hidden manually, works fine)
-" set hidden
+" hidden buffers
+set hidden
 
 " put all swap files in a single folder 
 " source: https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files
 set directory^=$HOME/.vim/tmp//
 
+"" Turn on the Wild menu
+set wildmenu
 
 "==================== TO TEST  ==================== 
 " remove word wrapping
@@ -96,11 +116,6 @@ set directory^=$HOME/.vim/tmp//
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 "set so=7
-
-
-"" Turn on the Wild menu
-"set wildmenu
-
 
 "" Always show current position
 "set ruler
@@ -141,7 +156,6 @@ set directory^=$HOME/.vim/tmp//
 "" Add a bit extra margin to the left
 "set foldcolumn=1
 
-
 "" Set utf8 as standard encoding and en_US as the standard language
 "set encoding=utf8
 
@@ -174,5 +188,4 @@ set directory^=$HOME/.vim/tmp//
 "" Turn backup off, since most stuff is in SVN, git etc. anyway...
 "set nobackup
 "set nowb
-"set noswapfile
 
