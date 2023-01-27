@@ -1,11 +1,22 @@
 " goal: I want to know what I have in my vimrc. 
 " Thus, I'll add things as-needed. Over time, I'll get a sense for what's most useful
 " and what isn't. 
+"
+" todo:
+" - basic statusline. just to look cool.
+" - single key to fuzzy-find all user-defined functions.
+"    - this is massive for future html workflows.
+"    - apparently possible with Unite plugin (:Unite command)
 
+" Plugins -------------------- {{{
 " vimplug for plugins
 call plug#begin()
 " commenting stuff out
 Plug 'tpope/vim-commentary'
+" surround.vim
+Plug 'https://github.com/tpope/vim-surround'
+" repeat.vim 
+Plug 'https://github.com/tpope/vim-repeat'
 " colorscheme
 Plug 'morhetz/gruvbox'
 " kotlin syntax highlighting
@@ -27,15 +38,17 @@ Plug 'junegunn/fzf.vim'
 " https://github.com/tpope/vim-unimpaired
 " abolish.vim
 call plug#end()
+" }}}
 
 
 "==================== remaps: the magic of vim!==================== 
 let mapleader=" "
+let maplocalleader="," " testing
 set showcmd
 
-" dotfile editing (matches bash_profile)
-nnoremap <silent> <leader>dvp :e $MYVIMRC<CR>
-nnoremap <silent> <leader>dbp :e $MYBASHPROFILE<CR>
+" dotfile editing
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
 
 " fzf
 nnoremap <silent> <leader>fo :Files<CR>
@@ -53,7 +66,32 @@ augroup vimrc
   autocmd!
   "misc
   au vimenter * ++nested colorscheme gruvbox
+  au BufWrite * echom "Writing buffer!"
+  " ~~~ ABBREVs ~~~
+  " testing: code templates
+  au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
 augroup END
+
+augroup filetype_vim
+  autocmd!
+  " enable folding for Vimscript files
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+
+"==================== Abbrevs ==================== 
+iabbrev @@ max@maxdarling.org 
+
+"==================== Misc  ==================== 
+" custom motion: markdown heading in current section
+onoremap ih :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rkvg_"<cr>
+onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
+
+
+"==================== Statusline ==================== 
+set statusline=%f\ %y%=%l/%L
+" always show statusline
+set laststatus=2
 
 "==================== GOOD ==================== 
 set history=500
@@ -109,7 +147,7 @@ set directory^=$HOME/.vim/tmp//
 "" Turn on the Wild menu
 set wildmenu
 
-"==================== TO TEST  ==================== 
+"TO TEST  ==================== {{{
 " remove word wrapping
 
 " remove auto comment on return?  
@@ -188,4 +226,4 @@ set wildmenu
 "" Turn backup off, since most stuff is in SVN, git etc. anyway...
 "set nobackup
 "set nowb
-
+" }}}

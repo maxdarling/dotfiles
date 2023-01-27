@@ -15,7 +15,7 @@ cp -R ~/.vim/ftplugin .
 cp ~/.bash_profile .
 
 # hammerspoon
-cp ~/.hammerspoon/init.lua
+cp ~/.hammerspoon/init.lua hammerspoon.lua
 
     
 echo "done copying: vim, bash profile, hammerspoon"
