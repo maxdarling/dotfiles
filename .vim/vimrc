@@ -28,6 +28,7 @@ Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Slimv for lisp (installed directly, incompatible otherwise)
 
 " == todo == 
 " Valloric/YouCompleteMe
@@ -40,6 +41,8 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
+" Slimv
+let g:slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"mit-scheme --load ~/.vim/plugged/slimv/slime/contrib/swank-mit-scheme.scm\""'
 
 "==================== remaps: the magic of vim!==================== 
 let mapleader=" "
@@ -130,6 +133,8 @@ set nocompatible
 filetype plugin on
 filetype indent on
 
+" hack that makes backspace work as intended in insert mode
+set backspace=indent,eol,start
 "==================== TESTING  ==================== 
 " speed up pasting?
 set noswapfile
