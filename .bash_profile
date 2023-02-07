@@ -1,6 +1,5 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
-
 # todo: vim autocmd -- every time I save this file, I run `source ~/.bash_profile`
 
 # test
@@ -14,7 +13,7 @@ alias hammer="vim ~/.hammerspoon/init.lua"
 alias nand="cd ~/Personal/nand2tetris"
 
 # git
-alias gp="git push"
+alias gp="git push -u origin"
 alias gpl="git pull"
 alias gs="git status"
 alias gc="git commit"
@@ -43,7 +42,21 @@ killports() {
 # TOKENS / SECRETS
 # example: git push https://maxdarling:${PERSONAL_GITHUB_TOKEN}@github.com/maxdarling/algorithm-design-manual.git
 # for repos, do git remote add <above url, tweaked for repo>
-export PERSONAL_GITHUB_TOKEN=<keeping this private...>
+export PERSONAL_GITHUB_TOKEN=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
+
+git_personal_remote() {
+    repo="$(pwd | sed -E 's#.*/##')"
+    echo "[y/n] is this the repo name?: $repo"
+    read yn
+    if [[ "$yn" != "y" ]]; then
+        echo "exiting"
+        kill -INT $$
+    fi
+    git remote remove origin 2>/dev/null
+    str="git remote add origin https://maxdarling:${PERSONAL_GITHUB_TOKEN}@github.com/maxdarling/${repo}.git"
+    eval "$str"
+    echo "done"
+}
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"

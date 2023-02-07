@@ -36,10 +36,13 @@ function expandWindowRight()
 end
 
 -- KEYBOARD
--- F keys for common apps (more ergo than key
--- F4 is Desktop 1 via Mission Control
+-- F keys for common apps (more ergo than key-chord)
+-- old: binded F4 to Desktop 1 via Mission Control.
+-- now I don't need b/c I don't use fullscreen anymore (Xah floating windows style)
+hs.hotkey.bind({}, 'F4', function() hs.application.open('MacVim') end)
 hs.hotkey.bind({}, 'F5', function() hs.application.open('Google Chrome') end)
 hs.hotkey.bind({}, 'F6', function() hs.application.open('iTerm') end)
+hs.hotkey.bind({}, 'F7', function() hs.application.open('Slack') end)
 
 hyper = hs.hotkey.modal.new({}, 'F17') -- mc. 
 hs.hotkey.bind(

@@ -8,8 +8,7 @@ if [[ "$xx" != "y" ]]; then
 fi
 
 # vim
-cp ~/.vimrc .
-cp -R ~/.vim/ftplugin .
+cp -R ~/.vim .
 
 # bash profile
 cp ~/.bash_profile .
