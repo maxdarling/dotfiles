@@ -49,6 +49,11 @@ let mapleader=" "
 let maplocalleader="," " testing
 set showcmd
 
+" terminal mode (still testing. comma inoptimal?)
+tnoremap <localleader><esc> <C-\><C-n>
+tnoremap <localleader>e <C-\><C-n>:new<CR><C-w><C-w>i
+nnoremap <leader>t :term<CR>
+
 " dotfile editing
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
