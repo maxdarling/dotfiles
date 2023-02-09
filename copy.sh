@@ -8,7 +8,12 @@ if [[ "$xx" != "y" ]]; then
 fi
 
 # vim
-cp -R ~/.vim .
+if [ ! -d ".vim" ]; then
+    mkdir ".vim"
+fi
+cp ~/.vim/vimrc .vim/vimrc
+cp -R ~/.vim/ftplugin .vim
+cp -R ~/.vim/autoload .vim
 
 # bash profile
 cp ~/.bash_profile .

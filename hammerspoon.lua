@@ -53,13 +53,15 @@ hs.hotkey.bind(
 )
 
 
+  -- update: avoiding these for now as key-chords are unhealthy.
+  -- prefer Fn keys instead.
   local hyperMappings = {
     -- apps on left home row
-    { 'f', 'Google Chrome' },
-    { 'd', 'iTerm' },
-    { 's', 'Spotify' },
-    { 'a', 'Slack' },
-    { 'g', 'IntelliJ IDEA CE 2' },
+    -- { 'f', 'Google Chrome' },
+    -- { 'd', 'iTerm' },
+    -- { 's', 'Spotify' },
+    -- { 'a', 'Slack' },
+    -- { 'g', 'IntelliJ IDEA CE 2' },
     -- utils
     { 'p', function() spoon.ClipboardTool:showClipboard() end },
     { 'Left', function() expandWindowLeft() end },

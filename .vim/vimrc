@@ -132,6 +132,8 @@ set number
 set nocompatible
 filetype plugin on
 filetype indent on
+" disable indents for html, though
+au FileType html set indentexpr=""
 
 " hack that makes backspace work as intended in insert mode
 set backspace=indent,eol,start
