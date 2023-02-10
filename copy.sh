@@ -12,6 +12,7 @@ if [ ! -d ".vim" ]; then
     mkdir ".vim"
 fi
 cp ~/.vim/vimrc .vim/vimrc
+cp ~/.vim/gvimrc .vim/gvimrc
 cp -R ~/.vim/ftplugin .vim
 cp -R ~/.vim/autoload .vim
 
