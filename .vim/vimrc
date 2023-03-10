@@ -1,9 +1,6 @@
-" goal: I want to know what I have in my vimrc. 
-" Thus, I'll add things as-needed. Over time, I'll get a sense for what's most useful
-" and what isn't. 
-"
 " todo:
-" - basic statusline. just to look cool.
+" - setup lsp. have intelliJ-like functionality in here.
+"   - ideal: can still do mouse browsing
 " - single key to fuzzy-find all user-defined functions.
 "    - this is massive for future html workflows.
 "    - apparently possible with Unite plugin (:Unite command)
@@ -28,7 +25,6 @@ Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Slimv for lisp (installed directly, incompatible otherwise)
 
 " == todo == 
 " Valloric/YouCompleteMe
@@ -36,18 +32,20 @@ Plug 'junegunn/fzf.vim'
 " moll/vim-mode.git (or similar text search)
 " scrooloose/nerdtree
 " use ag (tell ctrlp to use ag to do file searching)
-" https://github.com/tpope/vim-unimpaired
-" abolish.vim
+" https://github.com/tpope/vim-unimpaired (todo: extract useful ones myself)
+" abolish.vim ( I should implement the ones I want from scratch!)
+"             ( e.g. convert words to snake/camel/upper case. )
 call plug#end()
 " }}}
 
-" Slimv
-let g:slimv_swank_cmd='!osascript -e "tell application \"Terminal\" to do script \"mit-scheme --load ~/.vim/plugged/slimv/slime/contrib/swank-mit-scheme.scm\""'
-
-"==================== remaps: the magic of vim!==================== 
+"==================== remaps: the magic of vim!==================== {{{
 let mapleader=" "
 let maplocalleader="," " testing
 set showcmd
+
+" basics
+nnoremap <C-j> :cprev<CR>
+nnoremap <C-k> :cnext<CR>
 
 " terminal mode (still testing. comma inoptimal?)
 tnoremap <localleader><esc> <C-\><C-n>
@@ -57,20 +55,67 @@ nnoremap <leader>t :term<CR>
 " dotfile editing
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
+nnoremap <silent> <leader>ef :execute 'edit ~/.vim/ftplugin/'
+                                      \ .. &filetype .. '.vim'<CR>
 
 " fzf
+nnoremap <silent> <leader>sf :Rg<CR>
 nnoremap <silent> <leader>fo :Files<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fg :GFiles<CR>
 nnoremap <silent> <leader>fh :History<CR>
+nnoremap <silent> <leader>fi :Helptags<CR>
 
-" open ftplugin file for current filetype (todo)
-" nnoremap <silent> <leader>q :exe ':echo ~/.vim/ftplugin/&ft.vim'
+" misc
+" open last buffer in a botright split ("split previous")
+nnoremap <silent> <leader>sp :execute "botright split " .. bufname("#")<CR>
+" toggle higlighting trailing whitespace (not that useful...?)
+nnoremap <silent> <leader>w :call ToggleTrailingWhitespaceHighlight()<CR>
+let g:md_toggle_tr_whitespace_highlight = 0
+function! ToggleTrailingWhitespaceHighlight()
+    let g:md_toggle_tr_whitespace_highlight =
+      \ !g:md_toggle_tr_whitespace_highlight
+    if g:md_toggle_tr_whitespace_highlight
+        execute "match Error " .. '/\v\s+$/'
+    else
+        execute "match Error //"  
+    endif
+endfunction
 
-" ~~~ AUTOCMDs ~~~
-" necessary for autocmds to just be included 1x
+" automatically use \v in searches
+nnoremap / /\v
+
+nnoremap <leader>x :call <SID>FoldColumnToggle()<CR>
+" fold column toggle
+function! s:FoldColumnToggle()
+    if &foldcolumn
+        setlocal foldcolumn=0
+    else
+        setlocal foldcolumn=4
+    endif
+endfunction
+
+" quickfix list toggle
+let g:quickfix_is_open = 0
+nnoremap <leader>y :call <SID>QuickfixToggle()<CR>
+function! s:QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window .. "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+
+"}}}
+
+" ~~~ AUTOCMDs ~~~ {{{
+" groups are necessary for autocmds to just be included 1x
 augroup vimrc
-  " Remove all vimrc autocommands
   autocmd!
   "misc
   au vimenter * ++nested colorscheme gruvbox
@@ -82,26 +127,38 @@ augroup END
 
 augroup filetype_vim
   autocmd!
-  " enable folding for Vimscript files
+  " enable folding for Vimscript files (usage: 'za' to toggle)
   autocmd FileType vim setlocal foldmethod=marker
+  " remember folds (for vimrc)
+  autocmd BufWinLeave vimrc mkview
+  autocmd BufWinEnter vimrc silent loadview 
 augroup END
+" }}}
 
 
 "==================== Abbrevs ==================== 
-iabbrev @@ max@maxdarling.org 
+iabbrev max@ max@maxdarling.org 
 
-"==================== Misc  ==================== 
-" custom motion: markdown heading in current section
+"==================== Operators ==================== 
+" grep (plugin/grep-operator.vim)
+nnoremap <leader>g <Plug>GrepOperatorNormalMode
+vnoremap <leader>g <Plug>GrepOperatorVisualMode
+
+"==================== Motions ==================== 
+" markdown heading in current section
 onoremap ih :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
-
 
 "==================== Statusline ==================== 
 set statusline=%f\ %y%=%l/%L
 " always show statusline
 set laststatus=2
 
-"==================== GOOD ==================== 
+"==================== Bugfix ==================== 
+" macvim <C-i> appears weirdly. breaks tag jumping.
+nnoremap <D-> <C-i>
+
+"==================== GOOD ==================== {{{
 set history=500
 
 " colorscheme
@@ -142,7 +199,9 @@ au FileType html set indentexpr=""
 
 " hack that makes backspace work as intended in insert mode
 set backspace=indent,eol,start
-"==================== TESTING  ==================== 
+"}}}
+
+"==================== TESTING  ==================== {{{
 " speed up pasting?
 set noswapfile
 
@@ -158,6 +217,8 @@ set directory^=$HOME/.vim/tmp//
 
 "" Turn on the Wild menu
 set wildmenu
+
+"}}}
 
 "TO TEST  ==================== {{{
 " remove word wrapping

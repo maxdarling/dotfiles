@@ -2,7 +2,8 @@
 [[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
 # todo: vim autocmd -- every time I save this file, I run `source ~/.bash_profile`
 
-# test
+alias bp="vim ~/.bash_profile && source ~/.bash_profile && echo 'source completed'"
+alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile && echo 'source completed'"
 source ~/.doordash_bash_profile.sh
 
 # personal projects
