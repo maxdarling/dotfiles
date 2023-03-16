@@ -24,7 +24,12 @@ See kinesis and hammerspoon configs
 
 - 'linearmouse' program to disable mouse acceleration in macOS
 
-- emacs keys (terminal, chrome, etc)
+-  emacs/[readline](https://tiswww.case.edu/php/chet/readline/readline.html) keys (terminal, chrome, etc)
     - ctrl-a and ctrl-e for jumping to start/end of line
     - ctrl-k to delete right of cursor
     - ctrl-p and ctrl-n to go prev/next (way better than up/down arrows for terminal history!)
+    - iterm only:
+        - alt-b, alt-f, alt-backspace, alt-d, alt-.
+        - above: alt == option (or esc, via item settings)  
+   
+- fzf - ctrl-T, ctrl-R, alt-C/esc-C. Big!  
