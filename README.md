@@ -20,6 +20,8 @@ See kinesis and hammerspoon configs
 ## Misc
 - last tab mapped to cmd+E (["recent tabs"](https://chrome.google.com/webstore/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?hl=en) chrome extension)
 
+- macOS key repeat speed maxed (jarring at first, but super good)
+
 - iterm2 preserved window + font sizing via View -> Size Changes Update Profile 
 
 - 'linearmouse' program to disable mouse acceleration in macOS
