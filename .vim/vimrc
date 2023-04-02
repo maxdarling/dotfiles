@@ -1,13 +1,18 @@
 " todo:
-" - setup lsp. have intelliJ-like functionality in here.
-"   - ideal: can still do mouse browsing
-" - single key to fuzzy-find all user-defined functions.
-"    - this is massive for future html workflows.
-"    - apparently possible with Unite plugin (:Unite command)
+" - allow for fzf goto prev directory? (issue: https://github.com/junegunn/fzf.vim/issues/338#issuecomment-623087034)
+" - setup Coc goto definition and references (or, try ALE)
+" - read up on command-line mode. configure <C-e> and <C-a> emacs cmds.
+" - try out a file manager, like ranger (to replace netrw)
+" - contribute to Vim. implement [[ and ]] for another language. see https://vi.stackexchange.com/questions/25741/what-is-a-section-in-vim
+
+" this overwrites stuff (incl viminfo), so putting at the top
+set nocompatible
 
 " Plugins -------------------- {{{
 " vimplug for plugins
 call plug#begin()
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " commenting stuff out
 Plug 'tpope/vim-commentary'
 " surround.vim
@@ -25,91 +30,112 @@ Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
-" == todo == 
-" Valloric/YouCompleteMe
-" kien/ctrlp.vim.git (or similar file search)
-" moll/vim-mode.git (or similar text search)
-" scrooloose/nerdtree
-" use ag (tell ctrlp to use ag to do file searching)
-" https://github.com/tpope/vim-unimpaired (todo: extract useful ones myself)
-" abolish.vim ( I should implement the ones I want from scratch!)
+" == plugin todo == 
+" - https://github.com/tpope/vim-unimpaired (todo: extract useful ones myself)
+" - abolish.vim ( I should implement the ones I want from scratch!)
 "             ( e.g. convert words to snake/camel/upper case. )
 call plug#end()
 " }}}
 
+
 "==================== remaps: the magic of vim!==================== {{{
+" - I don't use marks! could be good...? I could see it...
+
+source ~/.vim/utils.vim " utility functions!
+
 let mapleader=" "
-let maplocalleader="," " testing
+let maplocalleader="," " testing. backslach better?
 set showcmd
 
-" basics
-nnoremap <C-j> :cprev<CR>
-nnoremap <C-k> :cnext<CR>
+" nuttballs
+nnoremap s <C-w><C-w>
+" S is useless ('cc' alias)
+nnoremap S s
+" I can use 'S' to single-char replacements instead of 'r'
+nnoremap r <C-^>
+nnoremap R :echom "todo: map R"<CR>
+nnoremap - :echom "todo: map -"<CR>
+nnoremap ' :echom "todo: map '"<CR>
+" nnoremap ` :echom "todo: map `"<CR>
+nnoremap \ :echom "todo: map \\"<CR>
 
-" terminal mode (still testing. comma inoptimal?)
-tnoremap <localleader><esc> <C-\><C-n>
-tnoremap <localleader>e <C-\><C-n>:new<CR><C-w><C-w>i
-nnoremap <leader>t :term<CR>
+" misc testing
+nnoremap <silent> <C-h> :<C-u>nohlsearch<CR><C-l>
+" 1 hand is way less ergo feeling, lol
+nnoremap <C-f> <C-u>
+
+" trident todo: (~/.vim/plugin/trident.vim)
+" - save scroll position in the window! it changes when hopping back (marks
+"   and :e both do this it seems...)
+" - UI (minor??)
+" - [minor] 'add mark' semantics (e.g. via <leader>a) instead of only m<mark char>
+set viminfo+=!
+nnoremap mj :call TridentSetMapping('j')<CR>
+nnoremap mk :call TridentSetMapping('k')<CR>
+nnoremap ml :call TridentSetMapping('l')<CR>
+nnoremap m; :call TridentSetMapping(';')<CR>
+nnoremap <C-j> :call TridentJumpToFile('j')<CR>
+nnoremap <C-k> :call TridentJumpToFile('k')<CR>
+nnoremap <C-l> :call TridentJumpToFile('l')<CR>
+" Vim doesn't recognize <C-;>. I've mapped <C-;> to Option+s in iterm.
+nnoremap ß :call TridentJumpToFile(';')<CR>
+
+" basics
+nnoremap <leader>w <C-w><C-w>
+" delete buffer without losing split
+" (competes with this 500-stars 80 lines: https://github.com/moll/vim-bbye)
+nnoremap <C-c> :bp\|bd! #<CR>
+command! Bdi :call DeleteInactiveBufs()
+" section movement on { and } (note: vim remaps these for .vim, py, etc)
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
+
+" my lite terminal hax (~/.vim/plugin/terminal)
+" philosophy: terms are lightweight and isolated/throwaway.
+" - trivial to create and close
+" - easy to swap back & forth (assumes you don't use tabs otherwise)
+" - don't pollute buffer list
+" note: an alternative to this would be 1 or 2 dedicated Ctrl-keys that open/switch
+" to terminal windows, like harpoon.
+nnoremap <leader>t :call CreateLiteTerm(1)<CR>ls<CR>
+nnoremap <leader>T :call CreateLiteTerm(0)<CR>ls<CR>
+tnoremap <F3> <C-w>gt
+noremap <F3> gt
+inoremap <F3> <C-o>gt
 
 " dotfile editing
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
 nnoremap <silent> <leader>ef :execute 'edit ~/.vim/ftplugin/'
                                       \ .. &filetype .. '.vim'<CR>
+nnoremap <silent> <leader>eu :e ~/.vim/utils.vim<CR>
+nnoremap <silent> <leader>en :e ~/.vim/notes.vim<CR>
+nnoremap <silent> <leader>ep :E ~/.vim/plugin/<CR>
 
-" fzf
+" coc
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+nnoremap <leader>cc :call ToggleCoc()<CR>
+
+" fzf (home-row optimized, I press these the most!)
 nnoremap <silent> <leader>sf :Rg<CR>
-nnoremap <silent> <leader>fo :Files<CR>
-nnoremap <silent> <leader>fb :Buffers<CR>
-nnoremap <silent> <leader>fg :GFiles<CR>
+nnoremap <silent> <leader>fj :Buffers<CR>
+nnoremap <silent> <leader>fk :Files<CR>
+nnoremap <silent> <leader>fl :Helptags<CR>
 nnoremap <silent> <leader>fh :History<CR>
-nnoremap <silent> <leader>fi :Helptags<CR>
+nnoremap <silent> <leader>fu :GFiles<CR>
 
-" misc
+" ~~ misc mappings ~~
 " open last buffer in a botright split ("split previous")
 nnoremap <silent> <leader>sp :execute "botright split " .. bufname("#")<CR>
-" toggle higlighting trailing whitespace (not that useful...?)
-nnoremap <silent> <leader>w :call ToggleTrailingWhitespaceHighlight()<CR>
-let g:md_toggle_tr_whitespace_highlight = 0
-function! ToggleTrailingWhitespaceHighlight()
-    let g:md_toggle_tr_whitespace_highlight =
-      \ !g:md_toggle_tr_whitespace_highlight
-    if g:md_toggle_tr_whitespace_highlight
-        execute "match Error " .. '/\v\s+$/'
-    else
-        execute "match Error //"  
-    endif
-endfunction
 
-" automatically use \v in searches
-nnoremap / /\v
-
-nnoremap <leader>x :call <SID>FoldColumnToggle()<CR>
-" fold column toggle
-function! s:FoldColumnToggle()
-    if &foldcolumn
-        setlocal foldcolumn=0
-    else
-        setlocal foldcolumn=4
-    endif
-endfunction
-
-" quickfix list toggle
-let g:quickfix_is_open = 0
-nnoremap <leader>y :call <SID>QuickfixToggle()<CR>
-function! s:QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window .. "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
-
+" testing
+" todo: fix (breaks when toggling 2x first time on grep operator plugin).
+nnoremap <leader>y :call QuickfixToggle()<CR>
+nnoremap <leader>x :call FoldColumnToggle()<CR>
 
 "}}}
 
@@ -119,7 +145,6 @@ augroup vimrc
   autocmd!
   "misc
   au vimenter * ++nested colorscheme gruvbox
-  au BufWrite * echom "Writing buffer!"
   " ~~~ ABBREVs ~~~
   " testing: code templates
   au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
@@ -129,18 +154,34 @@ augroup filetype_vim
   autocmd!
   " enable folding for Vimscript files (usage: 'za' to toggle)
   autocmd FileType vim setlocal foldmethod=marker
-  " remember folds (for vimrc)
+  " remember folds for vimrc 
+  " (exclude 'curdir' from viewoptions to not clobber current dir)
+  let &viewoptions="folds,cursor"
   autocmd BufWinLeave vimrc mkview
   autocmd BufWinEnter vimrc silent loadview 
 augroup END
 " }}}
 
+"==================== CoC configs ==================== 
+let g:coc_start_at_startup=v:false
+" augroup lsp
+"     autocmd BufReadPost *.kt setlocal filetype=kotlin
+" augroup END
+
+" need this???
+" let g:LanguageClient_serverCommands = {
+"     \ 'kotlin': ["kotlin-language-server"],
+"     \ }
+" enable CoC by file
+" augroup coc
+"     autocmd BufReadPost *.py CocEnable " python
+" augroup END
 
 "==================== Abbrevs ==================== 
 iabbrev max@ max@maxdarling.org 
 
 "==================== Operators ==================== 
-" grep (plugin/grep-operator.vim)
+" grep (plugin/grep-operator.vim) "todo: screen funkiness. redraw?
 nnoremap <leader>g <Plug>GrepOperatorNormalMode
 vnoremap <leader>g <Plug>GrepOperatorVisualMode
 
@@ -150,15 +191,14 @@ onoremap ih :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
 
 "==================== Statusline ==================== 
-set statusline=%f\ %y%=%l/%L
+" set statusline=%f\ %y%=%l/%L
+set statusline=%f\ %y%=\(%c\)\ \ %l/%L
 " always show statusline
 set laststatus=2
 
-"==================== Bugfix ==================== 
-" macvim <C-i> appears weirdly. breaks tag jumping.
-nnoremap <D-> <C-i>
-
 "==================== GOOD ==================== {{{
+set mouse=a " full mouse enable
+
 set history=500
 
 " colorscheme
@@ -167,12 +207,14 @@ set bg=dark "override lightmode Terminal
 " line numbers
 set number
 
-" show existing tab with 4 spaces width
+" tab = 4 spaces wide
 set tabstop=4
 " when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
+" tabs insert spaces
 set expandtab
+" autoindent (good for markdown bulleted lists)
+set autoindent
 
 " When searching try to be smart about cases
 set ignorecase
@@ -182,121 +224,93 @@ set smartcase
 set hlsearch
 set incsearch
 " add :nohlsearch to the default <C-l> redraw functionality (practical vim book)
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 " clear search when sourcing (otherwise higlights last search)
 let @/ = ""
 
-" relative number
-" set relativenumber
+" number (relnum too distracting while scrolling...)
 set number
 
+
 " Enable filetype plugins
-set nocompatible
 filetype plugin on
 filetype indent on
-" disable indents for html, though
+syntax on
+" disable indents for html, though, cuz that's my Xah style
 au FileType html set indentexpr=""
-
 " hack that makes backspace work as intended in insert mode
 set backspace=indent,eol,start
-"}}}
 
-"==================== TESTING  ==================== {{{
-" speed up pasting?
-set noswapfile
+" wildmenu
+set wildmode=list:longest,full
+set wildmenu
+set wildignore=*.o,*.obj,*~
 
-" autoindent (good for markdown bulleted lists)
-set autoindent
+" set formatoptions-=o "dont continue comments when pushing /O
+
+"vertical/horizontal scroll off settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
 
 " hidden buffers
 set hidden
 
+"make Y consistent with C and D
+nnoremap Y y$
+
+"}}}
+"
+
+"==================== TESTING  ==================== {{{
+" Briefly show matching brackets when text indicator is over them
+set showmatch
+set matchtime=2
+
+" prevent auto-newline when lines get long
+set textwidth=0
+
+" speed up pasting?
+set noswapfile
+
 " put all swap files in a single folder 
 " source: https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files
-set directory^=$HOME/.vim/tmp//
+set directory^=~/.vim/swapfiles//
 
-"" Turn on the Wild menu
-set wildmenu
+set showcmd     "show incomplete cmds down the bottom
+set showmode    "show current mode down the bottom
 
+"display tabs and trailing spaces
+set list
+set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+
+set wrap        "dont wrap lines
+set linebreak   "wrap lines at convenient points
+set breakindent "wrap lines such that vertical indent is not broken
+
+" make C-u, C-d, etc, not move cursor to start of line
+set nostartofline
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+" Set the command window height to 2 lines, to avoid many cases of having to
+" 'press <Enter> to continue'
+set cmdheight=2
+
+" 'o' doesn't continue comment block from current line
+set formatoptions-=o
 "}}}
 
 "TO TEST  ==================== {{{
-" remove word wrapping
-
-" remove auto comment on return?  
-
-" Set 7 lines to the cursor - when moving vertically using j/k
-"set so=7
-
-"" Always show current position
-"set ruler
-
-"" Height of the command bar
-"set cmdheight=1
-
-"" A buffer becomes hidden when it is abandoned
-"set hid
-
-"" Configure backspace so it acts as it should act
-"set backspace=eol,start,indent
 "set whichwrap+=<,>,h,l
 
 "" Don't redraw while executing macros (good performance config)
 "set lazyredraw
-
-"" For regular expressions turn magic on -- on by default though...
-"set magic
-
-"" Show matching brackets when text indicator is over them
-"set showmatch
-
-"" How many tenths of a second to blink when matching brackets
-"set mat=2
 
 "" No annoying sound on errors
 "set noerrorbells
 "set novisualbell
 "set t_vb=
 "set tm=500
-
-"" Properly disable sound on errors on MacVim
-"if has("gui_macvim")
-"    autocmd GUIEnter * set vb t_vb=
-"endif
-
-"" Add a bit extra margin to the left
-"set foldcolumn=1
-
-"" Set utf8 as standard encoding and en_US as the standard language
-"set encoding=utf8
-
-"" Use Unix as the standard file type
-"set ffs=unix,dos,mac
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => Colors and Fonts
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Enable syntax highlighting
-"syntax enable
-
-"" Enable 256 colors palette in Gnome Terminal
-"if $COLORTERM == 'gnome-terminal'
-"    set t_Co=256
-"endif
-
-"try
-"    colorscheme desert
-"catch
-"endtry
-
-"set background=dark
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => Files, backups and undo
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Turn backup off, since most stuff is in SVN, git etc. anyway...
-"set nobackup
-"set nowb
 " }}}

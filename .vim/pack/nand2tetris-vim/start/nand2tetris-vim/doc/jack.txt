@@ -1,0 +1,28 @@
+*jack.txt* support for the nand2tetris course's "Jack" programming language. 
+
+                            __             _     ~
+                            \ \  __ _  ___| | __ ~
+                             \ \/ _` |/ __| |/ / ~
+                          /\_/ / (_| | (__|   <  ~
+                          \___/ \__,_|\___|_|\_\ ~
+
+
+INTRODUCTION                                   *hi*
+
+
+asdfasdfsadf 'asdfasd' adfasdfsadfasdf *asdfasdf* asdfasdfasdfasdf
+asdfasdfasdfsadfadfasdfasdfas dfasdf asdf asdf as df asdf as dfa sdf asd fasdf
+asdfasd fas df asd fas df sadf asd fas df asdf as df asdf asd fdsf. 
+
+Also see |help-writing| for more details. 
+
+My code example~
+>
+    function FookinLitMatey()
+            echom "hi"
+    endfunction
+<
+asdfasdfsadf 'asdfasd' adfasdfsadfasdf *asdfasdf* asdfasdfasdfasdf.
+And that's all, folks!
+
+vim:tw=78:ts=8:ft=help:norl:
