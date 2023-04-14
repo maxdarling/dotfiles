@@ -14,5 +14,3 @@
 {prtscr}>{-lwin}{-lshift}{cbrack}{+lshift}{+lwin}
 {f11}>{-lwin}{-lctrl}{f}{+lctrl}{+lwin}
 {pdown}>{-lwin}{tab}{+lwin}
-{rctrl}{s}>{-rwin}{-lalt}{-lctrl}{s}{+rwin}{+lctrl}{+lalt}
-{rctrl}{i}>{-rwin}{-lalt}{-lctrl}{i}{+lalt}{+lctrl}{+rwin}
