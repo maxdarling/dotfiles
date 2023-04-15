@@ -29,25 +29,17 @@ call plug#end()
 " shared settings and mappings with Neovim
 source ~/.vim/base_config.vim
 
-"==================== remaps: the magic of vim!==================== {{{
-let mapleader=" "
-set showcmd
+" ~~~ Utility Mappings ~~~ {{{
+" dotfile editing
+nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
+nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
+nnoremap <silent> <leader>ef :execute 'edit ~/.vim/ftplugin/'
+            \ .. &filetype .. '.vim'<CR>
+nnoremap <silent> <leader>eu :e ~/.vim/plugin/utils.vim<CR>
+nnoremap <silent> <leader>en :e ~/.vim/notes.vim<CR>
+nnoremap <silent> <leader>ep :E ~/.vim/plugin/<CR>
 
-" nuttballs
-nnoremap s <C-w><C-w>
-" S is useless ('cc' alias)
-nnoremap S s
-" I can use 'S' to single-char replacements instead of 'r'
-nnoremap r <C-^>
-nnoremap R :echom "todo: map R"<CR>
-nnoremap - :echom "todo: map -"<CR>
-nnoremap ' :echom "todo: map '"<CR>
-" nnoremap ` :echom "todo: map `"<CR>
-nnoremap \ :echom "todo: map \\"<CR>
-
-" needed becuase C-{jk;} is used for file bookmarks.
-nnoremap <silent> <C-h> :<C-u>nohlsearch<CR><C-l>
-
+" TRIDENT
 " trident todo: (~/.vim/plugin/trident.vim)
 " - save scroll position in the window! it changes when hopping back (marks
 "   and :e both do this it seems...)
@@ -64,10 +56,6 @@ nnoremap <C-l> :call TridentJumpToFile('l')<CR>
 " Vim doesn't recognize <C-;>. I've mapped <C-;> to Option+s in iterm.
 nnoremap ß :call TridentJumpToFile(';')<CR>
 
-" basics
-" delete buffer without losing split
-" (competes with this 500-stars 80 lines: https://github.com/moll/vim-bbye)
-nnoremap <C-c> :bp\|bd! #<CR>
 command! Bdi :call DeleteInactiveBufs()
 " section movement on { and } (note: vim remaps these for .vim, py, etc)
 map [[ ?{<CR>w99[{
@@ -87,15 +75,6 @@ nnoremap <leader>T :call CreateLiteTerm(0)<CR>ls<CR>
 tnoremap <F3> <C-w>gt
 noremap <F3> gt
 inoremap <F3> <C-o>gt
-
-" dotfile editing
-nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
-nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
-nnoremap <silent> <leader>ef :execute 'edit ~/.vim/ftplugin/'
-            \ .. &filetype .. '.vim'<CR>
-nnoremap <silent> <leader>eu :e ~/.vim/plugin/utils.vim<CR>
-nnoremap <silent> <leader>en :e ~/.vim/notes.vim<CR>
-nnoremap <silent> <leader>ep :E ~/.vim/plugin/<CR>
 
 " coc (~/.vim/plugin/coc-config.vim)
 nnoremap <leader>cc :call ToggleCoc()<CR>
@@ -119,11 +98,6 @@ nnoremap <silent> <leader>fl :Helptags<CR>
 nnoremap <silent> <leader>fh :History<CR>
 nnoremap <silent> <leader>fu :GFiles<CR>
 
-" command line
-cnoremap <C-a> <C-b>
-" todo:
-" cnoremap <C-k>   
-" <C-f> is possible..?
 
 " ~~ misc mappings ~~
 " open last buffer in a botright split ("split previous")
@@ -133,34 +107,6 @@ nnoremap <silent> <leader>sp :execute "botright split " .. bufname("#")<CR>
 " todo: fix (breaks when toggling 2x first time on grep operator plugin).
 nnoremap <leader>y :call QuickfixToggle()<CR>
 nnoremap <leader>x :call FoldColumnToggle()<CR>
-
-"}}}
-
-" ~~~ AUTOCMDs ~~~ {{{
-" groups are necessary for autocmds to just be included 1x
-augroup vimrc
-  autocmd!
-  "misc
-  au vimenter * ++nested colorscheme gruvbox
-  " ~~~ ABBREVs ~~~
-  " testing: code templates
-  au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
-augroup end
-
-augroup filetype_vim
-  autocmd!
-  " enable folding for Vimscript files (usage: 'za' to toggle)
-  autocmd FileType vim setlocal foldmethod=marker
-  " remember folds for vimrc 
-  " (exclude 'curdir' from viewoptions to not clobber current dir)
-  let &viewoptions="folds,cursor"
-  autocmd BufWinLeave vimrc mkview
-  autocmd BufWinEnter vimrc silent loadview 
-augroup end
-" }}}
-
-"==================== Abbrevs ==================== 
-iabbrev max@ max@maxdarling.org 
 
 "==================== Operators ==================== 
 " grep (plugin/grep-operator.vim) "todo: screen funkiness. redraw?
@@ -172,122 +118,34 @@ vnoremap <leader>g <Plug>GrepOperatorVisualMode
 onoremap ih :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
 
-"==================== Statusline ==================== 
-" set statusline=%f\ %y%=%l/%L
-set statusline=%f\ %y%=\(%c\)\ \ %l/%L
-" always show statusline
-set laststatus=2
+"}}}
 
-"==================== GOOD ==================== {{{
-set mouse=a " full mouse enable
+" ~~~ Autocommands ~~~ {{{
+augroup vimrc
+  autocmd!
+  au vimenter * ++nested colorscheme gruvbox
 
-set history=500
+  " testing: code templates
+  au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
+augroup end
 
-" colorscheme
-set bg=dark "override lightmode Terminal
+augroup filetype_vim
+  autocmd!
+  " enable folding for Vimscript files (usage: 'za' to toggle)
+  autocmd FileType vim setlocal foldmethod=marker
 
-" line numbers
-set number
+  " (exclude 'curdir' from viewoptions to not clobber current dir)
+  let &viewoptions="folds,cursor"
 
-" tab = 4 spaces wide
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" tabs insert spaces
-set expandtab
-" autoindent (good for markdown bulleted lists)
-set autoindent
+  " remember folds for vimrc 
+  autocmd BufWinLeave vimrc mkview
+  autocmd BufWinEnter vimrc silent loadview 
+augroup end
+" }}}
 
-" When searching try to be smart about cases
-set ignorecase
-set smartcase
-
-" search highlight
-set hlsearch
-set incsearch
-" add :nohlsearch to the default <C-l> redraw functionality (practical vim book)
-" clear search when sourcing (otherwise higlights last search)
-let @/ = ""
-
-" number (relnum too distracting while scrolling...)
-set number
-
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
-syntax on
+" ~~~ Settings ~~~ {{{
+" Briefly show matching brackets when text indicator is over them
 " disable indents for html, though, cuz that's my Xah style
 au FileType html set indentexpr=""
-" hack that makes backspace work as intended in insert mode
-set backspace=indent,eol,start
 
-" wildmenu
-set wildmenu
-set wildmode=list:longest,full
-set wildignore=*.o,*.obj,*~
-
-" set formatoptions-=o "dont continue comments when pushing /O
-
-"vertical/horizontal scroll off settings
-set scrolloff=3
-set sidescrolloff=7
-set sidescroll=1
-
-" hidden buffers
-set hidden
-
-"make Y consistent with C and D
-nnoremap Y y$
-
-"}}}
-"
-
-"==================== TESTING  ==================== {{{
-" Briefly show matching brackets when text indicator is over them
-set showmatch
-set matchtime=2
-
-" prevent auto-newline when lines get long
-set textwidth=0
-
-" put all swap files in a single folder 
-" source: https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files
-set directory^=~/.vim/swapfiles//
-
-set showcmd     "show incomplete cmds down the bottom
-set showmode    "show current mode down the bottom
-
-"display tabs and trailing spaces
-set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
-
-set wrap        "dont wrap lines
-set linebreak   "wrap lines at convenient points
-set breakindent "wrap lines such that vertical indent is not broken
-
-" make C-u, C-d, etc, not move cursor to start of line
-set nostartofline
-
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
-set confirm
-
-" Set the command window height to 2 lines, to avoid many cases of having to
-" 'press <Enter> to continue'
-set cmdheight=2
-
-" 'o' doesn't continue comment block from current line
-set formatoptions-=o
-"}}}
-
-"TO TEST  ==================== {{{
-"set whichwrap+=<,>,h,l
-
-"" Don't redraw while executing macros (good performance config)
-"set lazyredraw
-
-"" No annoying sound on errors
-"set noerrorbells
-"set novisualbell
 " }}}
