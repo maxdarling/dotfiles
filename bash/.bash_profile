@@ -1,6 +1,3 @@
-# kotlin langauge server (vim)
-export PATH="~/lsp/kotlin/kotlin-language-server/server/build/install/server/bin:$PATH"
-
 # todo: vim autocmd -- every time I save this file, I run `source ~/.bash_profile`
 
 # testing
@@ -18,7 +15,7 @@ lsh() {
 export FZF_ALT_C_OPS="--bind 'ctrl-q'"
 
 alias bp="vim ~/.bash_profile && source ~/.bash_profile && echo 'source completed'"
-alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile && echo 'source completed'"
+alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
 source ~/.doordash_bash_profile.sh
 
 # personal projects
@@ -40,6 +37,7 @@ alias gamend="git status && git commit -a --no-edit --amend"
 alias gch="git checkout"
 alias gmast="git checkout master && git pull"
 alias grc="git rebase --continue"
+alias gd="git diff"
 
 # vim 
 alias v="vim"

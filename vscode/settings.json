@@ -1,0 +1,70 @@
+{
+  "editor.accessibilitySupport": "off",
+  "redhat.telemetry.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.zoomLevel": 1,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  // Neovim issues:
+  // - ctrl-u/d are different (fixed via keybind.)
+  // - 'r' (<C-^>) totally breaks everything.
+  // - <leader>ev doesn't work (file loads, but is a different file)
+  // - harpoon plugin opens preview windows
+  // - 
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  // Vim (not using)
+  "vim.leader": " ",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // {
+    //   "before": ["g", "q"],
+    //   "commands": ["editor.action.formatSelection"]
+    // },
+    {
+      "before": [
+        "<leader>",
+        "a"
+      ],
+      "commands": [
+        "vscode-harpoon.addEditor"
+      ]
+    },
+    {
+      // todo: try doing natively via a vscode command
+      "before": [
+        "<leader>",
+        "e",
+        "v"
+      ],
+      "commands": [
+        ":e /Users/mhd/.vim/vimrc"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "e",
+        "b"
+      ],
+      "commands": [
+        ":e /Users/mhd/.bash_profile"
+      ]
+    },
+  ],
+  // neovim support (for `:normal`, etc.)
+  "vim.enableNeovim": true,
+
+  "security.workspace.trust.untrustedFiles": "open",
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "explorer.confirmDelete": false,
+  "window.newWindowDimensions": "inherit",
+  "editor.minimap.enabled": false,
+  "workbench.settings.editor": "json"
+}

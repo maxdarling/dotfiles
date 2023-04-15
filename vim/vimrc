@@ -1,35 +1,24 @@
 " todo:
-" - allow for fzf goto prev directory? (issue: https://github.com/junegunn/fzf.vim/issues/338#issuecomment-623087034)
 " - setup Coc goto definition and references (or, try ALE)
-" - read up on command-line mode. configure <C-e> and <C-a> emacs cmds.
 " - try out a file manager, like ranger (to replace netrw)
-" - contribute to Vim. implement [[ and ]] for another language. see https://vi.stackexchange.com/questions/25741/what-is-a-section-in-vim
-
-" this overwrites stuff (incl viminfo), so putting at the top
-set nocompatible
 
 " Plugins -------------------- {{{
-" vimplug for plugins
 call plug#begin()
-" LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" commenting stuff out
 Plug 'tpope/vim-commentary'
-" surround.vim
 Plug 'https://github.com/tpope/vim-surround'
-" repeat.vim 
 Plug 'https://github.com/tpope/vim-repeat'
-" colorscheme
+Plug 'https://github.com/nelstrom/vim-visual-star-search'
 Plug 'morhetz/gruvbox'
-" kotlin syntax highlighting
-Plug 'https://github.com/udalov/kotlin-vim'
+
 " markdown preview in browser (:MarkdownPreview)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" * search on visual selection
-Plug 'https://github.com/nelstrom/vim-visual-star-search'
+
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
 " == plugin todo == 
 " - https://github.com/tpope/vim-unimpaired (todo: extract useful ones myself)
 " - abolish.vim ( I should implement the ones I want from scratch!)
@@ -37,14 +26,11 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
+" shared settings and mappings with Neovim
+source ~/.vim/base_config.vim
 
 "==================== remaps: the magic of vim!==================== {{{
-" - I don't use marks! could be good...? I could see it...
-
-source ~/.vim/utils.vim " utility functions!
-
 let mapleader=" "
-let maplocalleader="," " testing. backslach better?
 set showcmd
 
 " nuttballs
@@ -59,10 +45,8 @@ nnoremap ' :echom "todo: map '"<CR>
 " nnoremap ` :echom "todo: map `"<CR>
 nnoremap \ :echom "todo: map \\"<CR>
 
-" misc testing
+" needed becuase C-{jk;} is used for file bookmarks.
 nnoremap <silent> <C-h> :<C-u>nohlsearch<CR><C-l>
-" 1 hand is way less ergo feeling, lol
-nnoremap <C-f> <C-u>
 
 " trident todo: (~/.vim/plugin/trident.vim)
 " - save scroll position in the window! it changes when hopping back (marks
@@ -81,7 +65,6 @@ nnoremap <C-l> :call TridentJumpToFile('l')<CR>
 nnoremap ß :call TridentJumpToFile(';')<CR>
 
 " basics
-nnoremap <leader>w <C-w><C-w>
 " delete buffer without losing split
 " (competes with this 500-stars 80 lines: https://github.com/moll/vim-bbye)
 nnoremap <C-c> :bp\|bd! #<CR>
@@ -106,27 +89,41 @@ noremap <F3> gt
 inoremap <F3> <C-o>gt
 
 " dotfile editing
-nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
 nnoremap <silent> <leader>eb :e ~/.bash_profile<CR>
 nnoremap <silent> <leader>ef :execute 'edit ~/.vim/ftplugin/'
-                                      \ .. &filetype .. '.vim'<CR>
-nnoremap <silent> <leader>eu :e ~/.vim/utils.vim<CR>
+            \ .. &filetype .. '.vim'<CR>
+nnoremap <silent> <leader>eu :e ~/.vim/plugin/utils.vim<CR>
 nnoremap <silent> <leader>en :e ~/.vim/notes.vim<CR>
 nnoremap <silent> <leader>ep :E ~/.vim/plugin/<CR>
 
-" coc
+" coc (~/.vim/plugin/coc-config.vim)
+nnoremap <leader>cc :call ToggleCoc()<CR>
+" completion commands
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
-nnoremap <leader>cc :call ToggleCoc()<CR>
+" goto
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nnoremap <silent> K :call ShowDocumentation()<CR>
+nmap <leader>cl  <Plug>(coc-codeaction-cursor)
+" nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
 
 " fzf (home-row optimized, I press these the most!)
 nnoremap <silent> <leader>sf :Rg<CR>
 nnoremap <silent> <leader>fj :Buffers<CR>
-nnoremap <silent> <leader>fk :Files<CR>
+nnoremap <silent> <leader>fk :FzfFilesUppable<CR>
 nnoremap <silent> <leader>fl :Helptags<CR>
 nnoremap <silent> <leader>fh :History<CR>
 nnoremap <silent> <leader>fu :GFiles<CR>
+
+" command line
+cnoremap <C-a> <C-b>
+" todo:
+" cnoremap <C-k>   
+" <C-f> is possible..?
 
 " ~~ misc mappings ~~
 " open last buffer in a botright split ("split previous")
@@ -148,7 +145,7 @@ augroup vimrc
   " ~~~ ABBREVs ~~~
   " testing: code templates
   au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
-augroup END
+augroup end
 
 augroup filetype_vim
   autocmd!
@@ -159,23 +156,8 @@ augroup filetype_vim
   let &viewoptions="folds,cursor"
   autocmd BufWinLeave vimrc mkview
   autocmd BufWinEnter vimrc silent loadview 
-augroup END
+augroup end
 " }}}
-
-"==================== CoC configs ==================== 
-let g:coc_start_at_startup=v:false
-" augroup lsp
-"     autocmd BufReadPost *.kt setlocal filetype=kotlin
-" augroup END
-
-" need this???
-" let g:LanguageClient_serverCommands = {
-"     \ 'kotlin': ["kotlin-language-server"],
-"     \ }
-" enable CoC by file
-" augroup coc
-"     autocmd BufReadPost *.py CocEnable " python
-" augroup END
 
 "==================== Abbrevs ==================== 
 iabbrev max@ max@maxdarling.org 
@@ -241,8 +223,8 @@ au FileType html set indentexpr=""
 set backspace=indent,eol,start
 
 " wildmenu
-set wildmode=list:longest,full
 set wildmenu
+set wildmode=list:longest,full
 set wildignore=*.o,*.obj,*~
 
 " set formatoptions-=o "dont continue comments when pushing /O
@@ -268,9 +250,6 @@ set matchtime=2
 
 " prevent auto-newline when lines get long
 set textwidth=0
-
-" speed up pasting?
-set noswapfile
 
 " put all swap files in a single folder 
 " source: https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files
@@ -311,6 +290,4 @@ set formatoptions-=o
 "" No annoying sound on errors
 "set noerrorbells
 "set novisualbell
-"set t_vb=
-"set tm=500
 " }}}

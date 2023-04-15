@@ -1,0 +1,64 @@
+[
+    // Neovim
+    { "key": "ctrl+d", "command": "vscode-neovim.send", "args": "<c-d>", "when": "editorTextFocus && neovim.init" },
+    { "key": "ctrl+u", "command": "vscode-neovim.send", "args": "<c-u>", "when": "editorTextFocus && neovim.init" },
+    { "key": "ctrl+p", "command": "vscode-neovim.send", "args": "<c-p>", "when": "editorTextFocus && neovim.init" },
+    // necessary hack: bind <C-;> via VSCode, as it's not recognizeable in vim.
+    { "key": "ctrl+;", "command": "vscode-harpoon.gotoEditor4" },
+
+    // General
+    {
+        "key": "ctrl+=",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "cmd+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "-workbench.action.navigateBack"
+    },
+    {
+        "key": "cmd+right",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "-workbench.action.navigateForward"
+    },
+    {
+        "key": "cmd+left",
+        "command": "-cursorHome",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "cmd+left",
+        "command": "-list.collapseAll",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+left",
+        "command": "-workbench.action.terminal.sendSequence",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+left",
+        "command": "-extension.vim_cmd+left",
+        "when": "editorTextFocus && vim.active && vim.use<D-left> && !inDebugRepl && vim.mode != 'Insert'"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "workbench.action.tasks.runTask"
+    },
+    {
+        "key": "cmd+k cmd+j",
+        "command": "workbench.action.openGlobalKeybindingsFile"
+    }
+]

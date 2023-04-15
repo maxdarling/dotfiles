@@ -78,3 +78,6 @@ function! NewiTermTabInCwd()
                 \"\"iTerm\" to keystroke \"cd " .. expand("%:p:h") .. "\"\'"
 endfunction
 
+" fzf stuff
+
+

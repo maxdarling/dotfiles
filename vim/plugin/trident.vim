@@ -47,7 +47,7 @@ function! TridentJumpToFile(char, avoid_duplicate_views = 1)
         call win_gotoid(winIDList[0])
         echom "trident SWAPPED to window"
     else
-        execute 'edit ' .. f
+        execute 'edit' f
         echom "trident JUMPED to file directly"
     endif
 endfunction

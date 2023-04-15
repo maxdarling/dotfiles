@@ -1,3 +1,18 @@
+" VSCode Vim features:
+"   - NO expression register (can't <c-r>= in ins or cmd-line mode)
+"   - normal (via neovim)
+"   - CAN'T go forward in tag stack (<C-i>)
+"
+" IdeaVim features:
+"   - CAN source vimrc. works okay! ('s' works, 'r' didn't)
+"   - HAS expression register inserting via <C-r>=
+"   - can't see echo output in cmd line
+"   - can see settings, e.g set inc?
+"   - can :ls
+"   - can remap on the fly (but <C-^> doesn't work!)
+"
+
+
 " HOMEROW CTRL KEYS AUDIT: 
 " - a - incr number - B tier
 " - s - None
@@ -20,7 +35,8 @@
 " plugin ideas:
 " - harpoon, but for Vim
 " - fuzzy find over all user-defined functions (apparently possible with 
-"   the Unite plugin (:Unite command)
+"   the Unite plugin (:Unite command). Note: fzf.vim has :Commands. I 
+"   can probably adapt it, e.g. restrict to non .vim/plugged commands.
 " - code templates. useful for many languages, esp if you need a refresher,
 "   e.g. bash or file I/O. Imagine having a file I/O example for every
 "   language! Tight. And competetive programmers copy-paste templates around
