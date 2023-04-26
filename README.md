@@ -35,3 +35,5 @@ See kinesis and hammerspoon configs
         - above: alt == option (or esc, via item settings)  
    
 - fzf - ctrl-T, ctrl-R, alt-C/esc-C. Big!  
+
+- [firenvim](https://github.com/glacambre/firenvim) to pop into neovim for text area editing in Chrome using ctrl-x. Handy for editing files on github, like this very one!
