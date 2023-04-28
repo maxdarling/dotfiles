@@ -4,8 +4,8 @@ set noerrorbells
 
 "" Source your .vimrc
 " this breaks the enter key, wtf???
-" idea: todo: split off a small keybinds file from vimrc. source that here. avoid sourcing plugins, etc."
 "source ~/.vim/vimrc
+source ~/.vim/base_config.vim
 " <C-^> isn't recognized, patching with this...
 nnoremap r :e #<CR>
 

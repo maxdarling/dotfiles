@@ -12,10 +12,13 @@ set backspace=indent,eol,start
 "==================== Mappings  ====================
 let mapleader = " "
 
-nnoremap s <C-w><C-w>
-nnoremap S s
+nmap <leader>ej :e ~/.vim/base_config.vim<CR>
+nmap <leader>eb :e ~/.bash_profile<CR>
+
+noremap s <C-w><C-w>
 nnoremap r <C-^>
-" available maps: {R, -, ', `, \}
+" available maps: {R, -, ', `, \, <C-f>, <C-b>}
+" low-prio keys: {m}
 
 " delete buffer without losing split
 " (competes with this 500-stars 80 lines: https://github.com/moll/vim-bbye)

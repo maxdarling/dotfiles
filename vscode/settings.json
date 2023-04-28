@@ -9,55 +9,33 @@
   "[python]": {
     "editor.formatOnType": true
   },
+  // Neovim todo:
+  // - use '[[' and ']]' for function navigation. for all languages!
   // Neovim issues:
-  // - ctrl-u/d are different (fixed via keybind.)
-  // - 'r' (<C-^>) totally breaks everything.
-  // - <leader>ev doesn't work (file loads, but is a different file)
+  // - <C-u>/<C-d> not perfect.
+  //    - ideal impl scrolls half page and moves cursor same amount. the cursor stays on the same relative line
+  //      as you move around.
+  //    - sending keys to neovim only moves cursor, doesn't scroll. bad.
+  //    - extension just scrolls. this drags the cursor along, relative positon changing constantly.
+  //      and, at the ends of the buffer where there's no left to scroll, the cursor doesn't move. terrible!
+  //      AND, it sets the jump list...so bad! (https://github.com/vscode-neovim/vscode-neovim/issues/1084)
+  //    - this might be easily fixed, though? by sending to neovim, which does <C-u> AND sends back a vscode scroll cmd. or 'zz'.
+  //    - thread: https://github.com/vscode-neovim/vscode-neovim/pull/993 and https://github.com/vscode-neovim/vscode-neovim/issues/983
+  // - python unmatched opening braces ([{ in comments and strings cause indentation issues
+  //    - see https://github.com/nvim-treesitter/nvim-treesitter/issues/1573
+  //    - treesitter is builtin to neovim.
+  //    - too lazy to fix right now.
+  // - <C-^> can break...?
+  //    - mostly works. breaks when switching back to settings.json (whether via harpoon or cmd+,)
+  //    - viewing buffer list shows the issue. the plugin is maintaining mirrored 'vscode_userdata' files, which can't be switched to.
+  //    - ah. and this only really happens for viles navigable via commands like settings.json and keybindings.json
+  //    - fwiw, I can switch between __vscode_neovim__ files... huh
   // - harpoon plugin opens preview windows
-  // - 
+  //    - this also means it can duplicate windows. repro: cmd+,, then harpoon goto settings.
+  // - gf to goto file doesn't work
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  // Vim (not using)
-  "vim.leader": " ",
-  "vim.normalModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["g", "q"],
-    //   "commands": ["editor.action.formatSelection"]
-    // },
-    {
-      "before": [
-        "<leader>",
-        "a"
-      ],
-      "commands": [
-        "vscode-harpoon.addEditor"
-      ]
-    },
-    {
-      // todo: try doing natively via a vscode command
-      "before": [
-        "<leader>",
-        "e",
-        "v"
-      ],
-      "commands": [
-        ":e /Users/mhd/.vim/vimrc"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "e",
-        "b"
-      ],
-      "commands": [
-        ":e /Users/mhd/.bash_profile"
-      ]
-    },
-  ],
-  // neovim support (for `:normal`, etc.)
-  "vim.enableNeovim": true,
 
   "security.workspace.trust.untrustedFiles": "open",
   "[jsonc]": {
@@ -66,5 +44,16 @@
   "explorer.confirmDelete": false,
   "window.newWindowDimensions": "inherit",
   "editor.minimap.enabled": false,
-  "workbench.settings.editor": "json"
+  "workbench.settings.editor": "json",
+  // needed for 'r'? idk... 'false' nice for splits.
+  // ah, but 'true' better for harpoon with splits...?
+  "workbench.editor.revealIfOpen": false,
+  "workbench.editor.untitled.hint": "hidden",
+  "editor.lineNumbers": "relative",
+  "workbench.colorCustomizations": {
+    // opacity can't be changed in Nvim! Big win.
+    "editor.lineHighlightBackground": "#49a35f1e",
+    //"editor.lineHighlightBorder": "#f6327d"
+  },
+  "editor.cursorSurroundingLines": 10
 }

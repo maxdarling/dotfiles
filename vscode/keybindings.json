@@ -1,11 +1,30 @@
 [
     // Neovim
-    { "key": "ctrl+d", "command": "vscode-neovim.send", "args": "<c-d>", "when": "editorTextFocus && neovim.init" },
-    { "key": "ctrl+u", "command": "vscode-neovim.send", "args": "<c-u>", "when": "editorTextFocus && neovim.init" },
     { "key": "ctrl+p", "command": "vscode-neovim.send", "args": "<c-p>", "when": "editorTextFocus && neovim.init" },
     // necessary hack: bind <C-;> via VSCode, as it's not recognizeable in vim.
     { "key": "ctrl+;", "command": "vscode-harpoon.gotoEditor4" },
 
+    // <C-u>/<C-d> fixes. Scrolloff helps 
+    // prime's screen is ~30 tall, mine is ~40. He does relnum jumps, I don't. I'll be just holding 'j' or 'k'
+    // to correct overjumps. So a smaller number for less margin of error is good for me, I think.
+    // As for centering screen on each jump 10 scrolloff is a workaround ("cursorSurroundingLines").
+    // No option for this natively. And having vim do <C-d>zz doesn't work, either. wtf.
+    { "key": "ctrl-d", "command": "cursorMove", "args": { "to": "down", "by": "line", "value": 10 }, "when": "neovim.mode != insert && editorTextFocus" },
+    { "key": "ctrl-u", "command": "cursorMove", "args": { "to": "up", "by": "line", "value": 10 }, "when": "neovim.mode != insert && editorTextFocus" },
+
+    // below should work... (not at file edges, though.) 
+    // { 
+    //     "key": "ctrl+d", 
+    //     "command": "runCommands", 
+    //     "args": {
+    //         "commands": [
+    //             //  { "command" : "editorScroll", "args" : {"to" : "up", "by" : "halfPage"} },
+    //              { "command": "cursorMove", "args": { "to": "viewPortCenter } },
+    //         ]
+    //     } 
+    // },
+
+    
     // General
     {
         "key": "ctrl+=",
@@ -51,6 +70,7 @@
     {
         "key": "cmd+left",
         "command": "-extension.vim_cmd+left",
+        
         "when": "editorTextFocus && vim.active && vim.use<D-left> && !inDebugRepl && vim.mode != 'Insert'"
     },
     {
