@@ -15,7 +15,7 @@ nmap <leader>eb :e ~/.bash_profile<CR>
 map s <C-w><C-w>
 map r <C-^>
 
-" free up q on macro. it's not very common. it should require a leader.
+" free up q on maCRo. it's not very common. it should require a leader.
 noremap <leader>q q
 
 " NEW MAPS
@@ -27,11 +27,7 @@ vmap <C-f> gc
 nmap <leader>f gcc
 vmap <leader>f gc
 " format entire file not that good. often makes massive edits. better '=ap'
-" nmap <leader>f <cmd>normal! mzgg=g`z<cr>
-
-" test zz for vscode
-nmap <leader>z zz
-nmap <leader>x <c-d>:echom "hi mom!"<cr>
+" nmap <leader>f <Cmd>normal! mzgg=g`z<CR>
 
 if !exists('g:vscode')
     echom "started not in vscode!"
@@ -52,17 +48,17 @@ if exists('g:vscode')
     nmap gcc <plug>VSCodeCommentaryLine
 
     " harpoon
-    nnoremap mj <cmd>call VSCodeNotify('vscode-harpoon.addEditor1')<cr>
-    nnoremap mk <cmd>call VSCodeNotify('vscode-harpoon.addEditor2')<cr>
-    nnoremap ml <cmd>call VSCodeNotify('vscode-harpoon.addEditor3')<cr>
-    nnoremap m; <cmd>call VSCodeNotify('vscode-harpoon.addEditor4')<cr>
+    nnoremap mj <Cmd>call VSCodeNotify('vscode-harpoon.addEditor1')<CR>
+    nnoremap mk <Cmd>call VSCodeNotify('vscode-harpoon.addEditor2')<CR>
+    nnoremap ml <Cmd>call VSCodeNotify('vscode-harpoon.addEditor3')<CR>
+    nnoremap m; <Cmd>call VSCodeNotify('vscode-harpoon.addEditor4')<CR>
 
-    nnoremap <c-j> <cmd>call VSCodeNotify('vscode-harpoon.gotoEditor1')<cr>
-    nnoremap <c-k> <cmd>call VSCodeNotify('vscode-harpoon.gotoEditor2')<cr>
-    nnoremap <c-l> <cmd>call VSCodeNotify('vscode-harpoon.gotoEditor3')<cr>
+    nnoremap <c-j> <Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor1')<CR>
+    nnoremap <c-k> <Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor2')<CR>
+    nnoremap <c-l> <Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor3')<CR>
     " must map <c-;> in vscode, as vim can't recognize <c-;>
 
-    nnoremap <leader>a <cmd>call VSCodeNotify('vscode-harpoon.addEditor')<cr>
-    nnoremap <c-p> <cmd>call VSCodeNotify('vscode-harpoon.editEditors')<cr>
+    nnoremap <leader>a <Cmd>call VSCodeNotify('vscode-harpoon.addEditor')<CR>
+    nnoremap <c-p> <Cmd>call VSCodeNotify('vscode-harpoon.editEditors')<CR>
 endif
 

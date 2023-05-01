@@ -1,7 +1,6 @@
 # todo: vim autocmd -- every time I save this file, I run `source ~/.bash_profile`
 
-# testing
-function cd {
+function cdls {
     builtin cd "$@" && ls -F
 }
 
@@ -19,12 +18,12 @@ alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.s
 source ~/.doordash_bash_profile.sh
 
 # personal projects
-alias dot="cd ~/code/dotfiles"
-alias sicp="cd ~/code/sicp"
-alias alg="cd ~/code/algorithm-study"
-alias skiena="cd ~/code/algorithm-design-manual"
+alias dot="cdls ~/code/dotfiles"
+alias sicp="cdls ~/code/sicp"
+alias alg="cdls ~/code/algorithm-study"
+alias skiena="cdls ~/code/algorithm-design-manual"
 alias hammer="vim ~/.hammerspoon/init.lua"
-alias nand="cd ~/code/nand2tetris"
+alias nand="cdls ~/code/nand2tetris"
 
 # git
 alias gp="git push -u origin"

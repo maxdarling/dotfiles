@@ -1,17 +1,16 @@
-" disable error bells
-set visualbell
-set noerrorbells
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
-"" Source your .vimrc
-" this breaks the enter key, wtf???
-"source ~/.vim/vimrc
 source ~/.vim/base_config.vim
+
+nnoremap <leader>ei :e ~/.ideavimrc<CR>
+
 " <C-^> isn't recognized, patching with this...
 nnoremap r :e #<CR>
 
 " harpoon (see :actionlist harpoon)
 nnoremap <leader>a :action AddToHarpoon<CR>
-" doesn't work. mapped in IDE to ctrl-p.
+" below doesn't work. mapped in IDE to ctrl-p.
 " nnoremap <leader>e :action ShowHarpoon<CR>
 nnoremap <C-j> :action GotoHarpoon1<CR>
 nnoremap <C-k> :action GotoHarpoon2<CR>
@@ -22,11 +21,6 @@ nnoremap mk :action SetHarpoon2<CR>
 nnoremap ml :action SetHarpoon3<CR>
 nnoremap m; :action SetHarpoon4<CR>
 
-
-"" -- Suggested options --
-" Show a few lines of context around the cursor. Note that this makes the
-" text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
-
-" Don't use Ex mode, use Q for formatting.
-map Q gq
+set visualbell
+set noerrorbells
