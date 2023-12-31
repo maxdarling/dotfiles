@@ -1,5 +1,6 @@
 ## Todo
-- add neovim, vim bootstrap steps 
+- add neovim, vim bootstrap steps
+- add git folder (and move `~/.personal_github_token` there, but not tracked)
 
 ## Setup
 Bootstrap with `zsh bootstrap.zsh`
