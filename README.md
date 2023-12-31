@@ -1,17 +1,5 @@
 ## Todo
-- more bash macros (functions)
-- investigate terminal autocomplete (trying Fig, but oh-my-zsh is a classic too)
-
-## Vim
-- start from scratch. create my own vimrc and directory structure.
-- Videos
-    - cool vid ([primeagen](https://www.youtube.com/watch?v=Iid1Ms14Om4))
-    - vimgod derek wyatt [command line stuff](https://vimeo.com/15443936)
-
-
-## Bash
-- See bash_profile
-
+- 
 
 ## Keyboard shortcuts
 See kinesis and hammerspoon configs
