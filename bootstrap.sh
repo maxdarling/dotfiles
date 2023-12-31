@@ -3,20 +3,16 @@ set -e
 set -x
 
 #######################
-# BIN
+# UTILS
 #######################
 
 # FZF
-if [[ ! -f $HOME/.fzf/bin/fzf ]]; then
-    git clone https://github.com/junegunn/fzf.git $HOME/.fzf
-    yes | $HOME/.fzf/install
-fi
+brew install fzf
 
 # DIFF-SO-FANCY
-if [[ ! -f $HOME/bin/diff-so-fancy ]]; then
-    curl -o $HOME/bin/diff-so-fancy https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-    chmod +x $HOME/bin/diff-so-fancy
-fi
+brew install diff-so-fancy
+# see repo for git color setup instructions
+# https://github.com/so-fancy/diff-so-fancy
 
 #######################
 # ZSH
