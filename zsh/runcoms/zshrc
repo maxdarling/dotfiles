@@ -1,21 +1,30 @@
-# todo: vim autocmd -- every time I save this file, I run `source ~/.bash_profile`
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-function cdls {
-    builtin cd "$@" && ls -F
-}
+# disable auto correct
+unsetopt correct
 
-# filter out MacOs home dirs from 'ls'. I wish mac came with ls --ignore...
-lsh() {
-    ls "$@" | grep -Ewv \
-        'Music|Pictures|Library|Applications|Desktop|Documents|Movies|Public' 
-}
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# test: remap fzf ALT-C
-export FZF_ALT_C_OPS="--bind 'ctrl-q'"
+# broot
+source /Users/mhd/.config/broot/launcher/bash/br
 
-alias bp="vim ~/.bash_profile && source ~/.bash_profile && echo 'source completed'"
+# settings
+export EDITOR=vim
+
+# mine...
+alias zrc="vim ~/.zshrc && source ~/.zshrc"
+alias zpr="vim ~/.zprezto/runcoms"
+
 alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
 source ~/.doordash_bash_profile.sh
+
+###
+# INLINE COPIED BASHRC
+###
 
 # personal projects
 alias dot="cdls ~/code/dotfiles"
@@ -24,6 +33,7 @@ alias alg="cdls ~/code/algorithm-study"
 alias skiena="cdls ~/code/algorithm-design-manual"
 alias hammer="vim ~/.hammerspoon/init.lua"
 alias nand="cdls ~/code/nand2tetris"
+alias site="cdls ~/code/maxdarling.github.io"
 
 # git
 alias gp="git push -u origin"
@@ -34,18 +44,14 @@ alias gb="git branch"
 alias gl="git log"
 alias gamend="git status && git commit -a --no-edit --amend"
 alias gch="git checkout"
-alias gmast="git checkout master && git pull"
+alias gmast="git checkout master && git pull origin master"
 alias grc="git rebase --continue"
 alias gd="git diff"
+alias gemp="git commit -m \"empty commit\" --allow-empty"
 
 # vim 
 alias v="vim"
 alias vp="vim ~/.vimrc"
-
-
-bashman () { man bash | less -p "^       $1 "; }
-
-touch2() { mkdir -p "$(dirname "$1")" && touch "$1" ; }
 
 killports() {
     for port in "$@"
@@ -57,7 +63,7 @@ killports() {
 # TOKENS / SECRETS
 # example: git push https://maxdarling:${PERSONAL_GITHUB_TOKEN}@github.com/maxdarling/algorithm-design-manual.git
 # for repos, do git remote add <above url, tweaked for repo>
-export PERSONAL_GITHUB_TOKEN=<deleted>
+export PERSONAL_GITHUB_TOKEN=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
 
 git_personal_remote() {
     repo="$(pwd | sed -E 's#.*/##')"
