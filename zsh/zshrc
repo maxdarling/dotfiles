@@ -63,7 +63,7 @@ killports() {
 # TOKENS / SECRETS
 # example: git push https://maxdarling:${PERSONAL_GITHUB_TOKEN}@github.com/maxdarling/algorithm-design-manual.git
 # for repos, do git remote add <above url, tweaked for repo>
-export PERSONAL_GITHUB_TOKEN=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
+source ~/.personal_github_token.sh
 
 git_personal_remote() {
     repo="$(pwd | sed -E 's#.*/##')"

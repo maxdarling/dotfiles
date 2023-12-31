@@ -1,5 +1,8 @@
 ## Todo
-- 
+- add neovim, vim bootstrap steps 
+
+## Setup
+Bootstrap with `zsh bootstrap.zsh`
 
 ## Keyboard shortcuts
 See kinesis and hammerspoon configs
