@@ -25,13 +25,6 @@ vscode
 # IntelliJ
 cp ~/.ideavimrc intellij
 
-# bash profile
-cp ~/.bash_profile bash
-echo "removing PERSONAL_GITHUB_TOKEN from bashrc..."
-sed -i '' \
-'s/\(export PERSONAL_GITHUB_TOKEN=\).*/\1\<deleted\>/' \
-bash/.bash_profile
-
 # hammerspoon
 cp ~/.hammerspoon/init.lua hammerspoon
 

@@ -80,7 +80,7 @@ nnoremap <silent> <leader>sp :execute "botright split " .. bufname("#")<CR>
 " testing
 " todo: fix (breaks when toggling 2x first time on grep operator plugin).
 nnoremap <leader>y :call QuickfixToggle()<CR>
-nnoremap <leader>x :call FoldColumnToggle()<CR>
+" nnoremap <leader>x :call FoldColumnToggle()<CR>
 
 "==================== Operators ==================== 
 " grep (plugin/grep-operator.vim) "todo: screen funkiness. redraw?

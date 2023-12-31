@@ -36,20 +36,20 @@ function expandWindowRight()
 end
 
 -- KEYBOARD
--- F keys for common apps (more ergo than key-chord)
--- old: binded F4 to Desktop 1 via Mission Control.
--- now I don't need b/c I don't use fullscreen anymore (Xah floating windows style)
-hs.hotkey.bind({}, 'F3', function() hs.application.open('IntelliJ IDEA CE') end)
-hs.hotkey.bind({}, 'F4', function() hs.application.open('Visual Studio Code') end)
-hs.hotkey.bind({}, 'F5', function() hs.application.open('Google Chrome') end)
-hs.hotkey.bind({}, 'F6', function() hs.application.open('iTerm') end)
-hs.hotkey.bind({}, 'F7', function() hs.application.open('Slack') end)
+-- F keys for common apps (more ergo than key-chord). this is Xah Lee floating app philosophy.
+-- 5/31/23: optimized for the glove (F4 and F7 are by far the easiest to reach).
+hs.hotkey.bind({}, 'F3', function() hs.application.open('Slack') end)
+hs.hotkey.bind({}, 'F4', function() hs.application.open('Google Chrome') end)
+hs.hotkey.bind('shift', 'F4', function() hs.application.open('Spotify') end)
+hs.hotkey.bind({}, 'F7', function() hs.application.open('iTerm') end)
+hs.hotkey.bind('shift', 'F7', function() hs.application.open('Visual Studio Code') end)
+hs.hotkey.bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
 
-hyper = hs.hotkey.modal.new({}, 'F17') -- mc. 
+hyper = hs.hotkey.modal.new({}, 'F17') -- mc.
 hs.hotkey.bind(
-  {}, 
-  'End', 
-  function() hyper:enter() end, 
+  {},
+  'End',
+  function() hyper:enter() end,
   function() hyper:exit() end
 )
 

@@ -4,4 +4,4 @@ if &ft=="markdown"
   finish
 endif
 
-map <buffer> <F3> :exe ':silent !open -a /Applications/Google\ Chrome.app %'<CR>:redr!<CR>
+map <buffer> <leader>x :exe ':silent !open -a /Applications/Google\ Chrome.app %'<CR>:redr!<CR>

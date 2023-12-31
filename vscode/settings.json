@@ -3,12 +3,15 @@
   "redhat.telemetry.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.zoomLevel": 1,
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
+  // "[typescript]": {
+  //   "editor.defaultFormatter": "vscode.typescript-language-features"
+  // },
   "[python]": {
     "editor.formatOnType": true
   },
+  "python.linting.pylintArgs": [
+    "--good-names=i,j,k,ex,Run,_,x,y,z,s,d"
+  ],
   // Neovim todo:
   // - use '[[' and ']]' for function navigation. for all languages!
   // Neovim issues:
@@ -36,7 +39,6 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-
   "security.workspace.trust.untrustedFiles": "open",
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -48,12 +50,14 @@
   // needed for 'r'? idk... 'false' nice for splits.
   // ah, but 'true' better for harpoon with splits...?
   "workbench.editor.revealIfOpen": false,
-  "workbench.editor.untitled.hint": "hidden",
   "editor.lineNumbers": "relative",
   "workbench.colorCustomizations": {
     // opacity can't be changed in Nvim! Big win.
     "editor.lineHighlightBackground": "#49a35f1e",
     //"editor.lineHighlightBorder": "#f6327d"
   },
-  "editor.cursorSurroundingLines": 10
+  "editor.cursorSurroundingLines": 10,
+  "files.trimTrailingWhitespace": true,
+  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.editor.empty.hint": "hidden",
 }
