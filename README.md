@@ -5,16 +5,16 @@
 ## Setup
 Bootstrap with `zsh bootstrap.zsh`
 
-## Keyboard shortcuts
-See kinesis and hammerspoon configs
+## Keyboard
+- Keyboard: [Glove 80]([url](https://www.moergo.com/)) keyboard
+- Layout: ["Engram"]([url](https://engram.dev/)) (the best to my knowledge)
+- [My Glove80 layout]([url](https://my.glove80.com/#/layout/user/8c6c5fdf-f14b-40e7-bed5-a3e2bb39f60a))
+- Fn key mappings via Hammerspoon
 
-
-## Misc
-- last tab mapped to cmd+E (["recent tabs"](https://chrome.google.com/webstore/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?hl=en) chrome extension)
+## macOs / Other
+- chrome last tab mapped to cmd+E (via ["recent tabs"](https://chrome.google.com/webstore/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?hl=en))
 
 - macOS key repeat speed maxed (jarring at first, but super good)
-
-- iterm2 preserved window + font sizing via View -> Size Changes Update Profile 
 
 - 'linearmouse' program to disable mouse acceleration in macOS
 
@@ -26,6 +26,4 @@ See kinesis and hammerspoon configs
         - alt-b, alt-f, alt-backspace, alt-d, alt-.
         - above: alt == option (or esc, via item settings)  
    
-- fzf - ctrl-T, ctrl-R, alt-C/esc-C. Big!  
-
 - [firenvim](https://github.com/glacambre/firenvim) to pop into neovim for text area editing in Chrome using ctrl-x. Handy for editing files on github, like this very one!
