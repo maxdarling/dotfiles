@@ -26,4 +26,7 @@ Bootstrap with `zsh bootstrap.zsh`
         - alt-b, alt-f, alt-backspace, alt-d, alt-.
         - above: alt == option (or esc, via item settings)  
    
-- [firenvim](https://github.com/glacambre/firenvim) to pop into neovim for text area editing in Chrome using ctrl-x. Handy for editing files on github, like this very one!
+- [firenvim](https://github.com/glacambre/firenvim) to pop into neovim for text area editing in Chromee using ctrl-x. Handy for editing files on github, like this very one!
+
+- dotfile inspo:
+    - [MIT "missing semester"](https://missing.csail.mit.edu/2020/command-line/#dotfiles)
