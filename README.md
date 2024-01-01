@@ -6,9 +6,9 @@
 Bootstrap with `zsh bootstrap.zsh`
 
 ## Keyboard
-- Keyboard: [Glove 80]([url](https://www.moergo.com/)) keyboard
-- Layout: ["Engram"]([url](https://engram.dev/)) (the best to my knowledge)
-- [My Glove80 layout]([url](https://my.glove80.com/#/layout/user/8c6c5fdf-f14b-40e7-bed5-a3e2bb39f60a))
+- Keyboard: [Glove 80](https://www.moergo.com/collections/glove80-keyboards) keyboard
+- Layout: ["Engram"](https://engram.dev/) (the best to my knowledge)
+- [My Glove80 layout](https://my.glove80.com/#/layout/user/8c6c5fdf-f14b-40e7-bed5-a3e2bb39f60a)
 - Fn key mappings via Hammerspoon
 
 ## macOs / Other
