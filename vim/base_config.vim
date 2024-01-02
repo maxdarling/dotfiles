@@ -25,7 +25,7 @@ nnoremap r <C-^>
 nnoremap <C-c> :bp\|bd! #<CR>
 
 " needed becuase C-{jk;} is used for file bookmarks.
-nnoremap <silent> <C-h> :<C-u>nohlsearch<CR><C-l>
+" nnoremap <silent> <C-h> :<C-u>nohlsearch<CR><C-l>
 
 " todo:
 " cnoremap <C-k>   
@@ -36,6 +36,9 @@ nnoremap <silent> <leader>sp :execute "botright split " .. bufname("#")<CR>
 
 "make Y consistent with C and D
 nnoremap Y y$
+
+" testing (comments should be easier than `gcc`...
+nmap <leader>c gcc
 
 "==================== Settings ====================
 set number
