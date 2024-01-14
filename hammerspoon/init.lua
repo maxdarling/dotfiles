@@ -5,8 +5,7 @@
 hs.loadSpoon("ClipboardTool")
 spoon.ClipboardTool:start()
 spoon.ClipboardTool.show_copied_alert = false
-spoon.ClipboardTool.paste_on_select = false -- todo: try
-
+spoon.ClipboardTool.paste_on_select = true -- todo: try
 
 -- WINDOW MANAGEMENT
 function expandWindowLeft() -- todo: parameterize L/R
@@ -45,39 +44,30 @@ hs.hotkey.bind({}, 'F7', function() hs.application.open('iTerm') end)
 hs.hotkey.bind('shift', 'F7', function() hs.application.open('Visual Studio Code') end)
 hs.hotkey.bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
 
-hyper = hs.hotkey.modal.new({}, 'F17') -- mc.
+-- strat: use a single key (e.g. F17) for hyper mode (instead of the traditional 4 mod keys)
+-- so that in case I remove hyper I have a useful key (F17) to rebind instead of unusable mods.
+hyper = hs.hotkey.modal.new({}, 'F20') -- throwaway key
 hs.hotkey.bind(
   {},
-  'End',
+  'F17', -- this is the hyper key
   function() hyper:enter() end,
   function() hyper:exit() end
 )
 
-
-  -- update: avoiding these for now as key-chords are unhealthy.
-  -- prefer Fn keys instead.
   local hyperMappings = {
-    -- apps on left home row
-    -- { 'f', 'Google Chrome' },
-    -- { 'd', 'iTerm' },
-    -- { 's', 'Spotify' },
-    -- { 'a', 'Slack' },
-    -- { 'g', 'IntelliJ IDEA CE 2' },
     -- utils
     { 'p', function() spoon.ClipboardTool:showClipboard() end },
     { 'Left', function() expandWindowLeft() end },
     { 'Right', function() expandWindowRight() end },
     -- debug
-    {'q', function() hs.alert'Pressed q in hypermode' end}
+    {'q', function() hs.alert'Pressed q in hypermode' end},
   }
 
   for i, mapping in ipairs(hyperMappings) do
     local key = mapping[1]
     local app = mapping[2]
     hyper:bind({}, key, function()
-      if (type(app) == 'string') then
-        hs.application.open(app)
-      elseif (type(app) == 'function') then
+      if (type(app) == 'function') then
         app()
       else
         hs.logger.new('hyper'):e('Invalid mapping for Hyper +', key)
