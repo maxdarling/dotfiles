@@ -1,8 +1,10 @@
-"lua require('plugins')
-"lua require('firenvim-config')
-
-" base commands, shared by vim
+" plugins (must come first)
+source ~/.config/nvim/plugin/plugins.vim
+" base config shared with vim
 source ~/.vim/base_config.vim
+
+set background=dark
+colorscheme gruvbox
 
 " utils (~/.config/nvim/plugin/utils.vim)
 command! Bdi :call DeleteInactiveBufs()
@@ -12,21 +14,21 @@ command! Bdi :call DeleteInactiveBufs()
 nmap <leader>ev :e ~/.config/nvim/init.vim<CR>
 nmap <leader>ep :e ~/.config/nvim/plugin/plugins.vim<CR>
 nmap <leader>eb :e ~/.bash_profile<CR>
-map s <C-w><C-w>
+"map s <C-w><C-w>
 map r <C-^>
 
 " free up q. it's not very common. it should require a leader.
-noremap <leader>q q
+" noremap <leader>q q
 
 " format entire file not that good. often makes massive edits. better '=ap'
 " nmap <leader>f <Cmd>normal! mzgg=gG`z<CR>
 
-if !exists('g:vscode')
-    echom "started not in vscode!"
-    colorscheme slate
-    set cursorline
-endif
+" set cursorline
 
+
+""""""""""""""""""""""""""""""""
+" VSCODE
+""""""""""""""""""""""""""""""""
 if exists('g:vscode')
     " note: commands take all sorts of args. see below. but i couldn't figure
     " out vscode.open in the end. huh.

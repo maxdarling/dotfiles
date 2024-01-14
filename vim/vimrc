@@ -1,8 +1,9 @@
 " todo: remap for engram
 
+"plugins (should come first)
+source ~/.vim/plugin/plugins.vim
 " shared settings and mappings with Neovim
 source ~/.vim/base_config.vim
-source ~/.vim/plugin/plugins.vim
 
 " ~~~ Utility Mappings ~~~ {{{
 " dotfile editing
@@ -84,9 +85,6 @@ onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
 " ~~~ Autocommands ~~~ {{{
 augroup vimrc
   autocmd!
-  " colorscheme
-  au vimenter * ++nested colorscheme gruvbox
-
   " testing: code templates
   au FileType python iabbrev <buffer> fff def func(a: int) -> int:<cr>return 1
 augroup end

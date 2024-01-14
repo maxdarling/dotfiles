@@ -1,5 +1,5 @@
 call plug#begin()
-Plug 'tpope/vim-commentary'
+Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/nelstrom/vim-visual-star-search'

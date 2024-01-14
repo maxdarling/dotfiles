@@ -1,7 +1,4 @@
 " Core settings to be shared by Vim and NeoVim
-" todo:
-"   - source the plugin dir so neovim can benefit?
-"   - then, add mappings for :Bdi, lite terminal, etc
 "==================== Sane Defaults  ====================
 set nocompatible
 filetype plugin on
