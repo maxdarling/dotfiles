@@ -8,8 +8,6 @@ Plug 'morhetz/gruvbox'
 " markdown preview in browser (:MarkdownPreview)
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
-" LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'

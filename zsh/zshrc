@@ -9,11 +9,9 @@ unsetopt correct
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# broot
-source /Users/mhd/.config/broot/launcher/bash/br
-
 # settings
 export EDITOR=vim
+export MANPAGER='nvim +Man!'
 
 # mine...
 alias zrc="vim ~/.zshrc && source ~/.zshrc"
@@ -21,10 +19,6 @@ alias zpr="vim ~/.zprezto/runcoms"
 
 alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
 source ~/.doordash_bash_profile.sh
-
-###
-# INLINE COPIED BASHRC
-###
 
 # personal projects
 alias dot="cdls ~/code/dotfiles"
@@ -73,7 +67,7 @@ git_personal_remote() {
         kill -INT $$
     fi
     git remote remove origin 2>/dev/null
-    str="git remote add origin https://maxdarling:${PERSONAL_GITHUB_TOKEN}@github.com/maxdarling/${repo}.git"
+    str="git remote add origin https://maxdarling:${GITHUB_PAT}@github.com/maxdarling/${repo}.git"
     eval "$str"
     echo "done"
 }

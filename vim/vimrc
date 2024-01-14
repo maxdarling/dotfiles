@@ -2,7 +2,6 @@
 
 " shared settings and mappings with Neovim
 source ~/.vim/base_config.vim
-
 source ~/.vim/plugin/plugins.vim
 
 " ~~~ Utility Mappings ~~~ {{{
@@ -23,15 +22,15 @@ nnoremap <silent> <leader>ep :E ~/.vim/plugin/<CR>
 " - UI (minor??)
 " - [minor] 'add mark' semantics (e.g. via <leader>a) instead of only m<mark char>
 set viminfo+=!
-nnoremap mj :call TridentSetMapping('j')<CR>
-nnoremap mk :call TridentSetMapping('k')<CR>
-nnoremap ml :call TridentSetMapping('l')<CR>
-nnoremap m; :call TridentSetMapping(';')<CR>
-nnoremap <C-j> :call TridentJumpToFile('j')<CR>
-nnoremap <C-k> :call TridentJumpToFile('k')<CR>
-nnoremap <C-l> :call TridentJumpToFile('l')<CR>
+" nnoremap mj :call TridentSetMapping('j')<CR>
+" nnoremap mk :call TridentSetMapping('k')<CR>
+" nnoremap ml :call TridentSetMapping('l')<CR>
+" nnoremap m; :call TridentSetMapping(';')<CR>
+" nnoremap <C-j> :call TridentJumpToFile('j')<CR>
+" nnoremap <C-k> :call TridentJumpToFile('k')<CR>
+" nnoremap <C-l> :call TridentJumpToFile('l')<CR>
 " Vim doesn't recognize <C-;>. I've mapped <C-;> to Option+s in iterm.
-nnoremap ß :call TridentJumpToFile(';')<CR>
+" nnoremap ß :call TridentJumpToFile(';')<CR>
 
 command! Bdi :call DeleteInactiveBufs()
 " section movement on { and } (note: vim remaps these for .vim, py, etc)
@@ -53,20 +52,6 @@ tnoremap <F3> <C-w>gt
 noremap <F3> gt
 inoremap <F3> <C-o>gt
 
-" coc (~/.vim/plugin/coc-config.vim)
-" nnoremap <leader>cc :call ToggleCoc()<CR>
-" completion commands
-inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
-inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
-" goto
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nnoremap <silent> K :call ShowDocumentation()<CR>
-" nmap <leader>cl  <Plug>(coc-codeaction-cursor)
-" nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-
 " fzf (home-row optimized, I press these the most!)
 nnoremap <silent> <leader>sf :Rg<CR>
 nnoremap <silent> <leader>fj :Buffers<CR>
@@ -74,7 +59,6 @@ nnoremap <silent> <leader>fk :FzfFilesUppable<CR>
 nnoremap <silent> <leader>fl :Helptags<CR>
 nnoremap <silent> <leader>fh :History<CR>
 nnoremap <silent> <leader>fu :GFiles<CR>
-
 
 " ~~ misc mappings ~~
 " open last buffer in a botright split ("split previous")
@@ -100,6 +84,7 @@ onoremap ah :<c-u>execute "normal! ?^\\(=\\\|-\\)\\+$\r:nohlsearch\rg_vk0"<cr>
 " ~~~ Autocommands ~~~ {{{
 augroup vimrc
   autocmd!
+  " colorscheme
   au vimenter * ++nested colorscheme gruvbox
 
   " testing: code templates

@@ -1,15 +1,3 @@
-" coc toggle
-let g:md_coc_toggle_on=0
-function! ToggleCoc()
-    let g:md_coc_toggle_on = !g:md_coc_toggle_on
-    if (g:md_coc_toggle_on)
-        CocStart
-        CocEnable
-    else
-        CocDisable
-    endif
-endfunction
-
 " quickfix list toggle
 let g:quickfix_is_open = 0
 function! QuickfixToggle()
@@ -45,7 +33,7 @@ function! FoldColumnToggle()
     endif
 endfunction
 
-" cleanup all inactive bufs
+" cleanup all inactive bufs (inactive = unmodified and not open in a window/tab)
 " source:
 " https://stackoverflow.com/questions/1534835/how-do-i-close-all-buffers-that-arent-shown-in-a-window-in-vim
 function! DeleteInactiveBufs()

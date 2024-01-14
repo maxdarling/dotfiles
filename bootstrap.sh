@@ -40,24 +40,20 @@ ln -sf "$(pwd)/zsh/zshrc" "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc"
 #######################
 # NEOVIM
 #######################
-ln -sf "$(pwd)/nvim" ~/.config/nvim
+ln -sf "$(pwd)/nvim" ~/.config
 
 
 #######################
 # VIM
 #######################
-# todo: replace with loop over all files, minus: [vim/plugged vim/view vim/.netrwhist]
 ln -sf "$(pwd)/vim/vimrc" ~/.vim/vimrc
-
-ln -sf "$(pwd)/vim/plugin" ~/.vim/plugin
-ln -sf "$(pwd)/vim/pack" ~/.vim/pack
-ln -sf "$(pwd)/vim/ftplugin" ~/.vim/ftplugin
-ln -sf "$(pwd)/vim/autoload" ~/.vim/autoload
-
 ln -sf "$(pwd)/vim/base_config.vim" ~/.vim/base_config.vim
-ln -sf "$(pwd)/vim/coc-settings.json" ~/.vim/coc-settings.json
 ln -sf "$(pwd)/vim/notes.vim" ~/.vim/notes.vim
 
+ln -sf "$(pwd)/vim/plugin" ~/.vim
+ln -sf "$(pwd)/vim/pack" ~/.vim
+ln -sf "$(pwd)/vim/ftplugin" ~/.vim
+ln -sf "$(pwd)/vim/autoload" ~/.vim
 
 #######################
 # MISC
