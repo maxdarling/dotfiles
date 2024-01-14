@@ -40,7 +40,7 @@ ln -sf "$(pwd)/zsh/zshrc" "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc"
 #######################
 # NEOVIM
 #######################
-ln -sf "$(pwd)/nvim" ~/.config
+ln -sF "$(pwd)/nvim" ~/.config
 
 
 #######################
@@ -50,10 +50,10 @@ ln -sf "$(pwd)/vim/vimrc" ~/.vim/vimrc
 ln -sf "$(pwd)/vim/base_config.vim" ~/.vim/base_config.vim
 ln -sf "$(pwd)/vim/notes.vim" ~/.vim/notes.vim
 
-ln -sf "$(pwd)/vim/plugin" ~/.vim
-ln -sf "$(pwd)/vim/pack" ~/.vim
-ln -sf "$(pwd)/vim/ftplugin" ~/.vim
-ln -sf "$(pwd)/vim/autoload" ~/.vim
+ln -sF "$(pwd)/vim/plugin" ~/.vim
+ln -sF "$(pwd)/vim/pack" ~/.vim
+ln -sF "$(pwd)/vim/ftplugin" ~/.vim
+ln -sF "$(pwd)/vim/autoload" ~/.vim
 
 #######################
 # MISC
