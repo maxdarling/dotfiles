@@ -1,8 +1,9 @@
-" plugins (must come first)
-source ~/.config/nvim/plugin/plugins.vim
-" base config shared with vim
+source ~/.config/nvim/plugin/plugins.vim " VimPlug (must come first)
 source ~/.vim/base_config.vim
+lua require('treesitter-config')
+lua require('firenvim-config')
 
+""""""""""""""""""""
 set background=dark
 colorscheme gruvbox
 
