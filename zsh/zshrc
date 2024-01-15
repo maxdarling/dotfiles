@@ -10,7 +10,7 @@ unsetopt correct
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # settings
-export EDITOR=vim
+export EDITOR=nvim
 export MANPAGER='nvim +Man!'
 
 # mine...

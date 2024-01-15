@@ -1,9 +1,9 @@
-" todo: remap for engram
-
 "plugins (should come first)
 source ~/.vim/plugin/plugins.vim
 " shared settings and mappings with Neovim
 source ~/.vim/base_config.vim
+
+colorscheme gruvbox
 
 " ~~~ Utility Mappings ~~~ {{{
 " dotfile editing
