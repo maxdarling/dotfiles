@@ -10,8 +10,8 @@ unsetopt correct
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # settings
-export EDITOR=nvim
-export MANPAGER='nvim +Man!'
+# export EDITOR=nvim
+# export MANPAGER='nvim +Man!'
 
 # mine...
 alias zrc="vim ~/.zshrc && source ~/.zshrc"
