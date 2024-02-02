@@ -4,4 +4,16 @@ if &ft=="markdown"
   finish
 endif
 
-map <buffer> <leader>x :exe ':silent !open -a /Applications/Google\ Chrome.app %'<CR>:redr!<CR>
+function! OpenHtmlInBrowser()
+    let fname = expand('%')
+
+    if match(expand('%:p'), "maxdarling.github.io") != -1
+        let fname = 'http://localhost:8000/' .. expand('%:p:s?^.*maxdarling.github.io/??')
+    endif
+
+    exe ':silent !open -a /Applications/Google\ Chrome.app ' .. fname
+    redr!
+endfunction
+
+map <buffer> <leader>x :silent call OpenHtmlInBrowser()<CR>
+
