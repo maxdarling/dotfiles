@@ -1,7 +1,22 @@
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
 
 source ~/.vim/base_config.vim
+
+" testing
+noremap S <C-w><C-w>
+
+" easymotion copy-paste (some tweaks)
+let g:EasyMotion_do_mapping = 0 "disable default mappings
+map s <Plug>(easymotion-s)
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_keys = 'bdfgjklmopruvwxyncsiteha'
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
 
 nnoremap <leader>ei :e ~/.ideavimrc<CR>
 
