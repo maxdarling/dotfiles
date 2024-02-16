@@ -15,5 +15,5 @@ function! OpenHtmlInBrowser()
     redr!
 endfunction
 
-map <buffer> <leader>x :silent call OpenHtmlInBrowser()<CR>
+map <silent><buffer> <leader>x :call OpenHtmlInBrowser()<CR>
 

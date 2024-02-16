@@ -23,6 +23,9 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 "floating term
 Plug 'voldikss/vim-floaterm'
 
+" conjure (for lisp eval)
+Plug 'Olical/conjure'
+
 " colorscheme
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'folke/tokyonight.nvim'
@@ -48,10 +51,15 @@ lua require('lualine-config')
 " TODO {{{
 """"""""""""""""""""""""""""""""""
 " - try easymotion (actually seems good. I should CISC my usage a bit...)
-" - replace linux penguin in statusline with a lambda or xah sigma (my symbol)
 " - learn to use treesitter folding (e.g. fold all functions)
 " - lsp setup? for python?
 " - improve quit buffer than leader-q? hurts my hand
+" - fugitive
+" - context treesitter (for floating containing function at top of buffer)
+" - harpoon?
+
+" - config 'r' to not switch back to a C-c'ed buffer (can use normal C-^ or 
+"   :e # if really needed)
 
 " Open Keys:
 " - h, l (I use arrow keys! ballsy, I know!)
@@ -62,6 +70,13 @@ lua require('lualine-config')
 """"""""""""""""""""""""""""""""
 " delete without affecting the default register
 noremap <leader>d "_d
+
+noremap S <C-w><C-w>
+
+" quickly browse quickfixlist (when grepping, for example)
+nnoremap <leader>n :cn<CR>
+nnoremap <leader>p :cp<CR>
+
 
 " free up q. it's not very common. it should require a leader.
 " noremap <leader>q q
@@ -74,11 +89,11 @@ noremap <leader>d "_d
 " GENERAL {{{
 """""""""""""""""""""""""""""""""
 set background=dark
-colorscheme sonokai
-" let g:onedark_config = {
-"     \ 'style': 'darker',
-" \}
-" colorscheme onedark
+let g:onedark_config = {
+    \ 'style': 'darker',
+\}
+colorscheme onedark
+" colorscheme sonokai
 
 " utils (~/.config/nvim/plugin/utils.vim)
 command! Bdi :call DeleteInactiveBufs()
@@ -131,7 +146,6 @@ au FileType html set indentexpr=""
 " Easymotion {{{
 """"""""""""""""""""""""""""""""
 let g:EasyMotion_do_mapping = 0 "disable default mappings
-noremap S <C-w><C-w>
 nmap s <Plug>(easymotion-overwin-f)
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1

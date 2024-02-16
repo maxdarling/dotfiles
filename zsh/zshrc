@@ -12,13 +12,14 @@ unsetopt correct
 # settings
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+alias v=nvim # note: 'e' is also aliased to $VISUAL by default...
 # export MANPAGER='nvim +Man!'
 
 # mine...
-alias zrc="vim ~/.zshrc && source ~/.zshrc"
-alias zpr="vim ~/.zprezto/runcoms"
+alias zrc="nvim ~/.zshrc && source ~/.zshrc"
+alias zpr="nvim ~/.zprezto/runcoms"
 
-alias ddbp="vim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
+alias ddbp="nvim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
 source ~/.doordash_bash_profile.sh
 
 # personal projects
@@ -26,7 +27,7 @@ alias dot="cdls ~/code/dotfiles"
 alias sicp="cdls ~/code/sicp"
 alias alg="cdls ~/code/algorithm-study"
 alias skiena="cdls ~/code/algorithm-design-manual"
-alias hammer="vim ~/.hammerspoon/init.lua"
+alias hammer="nvim ~/.hammerspoon/init.lua"
 alias nand="cdls ~/code/nand2tetris"
 alias site="cdls ~/code/maxdarling.github.io"
 
@@ -44,9 +45,9 @@ alias grc="git rebase --continue"
 alias gd="git diff"
 alias gemp="git commit -m \"empty commit\" --allow-empty"
 
-# vim 
-alias v="vim"
-alias vp="vim ~/.vimrc"
+cdc() {
+    mkdir "$1" && cd "$1"
+}
 
 killports() {
     for port in "$@"
