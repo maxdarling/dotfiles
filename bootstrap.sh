@@ -42,7 +42,6 @@ ln -sf "$(pwd)/zsh/zshrc" "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc"
 #######################
 ln -sF "$(pwd)/nvim" ~/.config
 
-
 #######################
 # VIM
 #######################
@@ -67,6 +66,9 @@ ln -sf "$(pwd)/hammerspoon/init.lua" ~/.hammerspoon/init.lua
 # VSCode
 ln -sf "$(pwd)/vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$(pwd)/vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
+
+# Emacs
+ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
 
 
 echo "bootstrap complete"
