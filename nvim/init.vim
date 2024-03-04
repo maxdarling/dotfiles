@@ -77,6 +77,16 @@ noremap S <C-w><C-w>
 nnoremap <leader>n :cn<CR>
 nnoremap <leader>p :cp<CR>
 
+" homebrew sicp repl
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-w> <C-\><C-n><C-w>
+
+function! SendBufferToAltWin()
+    norm ggyG<C-w>wp<CR><C-w>w
+endfunction
+
+
+
 
 " free up q. it's not very common. it should require a leader.
 " noremap <leader>q q
@@ -149,7 +159,8 @@ let g:EasyMotion_do_mapping = 0 "disable default mappings
 nmap s <Plug>(easymotion-overwin-f)
 " Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys = 'bdfgjklmopruvwxyncsiteha' "
+let g:EasyMotion_keys = 'bdfgjklmopruvwxyncsiteha'
+
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)

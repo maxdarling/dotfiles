@@ -8,6 +8,7 @@ set backspace=indent,eol,start
 
 "==================== Mappings  ====================
 let mapleader = " "
+let maplocalleader = ","
 
 " testing (comments should be easier than `gcc`...)
 nmap <leader>c gcc

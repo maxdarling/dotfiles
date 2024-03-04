@@ -40,6 +40,7 @@ end
 hs.hotkey.bind({}, 'F3', function() hs.application.open('Slack') end)
 hs.hotkey.bind({}, 'F4', function() hs.application.open('Google Chrome') end)
 hs.hotkey.bind('shift', 'F4', function() hs.application.open('Spotify') end)
+hs.hotkey.bind({}, 'F6', function() hs.application.open('Emacs') end)
 hs.hotkey.bind({}, 'F7', function() hs.application.open('iTerm') end)
 hs.hotkey.bind('shift', 'F7', function() hs.application.open('Visual Studio Code') end)
 hs.hotkey.bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
