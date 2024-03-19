@@ -1,42 +1,51 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Todo
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; - why are my normal mode commands not there in <N> mode in dired? E.g. 'h' is go left
+;; - why even in <N> mode is my SPC doing dired-next-line??
+;; - look at dired commands. (enable 'h', 'r', and leader, enable search with '/' and n/p)
+;; - what is <M> mode?
+;; - start help/info in <E> mode instead of <M>
+
+
 (add-to-list 'load-path "~/.emacs.d/lisp")
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'package)
 
-;; todo: can I skip the below??? it was recommended in the evil readme.
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-(package-refresh-contents)
+(use-package package
+  :config
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
 
-(unless (package-installed-p 'evil)
-  (package-install 'evil)
-  (package-install 'evil-surround))
-(require 'evil)
-(evil-mode 1)
-(global-evil-surround-mode 1)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
+  ;; todo: can I skip the below??? it was recommended in the evil readme.
+  ;; (package-refresh-contents
+  )
+
+;; evil
+(use-package evil
+  :config
+  (evil-mode 1)
+  (use-package evil-surround)
+  (global-evil-surround-mode 1))
 
 ;; avy
-(unless (package-installed-p 'avy)
-  (package-install 'avy))
-(setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
-(setq avy-all-windows nil)
-(setq avy-case-fold-search nil)
-
-;; is pretty bad (or, good if you want typing game practice, lol). so, instead I should
-;; setup a screen-local search that doesn't pollute jump list.
+(use-package avy
+  :config
+  (setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
+  (setq avy-all-windows nil)
+  (setq avy-case-fold-search nil))
 
 ;; yasnippet
-(unless (package-installed-p 'yasnippet) (package-install 'yasnippet))
-(require 'yasnippet)
-(yas-global-mode 1)
-(require 'yasnippet)
-(yas-global-mode 1)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 ;; fireplace
-(unless (package-installed-p 'fireplace) (package-install 'fireplace))
-(require 'fireplace)
+(use-package fireplace)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Testing
@@ -84,8 +93,9 @@
 	  (left . 50)
 	  (top . 50))))
 
-(global-hl-line-mode 1)
 (set-frame-font "Menlo-14" t t)
+(global-hl-line-mode 1)
+(blink-cursor-mode -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
