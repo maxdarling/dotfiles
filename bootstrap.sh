@@ -69,8 +69,8 @@ ln -sf "$(pwd)/vscode/keybindings.json" ~/Library/Application\ Support/Code/User
 
 # Emacs
 ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
-
 ln -sF "$(pwd)/emacs/lisp" ~/.emacs.d
+ln -sF "$(pwd)/emacs/snippets" ~/.emacs.d
 
 
 echo "bootstrap complete"
