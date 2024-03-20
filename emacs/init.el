@@ -2,10 +2,13 @@
 ;; Todo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; - why are my normal mode commands not there in <N> mode in dired? E.g. 'h' is go left
-;; - why even in <N> mode is my SPC doing dired-next-line??
+;;   - I found it! bkmk dired-overrides.
+;; - why even in <N> mode is my SPC doing dired-next-line?? I guess the major mode is stealing...?
 ;; - look at dired commands. (enable 'h', 'r', and leader, enable search with '/' and n/p)
-;; - what is <M> mode?
-;; - start help/info in <E> mode instead of <M>
+
+;; - setup treesitter for elisp. highlighting??
+
+;; - enable "h" switching from help mode (it's shadowed by '?' too, so it's fine)
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -19,18 +22,23 @@
   (setq use-package-always-ensure t)
 
   (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+               '("nongnuu" . "https://elpa.nongnu.org/nongnu/"))
   (package-initialize)
-  ;; todo: can I skip the below??? it was recommended in the evil readme.
-  ;; (package-refresh-contents
-  )
+  (package-refresh-contents t))
 
 ;; evil
 (use-package evil
   :config
   (evil-mode 1)
   (use-package evil-surround)
-  (global-evil-surround-mode 1))
+  (global-evil-surround-mode 1)
+
+  ;; misc settings.
+  ;; todo: enable C-w in emacs mode for window commands (instead of default kill-region) 
+  (evil-set-initial-state 'help-mode 'emacs)
+  (evil-set-initial-state 'Info-mode 'emacs)
+  (evil-set-initial-state 'inferior-scheme-mode 'emacs)
+  )
 
 ;; avy
 (use-package avy
@@ -87,7 +95,7 @@
   (setq initial-frame-alist
 	'(
 	  (tool-bar-lines . 0)
-	  (width . 106)
+	  (width . 210)
 	  (height . 60)
 	  (background-color . "honeydew")
 	  (left . 50)

@@ -48,6 +48,9 @@ Based on `xah-run-current-file'"
 ;; Misc 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; todo: fix for decimals, e.g 3.28 goes crazy...? must be a precision thing?
+;; todo: fix removal of period, e.g. in "5."
+;; todo: make number scoped only to right of cursor, e.g. 10.14.11 -> 10.14.12 intead of 10.15.11
 (defun md-inc-number-after-point (&optional incval)
   "Increment the current/next number on the current line by 1 (or `incval' if specified)."
   (interactive)

@@ -1,12 +1,48 @@
 (evil-set-leader nil (kbd "SPC"))
+(setopt evil-want-Y-yank-to-eol t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Normal mode maps
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(evil-define-key '(normal visual) 'global
+;; todo: this should be more forceful. e.g. right now dired's use of evil-make-overriding-map is
+;; overpowering this mapping. evil-make-intercept-map seems good...?
+;; (define-minor-mode foo-mode
+;;   "Foo mode."
+;;   :keymap (make-sparse-keymap))
+
+;; minor mode way works but is clunky. I'd rather have the evil minor mode active and that's it.
+;; I think I can just define a custom keymap, e.g. "foo-map" as in the docs.
+;; (evil-define-keymap mymap
+;;   "my keymap, baby"
+;;   "h" 'evil-window-next
+;;   "l" 'fireplace)
+
+;; (evil-make-intercept-map mymap )
+
+
+;; other idea: use advice on 'evil-make-overriding-map'. when called with dired-mode-map, just
+;; stop. pretty lit...?
+;; (defun md-trace-evil-override-map (orig-fun &rest args)
+;;   (message "evil-make-overriding-map called with args %S" args)
+;;   (let ((res (apply orig-fun args)))
+;;     (message "evil-make-overriding-map returned %S" res)
+;;     res))
+
+;; (advice-add 'evil-make-overriding-map :around #'md-trace-evil-override-map)
+
+;; ok, WTF. 'h' and 'l' are taking precedence in dired now. but they weren't before. makes ZERO sense.
+;; but 'r' doesn't take precedence, for example. and now I've commented all my changes and yet this
+;; behavior remains. huh??? I'm tempted to reinstall my emacs now. I need to know how I did that.
+;; and then how to undo it as well, and how to do it for 'r' and others. wtf is going on.
+
+
+;; (evil-define-key '(normal visual motion) 'global
+(evil-define-key '(normal visual motion) 'global
+;; (evil-define-key '(normal visual) 'foo-mode 
+;; (defvar md-keymap (define-keymap
   ;; * Core *
   "s" 'avy-goto-char-timer
-  "S" 'avy-goto-char
+  "S" 'avy-goto-line ;'avy-goto-char
   "r" 'evil-buffer
   "l" 'execute-extended-command ;; testing.
   "L" 'evil-ex
@@ -15,6 +51,8 @@
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
   (kbd "C-a") 'md-inc-number-after-point
   (kbd "C-S-a") (lambda() (interactive) (md-inc-number-after-point (- 1)))
+  (kbd "C-3") (lambda() (interactive) (kill-buffer nil)) ;; testing. 3 is a little random, but a decent key.
+  (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
 
   ;; * Windows/Frames *
   "h" 'evil-window-next
@@ -44,7 +82,7 @@
   ;; ...
   (kbd "<leader>is") 'save-buffer
   (kbd "<leader>iS") (lambda () (interactive) (save-some-buffers t) (message "Saved all buffers."))
-  (kbd "<leader>id") 'kill-buffer
+  (kbd "<leader>id") 'kill-buffer ;; this kinda sucks. default should be not have to press RET
   (kbd "<leader>iD") (lambda () (interactive)
 		       (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
   ;; ...
@@ -60,6 +98,14 @@
   ;; xah-show-in-desktop
   ;; ;; ...
   (kbd "<leader>ic") 'xah-copy-file-path
+
+  ;; * Indentation (todo) *
+  ;; ("TAB TAB" . indent-for-tab-command)
+  ;; ("TAB i" . complete-symbol)
+  ;; ("TAB g" . indent-rigidly)
+  ;; ("TAB r" . indent-region)
+  ;; ("TAB s" . indent-sexp)
+  (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
 
   ;; * Misc *
   (kbd "<leader>c") 'comment-line
@@ -101,9 +147,9 @@
 (evil-define-key nil 'global
   ;; todo: potentially remove all these.
   (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
-;;   (kbd "s-w") 'delete-window
-;;   (kbd "s-o") 'delete-other-windows
-;;   (kbd "s-W") 'delete-frame ;; alternative to above
+  ;;   (kbd "s-w") 'delete-window
+  ;;   (kbd "s-o") 'delete-other-windows
+  ;;   (kbd "s-W") 'delete-frame ;; alternative to above
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
