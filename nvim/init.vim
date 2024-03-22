@@ -50,7 +50,6 @@ lua require('lualine-config')
 """"""""""""""""""""""""""""""""""
 " TODO {{{
 """"""""""""""""""""""""""""""""""
-" - try easymotion (actually seems good. I should CISC my usage a bit...)
 " - learn to use treesitter folding (e.g. fold all functions)
 " - lsp setup? for python?
 " - improve quit buffer than leader-q? hurts my hand
@@ -70,8 +69,6 @@ lua require('lualine-config')
 """"""""""""""""""""""""""""""""
 " delete without affecting the default register
 noremap <leader>d "_d
-
-noremap S <C-w><C-w>
 
 " quickly browse quickfixlist (when grepping, for example)
 nnoremap <leader>n :cn<CR>
@@ -114,8 +111,7 @@ nmap <silent><leader>ev :e ~/.config/nvim/init.vim<CR>
 nmap <silent><leader>ep :e ~/.config/nvim/plugin/<CR>
 nmap <silent><leader>ef :execute 'edit ~/.config/nvim/ftplugin/' .. &filetype .. '.vim'<CR>
 nmap <silent><leader>ez :e ~/.zshrc<CR>
-"map s <C-w><C-w>
-map r <C-^>
+
 " }}}
 
 """""""""""""""""""""""""""""""""
@@ -157,25 +153,22 @@ au FileType html set indentexpr=""
 """"""""""""""""""""""""""""""""
 let g:EasyMotion_do_mapping = 0 "disable default mappings
 nmap s <Plug>(easymotion-overwin-f)
-" Turn on case-insensitive feature
+nmap S <Plug>(easymotion-bd-jk)
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_keys = 'bdfgjklmopruvwxyncsiteha'
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
 " }}}
 
 """"""""""""""""""""""""""""""""
 " Telescope {{{
 """"""""""""""""""""""""""""""""
-nnoremap <silent> ho :Telescope find_files<CR>
-nnoremap <silent> ha :Telescope buffers<CR>
-nnoremap <silent> hg :Telescope live_grep<CR>
-nnoremap <silent> hh :Telescope help_tags<CR>
+nnoremap <silent> lo :Telescope find_files<CR>
+nnoremap <silent> la :Telescope buffers<CR>
+nnoremap <silent> lg :Telescope live_grep<CR>
+nnoremap <silent> lh :Telescope help_tags<CR>
 " fringe
-nnoremap <silent> hc :Telescope grep_string<CR>
-nnoremap <silent> hx :lua require'telescope.builtin'.builtin()<CR>
+nnoremap <silent> lc :Telescope grep_string<CR>
+nnoremap <silent> lx :lua require'telescope.builtin'.builtin()<CR>
 " useful?
 " - git files (to exclude build files, for example. or can set .rgignore...)
 " - commands

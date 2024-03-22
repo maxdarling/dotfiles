@@ -1,5 +1,4 @@
-" Core settings to be shared by Vim and NeoVim
-"==================== Sane Defaults  ====================
+" Core settings to be shared by Vim and NeoVim (and IdeaVim)
 set nocompatible
 filetype plugin on
 filetype indent on
@@ -17,17 +16,14 @@ vmap <leader>c gc
 nmap <leader>ej :e ~/.vim/base_config.vim<CR>
 nmap <leader>eb :e ~/.bash_profile<CR>
 
-" use s to cycle windows!
-noremap s <C-w><C-w>
-" use S to cycle buffers! (testing)
-noremap S :bn<CR>
+noremap h <C-w><C-w>
+nnoremap r <C-^>
 
 " todo: have <C-c>'ed files not be switchable back to
 " or, have another key cycle files (with a single keypress)
 "
 " todo: <in a file> -> netrw to pick a new file -> 'r' -> goes to a "[New
 " File]". I don't want that.
-nnoremap r <C-^>
 " available maps: {R, -, ', `, \, <C-f>, <C-b>}
 
 " delete buffer without losing split

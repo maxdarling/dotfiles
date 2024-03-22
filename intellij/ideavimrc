@@ -3,38 +3,30 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
 source ~/.vim/base_config.vim
+nnoremap <leader>ei :e ~/.ideavimrc<CR>
 
-" testing
-noremap S <C-w><C-w>
-
-" easymotion copy-paste (some tweaks)
+" port easymotion (some tweaks)
 let g:EasyMotion_do_mapping = 0 "disable default mappings
 map s <Plug>(easymotion-s)
-" Turn on case-insensitive feature
+map S <Plug>(easymotion-bd-jk)
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_keys = 'bdfgjklmopruvwxyncsiteha'
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-
-nnoremap <leader>ei :e ~/.ideavimrc<CR>
 
 " <C-^> isn't recognized, patching with this...
 nnoremap r :e #<CR>
 
-" harpoon (see :actionlist harpoon)
-nnoremap <leader>a :action AddToHarpoon<CR>
-" below doesn't work. mapped in IDE to ctrl-p.
-" nnoremap <leader>e :action ShowHarpoon<CR>
-nnoremap <C-j> :action GotoHarpoon1<CR>
-nnoremap <C-k> :action GotoHarpoon2<CR>
-nnoremap <C-l> :action GotoHarpoon3<CR>
-" <C-;> is mapped in intelliJ, vim can't recognize
-nnoremap mj :action SetHarpoon1<CR>
-nnoremap mk :action SetHarpoon2<CR>
-nnoremap ml :action SetHarpoon3<CR>
-nnoremap m; :action SetHarpoon4<CR>
+" " harpoon (see :actionlist harpoon)
+" nnoremap <leader>a :action AddToHarpoon<CR>
+" " below doesn't work. mapped in IDE to ctrl-p.
+" " nnoremap <leader>e :action ShowHarpoon<CR>
+" nnoremap <C-j> :action GotoHarpoon1<CR>
+" nnoremap <C-k> :action GotoHarpoon2<CR>
+" nnoremap <C-l> :action GotoHarpoon3<CR>
+" " <C-;> is mapped in intelliJ, vim can't recognize
+" nnoremap mj :action SetHarpoon1<CR>
+" nnoremap mk :action SetHarpoon2<CR>
+" nnoremap ml :action SetHarpoon3<CR>
+" nnoremap m; :action SetHarpoon4<CR>
 
 set scrolloff=5
 set visualbell
