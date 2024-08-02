@@ -23,6 +23,7 @@ alias ddbp="nvim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.
 source ~/.doordash_bash_profile.sh
 
 # personal projects
+alias code="cdls ~/code"
 alias dot="cdls ~/code/dotfiles"
 alias sicp="cdls ~/code/sicp"
 alias alg="cdls ~/code/algorithm-study"
@@ -41,6 +42,7 @@ alias gl="git log"
 alias gamend="git status && git commit -a --no-edit --amend"
 alias gch="git checkout"
 alias gmast="git checkout master && git pull origin master"
+alias gm="git checkout master && git pull origin master"
 alias grc="git rebase --continue"
 alias gd="git diff"
 alias gemp="git commit -m \"empty commit\" --allow-empty"
@@ -73,3 +75,17 @@ git_personal_remote() {
     eval "$str"
     echo "done"
 }
+
+# for typing practice (can paste into monkeytype)
+generate_random_words () {
+    cat /usr/share/dict/words | awk 'length($0) > 6' | shuf | head -n 1000
+}
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+export PATH="$(go env GOBIN):$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -1,46 +1,12 @@
-(evil-set-leader nil (kbd "SPC"))
+(evil-set-leader '(normal visual motion) (kbd "SPC")) ;; note: leader in emacs state doesn't work.
 (setopt evil-want-Y-yank-to-eol t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Normal mode maps
+;; Normal mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; todo: this should be more forceful. e.g. right now dired's use of evil-make-overriding-map is
-;; overpowering this mapping. evil-make-intercept-map seems good...?
-;; (define-minor-mode foo-mode
-;;   "Foo mode."
-;;   :keymap (make-sparse-keymap))
-
-;; minor mode way works but is clunky. I'd rather have the evil minor mode active and that's it.
-;; I think I can just define a custom keymap, e.g. "foo-map" as in the docs.
-;; (evil-define-keymap mymap
-;;   "my keymap, baby"
-;;   "h" 'evil-window-next
-;;   "l" 'fireplace)
-
-;; (evil-make-intercept-map mymap )
-
-
-;; other idea: use advice on 'evil-make-overriding-map'. when called with dired-mode-map, just
-;; stop. pretty lit...?
-;; (defun md-trace-evil-override-map (orig-fun &rest args)
-;;   (message "evil-make-overriding-map called with args %S" args)
-;;   (let ((res (apply orig-fun args)))
-;;     (message "evil-make-overriding-map returned %S" res)
-;;     res))
-
-;; (advice-add 'evil-make-overriding-map :around #'md-trace-evil-override-map)
-
-;; ok, WTF. 'h' and 'l' are taking precedence in dired now. but they weren't before. makes ZERO sense.
-;; but 'r' doesn't take precedence, for example. and now I've commented all my changes and yet this
-;; behavior remains. huh??? I'm tempted to reinstall my emacs now. I need to know how I did that.
-;; and then how to undo it as well, and how to do it for 'r' and others. wtf is going on.
-
-
-;; (evil-define-key '(normal visual motion) 'global
 (evil-define-key '(normal visual motion) 'global
-;; (evil-define-key '(normal visual) 'foo-mode 
-;; (defvar md-keymap (define-keymap
   ;; * Core *
+  (kbd "<control-i>") 'evil-jump-forward ;; fix <C-i>. see Tab vs. <C-i> discussion below.
   "s" 'avy-goto-char-timer
   "S" 'avy-goto-line ;'avy-goto-char
   "r" 'evil-buffer
@@ -49,10 +15,13 @@
   (kbd "C-u") 'evil-scroll-up
   (kbd "<leader>v") 'universal-argument
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
-  (kbd "C-a") 'md-inc-number-after-point
-  (kbd "C-S-a") (lambda() (interactive) (md-inc-number-after-point (- 1)))
-  (kbd "C-3") (lambda() (interactive) (kill-buffer nil)) ;; testing. 3 is a little random, but a decent key.
+  (kbd "C-a") 'my/inc-number-after-point
+  (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
+
+  ;; testing - numbers and C-numbers are same by default. that's free real-estate since I don't use numbers much!
+  "3" (lambda() (interactive) (kill-buffer nil))
+  "9" 'my/align
 
   ;; * Windows/Frames *
   "h" 'evil-window-next
@@ -67,6 +36,7 @@
 
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer
+  (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. helm?
   (kbd "<leader>a") 'find-file ;; todo: need directory-recursive version (via helm, likely?)
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump
@@ -92,8 +62,8 @@
   ;; 'xah-list-recently-closed
   (kbd "<leader>iw") 'recentf
   ;; ;; ...
-  (kbd "<leader>ix") 'md-run-current-file
-  (kbd "<leader>ik") 'md-run-current-file
+  (kbd "<leader>ix") 'my/run-current-file
+  (kbd "<leader>ik") 'my/run-current-file
   (kbd "<leader>i1") 'xah-open-in-terminal
   ;; xah-show-in-desktop
   ;; ;; ...
@@ -108,7 +78,8 @@
   (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
 
   ;; * Misc *
-  (kbd "<leader>c") 'comment-line
+  ;; (kbd "<leader>c") 'comment-line
+  (kbd "<leader>c") 'my/comment-dwim
   "gq" 'evil-indent
 
   ;; * Common *
@@ -133,7 +104,7 @@
   (kbd "<leader>bf") 'xah-show-formfeed-as-line ;; note: should be on almost always
 
   ;; * Evaluations *
-  (kbd "<leader>kh") 'md-run-current-file
+  (kbd "<leader>kh") 'my/run-current-file
   (kbd "<leader>kf") 'eval-buffer
   (kbd "<leader>kd") 'eval-defun
   (kbd "<leader>kl") 'eval-last-sexp
@@ -143,61 +114,37 @@
 
   )
 
-;; ;; * Global Windows / Frames *
-(evil-define-key nil 'global
-  ;; todo: potentially remove all these.
-  (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
-  ;;   (kbd "s-w") 'delete-window
-  ;;   (kbd "s-o") 'delete-other-windows
-  ;;   (kbd "s-W") 'delete-frame ;; alternative to above
-  )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Insert Mode Maps
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'insert 'global
   ;; make RET continue comments by default. use S-RET to bypass.
   ;; https://emacs.stackexchange.com/questions/59575/continue-comment-while-editing-lisp-and-when-hitting-enter
-  (kbd "RET") 'comment-indent-new-line
+  ;; (kbd "RET") 'comment-indent-new-line
   (kbd "<S-return>") 'newline
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom Project Toggle
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; problem: too annoying to add a "p" prefix for project commands. e.g. C-x p f or C-x p b
-;; ideas:
-;; - make a toggle system. i get to keep the same SPC-i-e/a commands, but it will be project or non-project based on
-;; a variable. and I have one keycombo to set the variable. totally nice. but added complexity.
-;; - default to project for now...ballsy, but not bad. since my workflow is to generally stay in-project.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key 'emacs 'global
+  "\C-w" 'evil-window-map)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Todo
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Term popups
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key '(normal motion) 'global "\C-j" 'term-toggle-term)
+(evil-define-key 'emacs 'global "\C-j" 'evil-window-delete)
 
-;; use hippie expand
-;; use YA snippet
-
-;; lookup winner mode
-
-;; settle on regexp replace. I want live preview like :%s. do I need a package for that? eww.
-;; also, I should learn how to use elisp funcs in the replacement! https://www.reddit.com/r/emacs/comments/mil5to/use_visualreplaceregexp_lisp_functions_to_do/
-
-;; yank-from-kill-ring
-
-;; use emacs transpose functionality. seems powerful. e.g. word, sexp, line with M-t, C-M-t, C-x C-t
-;; seems evil has unbound these, though
-
-;; use emacs filling and formatting
-
-;; todo: copy xah abbrev completion
-;; http://xahlee.info/emacs/emacs/emacs_interactive_abbrev.html
-
-;; bonus: TAB -> xah-elisp-complete-or-indent (https://www.youtube.com/live/bHGVp9c7fPg?si=2sPVPRMfTvpqHByF&t=1030)
-;; I don't see this in XFK, it must be part of his elisp mode. but I do see xah-reformat-lines.
-;; todo: xah-comment-dwim (set to ;). kinda lit.
-;; todo: I can use number keys. I rarely use em in vim. I'm fine to prefix it to use em as numbers if
-;; needed. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global Windows / Frames
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (evil-define-key nil 'global
+;; (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
+;;   (kbd "s-w") 'delete-window
+;;   (kbd "s-o") 'delete-other-windows
+;;   (kbd "s-W") 'delete-frame ;; alternative to above
+;; )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes
@@ -206,3 +153,19 @@
 ;; 'w' for xah-next-window-or-frame
 ;; '-' or '3' to close other windows (he uses this to close help) 
 ;; he uses leader-3 to close current window. it's lower-use than close-other-windows. fascinating!
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Fix to distinguish <C-i> from Tab:
+;; - keystroke C-i generates ^I (which is displayed at TAB in emacs)
+;; - traditionally, Tab on terminals sends ^I too. Emacs binds it this way, too.
+;; - many binds exist for Tab across emacs, so we should leave that alone.
+;; - instead, we rebind C-i to send not ^I, but the custom code "<control-i>". then, we can
+;; just define keybinds in terms of input (kbd "<control-i>")
+;; - source: https://stackoverflow.com/questions/916797/emacs-global-set-key-to-c-tab
+(define-key input-decode-map [(control ?i)] [control-i])
+(define-key input-decode-map [(control ?I)] [(shift control-i)])
+;; last, I need to rebind <C-i> to the evil defaults
+

@@ -4,6 +4,10 @@ filetype plugin on
 filetype indent on
 syntax on
 set backspace=indent,eol,start
+"
+"==================== Emacs habits  ====================
+noremap <leader>is :w<CR>
+noremap <leader>id :bp\|bd! #<CR>
 
 "==================== Mappings  ====================
 let mapleader = " "

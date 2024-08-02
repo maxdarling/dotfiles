@@ -1,28 +1,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Run Current File
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun md-run-current-file ()
+(defun my/run-current-file ()
   "Run a file. E.g. for scheme, eval it and send to repl.
 Based on `xah-run-current-file'"
   (interactive)
   (let* ((fileExt (file-name-extension buffer-file-name))
-	 (run-func (cdr (assoc fileExt md-run-current-file-map))))
+	 (run-func (cdr (assoc fileExt my/run-current-file-map))))
     (funcall run-func buffer-file-name) 
     ))
 
-(defvar md-run-current-file-map
-  '(("scm" . md-run-scheme-file)
-    ("el" . md-run-elisp-file)
+(defvar my/run-current-file-map
+  '(("scm" . my/run-scheme-file)
+    ("el" . my/run-elisp-file)
     ) 
-  "Maps file extension to file runner function, used by `md-run-current-file'.")
+  "Maps file extension to file runner function, used by `my/run-current-file'.")
 
-(defun md-run-scheme-file (&optional filepath) ;; todo: use interactive args
+(defun my/run-scheme-file (&optional filepath) ;; todo: use interactive args
   "Run the given scheme file."
   (interactive)
   (message "Loaded scheme file.")
   (scheme-load-file filepath))
 
-(defun md-run-elisp-file (&optional filepath) ;; tood: use interactive args
+(defun my/run-elisp-file (&optional filepath) ;; tood: use interactive args
   "Run the given elisp file."
   (interactive)
   (message "Evaluated elisp buffer.")
@@ -34,14 +34,15 @@ Based on `xah-run-current-file'"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; SICP
-(defun md-setup-project-sicp ()
+(defun my/setup-project-sicp ()
   (interactive)
-  (dired "~/code/sicp/")
+  (require 'bookmark)
+  (bookmark-maybe-load-default-file)
+  (bookmark-jump "sicp")
   (split-window-right)
   (other-window 1)
   (call-interactively 'run-scheme)
   (other-window 1)
-  (set-frame-width (selected-frame) 220) ;; arb. codify later.
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -51,7 +52,7 @@ Based on `xah-run-current-file'"
 ;; todo: fix for decimals, e.g 3.28 goes crazy...? must be a precision thing?
 ;; todo: fix removal of period, e.g. in "5."
 ;; todo: make number scoped only to right of cursor, e.g. 10.14.11 -> 10.14.12 intead of 10.15.11
-(defun md-inc-number-after-point (&optional incval)
+(defun my/inc-number-after-point (&optional incval)
   "Increment the current/next number on the current line by 1 (or `incval' if specified)."
   (interactive)
   (let ((inc (or incval 1))
@@ -61,3 +62,43 @@ Based on `xah-run-current-file'"
     (if (number-at-point)
 	(replace-match (number-to-string (+ inc (number-at-point))))
       (goto-char origPoint))))
+
+;; improve 'comment-line', and don't rely on evil-commentary (for fun + reduce bloat)
+;; issues:
+;; - visual line always comments out +1 lines
+;; - always moves your cursor to next line... (line or region) (can be good, but try off)
+;; note: next-line is good because you can dot it (?).
+(defun my/comment-dwim ()
+  (interactive)
+  (if (region-active-p)
+      (comment-dwim nil)
+    (comment-line 1)))
+
+;; source: https://www.reddit.com/r/emacs/comments/13y5k9j/simple_fuzzy_find_file/
+(defun my/find-file-rec ()
+  "Find a file recursively from the current working directory."
+  (interactive)
+  (let ((find-files-program
+	 (cond ((executable-find "rg") '("rg" "--color=never" "--files"))
+               ((executable-find "find") '("find" "." "-type" "f")))))
+    (find-file
+     (completing-read "Find file: " (apply #'process-lines find-files-program)))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Align hacks
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; https://stackoverflow.com/questions/22710040/emacs-align-regexp-with-spaces-instead-of-tabs
+;; force align-regexp to not use tabs. I was convinced this is good in 6.824 where the authors
+;; are using tabs in the file, but did their argument type aligning via minimal spaces
+;; (defadvice align-regexp (around align-regexp-with-spaces activate)
+;;   (let ((indent-tabs-mode nil))
+;;     ad-do-it))
+
+
+;; align by space -- untested, is this useful? running a more heavyweight prettifier might be
+;; what I want...
+(defun my/align (BEG END)
+  (interactive "r")
+  (let ((indent-tabs-mode nil))
+    (align-regexp BEG END (concat "\\(\\s-*\\)" " ") 1 1)))

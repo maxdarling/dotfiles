@@ -45,12 +45,11 @@
   },
   "explorer.confirmDelete": false,
   "window.newWindowDimensions": "inherit",
-  "editor.minimap.enabled": false,
   "workbench.settings.editor": "json",
   // needed for 'r'? idk... 'false' nice for splits.
   // ah, but 'true' better for harpoon with splits...?
   "workbench.editor.revealIfOpen": false,
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "off",
   "workbench.colorCustomizations": {
     // opacity can't be changed in Nvim! Big win.
     "editor.lineHighlightBackground": "#49a35f1e",
@@ -60,4 +59,6 @@
   "files.trimTrailingWhitespace": true,
   "workbench.colorTheme": "Visual Studio Dark",
   "workbench.editor.empty.hint": "hidden",
+  "go.toolsManagement.autoUpdate": true,
+  "editor.minimap.enabled": false,
 }
