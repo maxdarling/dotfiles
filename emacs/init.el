@@ -12,7 +12,6 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
-;; - / search is broken in dired, info, help modes (the initial search + highlight is made, but you can't n/N. fuck.)
 ;; - cleanup modeline (don't need minor modes)
 ;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)
 ;; - figure out how to continue comments (but, corfu relies on normal RET?)
@@ -62,7 +61,8 @@
 ;; evil
 (use-package evil
   :init
-  (setq evil-search-module 'evil-search)
+  (setq evil-search-module 'isearch) ;; bug 8/2/24: 'evil-search breaks search in help/dired/info modes
+
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo)
