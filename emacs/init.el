@@ -12,6 +12,7 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
+;; - change C-i and C-o to behave normally in help/info and figure out a new binding for <E> l/r in <M>
 ;; - cleanup modeline (don't need minor modes)
 ;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)
 ;; - figure out how to continue comments (but, corfu relies on normal RET?)
@@ -195,6 +196,12 @@
 (add-hook 'prog-mode-hook (lambda () (abbrev-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Theme
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-file "~/.emacs.d/lisp/theme.el")
+(load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Binds
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file "~/.emacs.d/lisp/keymaps.el")
@@ -208,48 +215,11 @@
 (load-file "~/.emacs.d/lisp/xah-fly-keys.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Theme
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Xah theme
-(if (not (display-graphic-p))
-    (load-theme 'leuven-dark)
-  (progn
-    (setq initial-frame-alist
-	  '(
-	    (tool-bar-lines . 0)
-	    (vertical-scroll-bars . nil)
-	    (width . 200)
-	    (height . 55)
-	    (background-color . "honeydew")
-	    (left . 30)
-	    (top . 30)))
-    (setq default-frame-alist
-	  '(
-	    (tool-bar-lines . 0)
-	    (vertical-scroll-bars . nil)
-	    (width . 200)
-	    (height . 55)
-	    (background-color . "antique white") ;; light yellow | seashell | antique white
-	    (left . 10)
-	    (top . 10)))))
-
-(set-frame-font "Menlo-15" t t)
-(global-hl-line-mode 1)
-(blink-cursor-mode -1)
-
-;; term background colors gave me lots of trouble. see lisp/hacks/term-color-hacks.el
-(load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; separate emacs and system clipboard
+;; differentiate emacs kill ring and system clipboard
 (setq x-select-enable-clipboard nil)
-;; (evil-define-key nil 'global
-;;   (kbd "s-v") 'clipboard-yank
-;;   (kbd "s-c") 'clipboard-kill-ring-save
-;;   (kbd "s-x") 'clipboard-kill-region)
-(global-set-key (kbd "s-v") 'clipboard-yank) ;; above works, do these?
+(global-set-key (kbd "s-v") 'clipboard-yank)
 (global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "s-x") 'clipboard-kill-region)
 
@@ -266,7 +236,6 @@
 (setq shell-command-prompt-show-cwd t)
 (setq gc-cons-threshold (* 100 1024 1024) ;; recommended for LSP
       read-process-output-max (* 1024 1024))
-
 
 (winner-mode 1)
 (add-hook 'scheme-mode-hook (lambda () (setq indent-tabs-mode -1))) ;; not working!!
