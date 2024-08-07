@@ -31,8 +31,8 @@
   (kbd "<leader>ws") 'evil-window-split
   (kbd "<leader>wv") 'evil-window-vsplit
   (kbd "<leader>wc") 'evil-window-delete
-  ;; (kbd "<leader>wu") 'winner-undo ;; todo: look into winner mode
-  ;; (kbd "<leader>wU") 'winner-redo
+  (kbd "M-<left>") 'winner-undo
+  (kbd "M-<right>") 'winner-redo
 
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer

@@ -81,8 +81,8 @@
   ;; general RO emacs
   (kbd "S-<tab>") 'backward-button
   (kbd "<tab>") 'forward-button
-  "\C-o" 'help-go-back
-  (kbd "<control-i>") 'help-go-forward
+  (kbd "C-<left>") 'help-go-back
+  (kbd "C-<right>") 'help-go-forward
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -101,8 +101,8 @@
   (kbd "<return>") 'Info-follow-nearest-node
   (kbd "S-<tab>") 'Info-prev-reference
   (kbd "<tab>") 'Info-next-reference
-  "\C-o" 'Info-history-back
-  (kbd "<control-i>") 'Info-history-forward
+  (kbd "C-<left>") 'Info-history-back
+  (kbd "C-<right>") 'Info-history-forward
 
   ;; Info-specific emacs
   "," 'Info-index-next
