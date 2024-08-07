@@ -1,27 +1,24 @@
-;; Xah theme
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Frame
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq my//frame-start-pos-left 10)
+(setq my//frame-start-pos-top 35) ;; macOS top "bar" size is 25
+
 (if (not (display-graphic-p))
     (load-theme 'leuven-dark)
   (progn
     (setq initial-frame-alist
-	  '(
+	  `(
 	    (tool-bar-lines . 0)
 	    (vertical-scroll-bars . nil)
 	    (width . 200)
 	    (height . 55)
 	    (background-color . "honeydew")
-	    (left . 10)
-	    (top . 10)))
-    (setq default-frame-alist
-	  '(
-	    (tool-bar-lines . 0)
-	    (vertical-scroll-bars . nil)
-	    (width . 200)
-	    (height . 55)
-	    (background-color . "antique white")
-	    (left . 30)
-	    (top . 30)))))
+	    (left . ,my//frame-start-pos-left)
+	    (top . ,my//frame-start-pos-top))) 
+    (setq default-frame-alist initial-frame-alist)))
 
-;; cycle colors
+;; colors to cycle
 (setq my//background-color-ring (ring-convert-sequence-to-ring
 				 '(
 				   "antique white"
@@ -36,11 +33,18 @@
  'before-make-frame-hook
  (lambda()
    (let* ((current-color (alist-get 'background-color default-frame-alist))
-	  (next-color (ring-next my//background-color-ring current-color)))
-     (setcdr (assq 'background-color default-frame-alist) next-color))))
+	  (next-color (ring-next my//background-color-ring current-color))
+	  (frame-pos-offset (* 5 (length (frame-list)))))
+     ;; cycle color
+     (setcdr (assq 'background-color default-frame-alist) next-color)
+     ;; offset frame position
+     (setcdr (assq 'top default-frame-alist) (+ my//frame-start-pos-top frame-pos-offset))
+     (setcdr (assq 'left default-frame-alist) (+ my//frame-start-pos-left frame-pos-offset))
+     )))
 
-
-;; misc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-frame-font "Menlo-15" t t)
 (global-hl-line-mode 1)
 (blink-cursor-mode -1)

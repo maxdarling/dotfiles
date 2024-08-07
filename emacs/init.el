@@ -42,7 +42,6 @@
 ;; - use sexp-based movement. e.g. C-M-f forward-sexp (but, this doesn't go to next lines, wtf?
 ;; note that C-M-b/n are related. b works nicely. but n won't let me skip to new lines, wtf.
 ;; - copy his syntax highlighting for elisp. see `custom-elisp-mode.el`
-;; - [project] cycle colorschemes + screen offsets for new windows.
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 ;;;;;;;;;;;;;;;;;;;;;;;;;
