@@ -12,8 +12,6 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
-;; - change C-i and C-o to behave normally in help/info and figure out a new binding for <E> l/r in <M>
-;; - cleanup modeline (don't need minor modes)
 ;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)
 ;; - figure out how to continue comments (but, corfu relies on normal RET?)
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)
@@ -47,7 +45,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (use-package package
   :config
   (require 'use-package-ensure)
@@ -58,7 +55,6 @@
   (package-initialize)
   (package-refresh-contents t))
 
-;; evil
 (use-package evil
   :init
   (setq evil-search-module 'isearch) ;; bug 8/2/24: 'evil-search breaks search in help/dired/info modes
@@ -71,29 +67,22 @@
   (use-package evil-visualstar)
   (global-evil-visualstar-mode t))
 
-;; avy
 (use-package avy
   :config
   (setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
   (setq avy-all-windows nil)
   (setq avy-case-fold-search nil))
 
-;; yasnippet
 (use-package yasnippet
   :config
   (yas-global-mode 1))
 
-;; magit
 (use-package magit)
 
-;; fireplace
 (use-package fireplace)
 
-;; wgrep
 (use-package wgrep)
 
-
-;; corfu
 (use-package corfu
   :init
   (global-corfu-mode)
@@ -116,7 +105,6 @@
   ;; to get more completion in scheme mode.
   )
 
-;; embark
 (use-package embark
   :ensure t
   :bind (:map minibuffer-mode-map
@@ -135,7 +123,6 @@
 	)
   )
 
-;; term-toggle
 (use-package term-toggle
   ;; is this better? way older... https://github.com/kyagi/shell-pop-el
   :ensure nil
