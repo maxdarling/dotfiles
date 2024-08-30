@@ -153,3 +153,20 @@
   "n" 'evil-search-next
   "N" 'evil-search-previous
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key 'emacs magit-mode-map
+  ;; vim
+  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map) ;; doesn't work because emacs leader doesn't work (see keymaps.el)
+  "h" (alist-get ?h normal-mode-map)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Term
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key 'emacs term-raw-map
+  ;; vim
+  "S-v" 'term-paste
+  )

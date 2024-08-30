@@ -12,6 +12,8 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
+;; - decide on magit key (leader something)
+;; - enable macros with q in dired mode, which uses <N> (other motion modes, e.g. grep, avoid this by using <M>)
 ;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)
 ;; - figure out how to continue comments (but, corfu relies on normal RET?)
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)

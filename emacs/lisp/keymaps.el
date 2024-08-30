@@ -1,38 +1,42 @@
-(evil-set-leader '(normal visual motion) (kbd "SPC")) ;; note: leader in emacs state doesn't work.
+(evil-set-leader '(normal visual motion emacs) (kbd "SPC"))
 (setopt evil-want-Y-yank-to-eol t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Normal mode
-;;;;;;;;;;;;;;;;;;;;;;;;;
-(evil-define-key '(normal visual motion) 'global
-  ;; * Core *
-  (kbd "<control-i>") 'evil-jump-forward ;; fix <C-i>. see Tab vs. <C-i> discussion below.
-  "s" 'avy-goto-char-timer
-  "S" 'avy-goto-line ;'avy-goto-char
-  "r" 'evil-buffer
-  "l" 'execute-extended-command ;; testing.
-  "L" 'evil-ex
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; All modes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (evil-define-key '(normal visual motion emacs) 'global
+(evil-define-key nil 'global
+  ;; philosophy:
+  ;; - SPC leader in <E> is good/harmless. can rebind or use another way if it overwrites something
+  ;; useful (e.g. "dc" == SPC in magit). Note: <E>-specific leader combos might be desirable
+  ;; one day, but I'm ingoring that for now, and assuming sharing across all states is fine.
+  ;; - non-leader binds: good for consistency but bad if you have to rebind. I'm hesitant to rebind
+  ;; "h". But SPC is worth it. <C-u> and <C-d> are likely worth it. Etc. I only really use <E> in
+  ;; Info and magit currently, so it's not a huge deal, but that might change.
+  ;; - note: editing commands aren't needed in <E>. I'll put those in the <NVM> map where
+  ;; convenient (e.g. if there's just 1 editing command that fits nicely into a group, cleaner to
+  ;; keep it)
+  
+  ;; * Core Nav *
+  ;; todo: map C-i and C-o in all modes? (alternative is s-<left> and s-<right>, as I do in IJ)
   (kbd "C-u") 'evil-scroll-up
+  (kbd "C-d") 'evil-scroll-down ;; (already bound in <N>)
   (kbd "<leader>v") 'universal-argument
-  ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
-  (kbd "C-a") 'my/inc-number-after-point
-  (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
-  (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
-
-  ;; testing - numbers and C-numbers are same by default. that's free real-estate since I don't use numbers much!
-  "3" (lambda() (interactive) (kill-buffer nil))
-  "9" 'my/align
+  ;; "h" 'evil-window-next ;; holding off binding for all modes. using for magit currently.
+  ;; todo: decide on below
+  ;; (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
+  ;; (kbd "s-w") 'delete-window
+  ;; (kbd "s-o") 'delete-other-windows
+  ;; (kbd "s-W") 'delete-frame ;; alternative to above
 
   ;; * Windows/Frames *
-  "h" 'evil-window-next
-  "-" 'delete-other-windows ;; this is most important. help/info windows are simply closed with 'q'
+  (kbd "M-<left>") 'winner-undo
+  (kbd "M-<right>") 'winner-redo
   (kbd "<leader>-") 'delete-window
   ;; ...
   (kbd "<leader>ws") 'evil-window-split
   (kbd "<leader>wv") 'evil-window-vsplit
   (kbd "<leader>wc") 'evil-window-delete
-  (kbd "M-<left>") 'winner-undo
-  (kbd "M-<right>") 'winner-redo
 
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer
@@ -69,19 +73,6 @@
   ;; ;; ...
   (kbd "<leader>ic") 'xah-copy-file-path
 
-  ;; * Indentation (todo) *
-  ;; ("TAB TAB" . indent-for-tab-command)
-  ;; ("TAB i" . complete-symbol)
-  ;; ("TAB g" . indent-rigidly)
-  ;; ("TAB r" . indent-region)
-  ;; ("TAB s" . indent-sexp)
-  (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
-
-  ;; * Misc *
-  ;; (kbd "<leader>c") 'comment-line
-  (kbd "<leader>c") 'my/comment-dwim
-  "gq" 'evil-indent
-
   ;; * Common *
   (kbd "<leader>tg") 'rgrep
   (kbd "<leader>ti") 'query-replace-regexp ;; todo: incremental replace preview like :%s
@@ -111,7 +102,56 @@
   (kbd "<leader>ks") 'eval-expression
   (kbd "<leader>kr") 'eval-region
   ;; (kbd "<leader>kz") 'xah-run-current-file
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Normal mode
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key '(normal visual motion) 'global
+  ;; * Core *
+  (kbd "<control-i>") 'evil-jump-forward ;; fix <C-i>. see Tab vs. <C-i> discussion below.
+  "s" 'avy-goto-char-timer
+  "S" 'avy-goto-line ;'avy-goto-char
+  "r" 'evil-buffer
+  "l" 'execute-extended-command ;; testing.
+  "L" 'evil-ex
+  ;; (kbd "C-u") 'evil-scroll-up
+  ;; (kbd "<leader>v") 'universal-argument
+  ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
+  (kbd "C-a") 'my/inc-number-after-point
+  (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
+  (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
+
+  ;; testing - numbers and C-numbers are same by default. that's free real-estate since I don't use numbers much!
+  "3" (lambda() (interactive) (kill-buffer nil))
+  "9" 'my/align
+
+  ;; ;; * Windows/Frames *
+  "h" 'evil-window-next
+  "-" 'delete-other-windows ;; this is most important. help/info windows are simply closed with 'q'
+
+  ;; * Commenting + Indentation *
+  (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
+  (kbd "<leader>c") 'comment-line
+  (kbd "<leader>c") 'my/comment-dwim
+  "gq" 'evil-indent
+  ;; xah inspiration:
+  ;; ("TAB TAB" . indent-for-tab-command)
+  ;; ("TAB i" . complete-symbol)
+  ;; ("TAB g" . indent-rigidly)
+  ;; ("TAB r" . indent-region)
+  ;; ("TAB s" . indent-sexp)
+
+  ;; ;; * Edits/Insertions + Formatting *
+  (kbd "<leader>b\"") 'xah-escape-quotes
+  (kbd "<leader>b\\") 'xah-space-to-newline
+  (kbd "<leader>bl") 'xah-quote-lines
+  (kbd "<leader>bw") 'xah-remove-whitespace
+  ;; ...
+  (kbd "<leader>bd") 'xah-insert-date
+  ;; 'format dwim
+  ;; ...
+  (kbd "<leader>bf") 'xah-show-formfeed-as-line ;; note: should be on almost always
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -128,23 +168,14 @@
 ;; Emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'emacs 'global
-  "\C-w" 'evil-window-map)
+  "\C-w" 'evil-window-map
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Term popups
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal motion) 'global "\C-j" 'term-toggle-term)
 (evil-define-key 'emacs 'global "\C-j" 'evil-window-delete)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global Windows / Frames
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (evil-define-key nil 'global
-;; (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
-;;   (kbd "s-w") 'delete-window
-;;   (kbd "s-o") 'delete-other-windows
-;;   (kbd "s-W") 'delete-frame ;; alternative to above
-;; )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes
