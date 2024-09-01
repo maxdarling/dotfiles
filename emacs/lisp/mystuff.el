@@ -84,6 +84,18 @@ Based on `xah-run-current-file'"
     (find-file
      (completing-read "Find file: " (apply #'process-lines find-files-program)))))
 
+;; source: https://emacs.stackexchange.com/questions/51592/enable-follow-mode-in-dired
+;; goal: emulate grep follow mode
+(define-minor-mode dired-follow-mode
+  "Diplay file at point in dired after a move."
+  :lighter " dired-follow"
+  :global t
+  (cond (dired-follow-mode
+	 (advice-add 'evil-next-line :after (lambda (arg) (dired-display-file)))
+	 (advice-add 'evil-previous-line :after (lambda (arg) (dired-display-file))))
+	(t
+	 (advice-remove 'evil-next-line (lambda (arg) (dired-display-file)))
+	 (advice-remove 'evil-previous-line (lambda (arg) (dired-display-file))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Align hacks

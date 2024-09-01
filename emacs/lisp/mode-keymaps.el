@@ -67,6 +67,11 @@
   (kbd "C-o") 'evil-jump-backward
   (kbd "<S-return>") 'dired-display-file ;; this is what *grep* does, very sensible
 
+  ;; match grep follow and writable modes
+  (kbd "C-c C-p") 'wdired-change-to-wdired-mode
+  (kbd "C-c C-c") 'wdired-finish-edit ;; (already bound)
+  (kbd "C-c C-k") 'wdired-abort-changes ;; (already bound)
+  (kbd "C-c C-f") 'dired-follow-mode
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,7 +140,6 @@
   (kbd "S-<return>") 'compilation-display-error
   "[" 'previous-error-no-select ;; trying these (formerly n/p). they seem *good*.
   "]" 'next-error-no-select
-  ;; todo: rebind C-c C-f ?
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
