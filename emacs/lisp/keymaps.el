@@ -18,6 +18,7 @@
   ;; keep it)
   
   ;; * Core Nav *
+  (kbd "<leader>q") 'evil-record-macro ;; ballsy?! but quit window >often than creating macro.
   ;; todo: map C-i and C-o in all modes? (alternative is s-<left> and s-<right>, as I do in IJ)
   (kbd "C-u") 'evil-scroll-up
   (kbd "C-d") 'evil-scroll-down ;; (already bound in <N>)
@@ -110,6 +111,7 @@
 (evil-define-key '(normal visual motion) 'global
   ;; * Core *
   (kbd "<control-i>") 'evil-jump-forward ;; fix <C-i>. see Tab vs. <C-i> discussion below.
+  "q" 'quit-window
   "s" 'avy-goto-char-timer
   "S" 'avy-goto-line ;'avy-goto-char
   "r" 'evil-buffer

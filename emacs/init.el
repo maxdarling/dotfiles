@@ -73,7 +73,8 @@
   :config
   (setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
   (setq avy-all-windows nil)
-  (setq avy-case-fold-search nil))
+  (setq avy-case-fold-search nil)
+  (setq avy-timeout-seconds 0.4))
 
 (use-package yasnippet
   :config

@@ -64,6 +64,9 @@
   ;; override dired
   "gg" 'evil-goto-first-line ;; revert buffer. call via M-x. or, gg not that useful...?
   "G" 'evil-goto-line        ;; dired-do-chgrp. useless.
+  (kbd "C-o") 'evil-jump-backward
+  (kbd "<S-return>") 'dired-display-file ;; this is what *grep* does, very sensible
+
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
