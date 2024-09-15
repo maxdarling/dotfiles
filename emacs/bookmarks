@@ -1,0 +1,137 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("mit6824"
+ (filename . "~/code/MIT-6.824/src/raft/")
+ (front-context-string . "2C.txt\n  -rw-r--")
+ (rear-context-string . "9M Jun  1 13:36 ")
+ (position . 253)
+ (last-modified 26330 63401 104269 0))
+("test"
+ (filename . "~/code/dotfiles/emacs/lisp/mystuff.el")
+ (front-context-string . "	))\n\n;;;;;;;;;;;")
+ (rear-context-string . "lay-file)))\n	 )\n")
+ (position . 4329)
+ (last-modified 26324 32746 934337 0))
+("theme.el"
+ (filename . "~/code/dotfiles/emacs/lisp/theme.el")
+ (front-context-string . ";; Xah theme\n(if")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26286 23023 654890 0))
+("tt"
+ (filename . "~/code/dotfiles/emacs/init.el")
+ (front-context-string . "\n(add-hook\n 'bef")
+ (rear-context-string . "lt-frame-alist \n")
+ (position . 8769)
+ (last-modified 26286 22530 957272 0))
+("raft.go"
+ (filename . "~/code/MIT-6.824/src/raft/raft.go")
+ (front-context-string . "\n// A Go object ")
+ (rear-context-string . "\n	data string\n}\n")
+ (position . 1528)
+ (last-modified 26186 5968 808348 0))
+("temp"
+ (filename . "~/code/dotfiles/emacs/init.el")
+ (front-context-string . "(global-set-key ")
+ (rear-context-string . "kill-ring-save)\n")
+ (position . 7751)
+ (last-modified 26183 36148 897969 0))
+("dotfiles"
+ (filename . "~/code/dotfiles/")
+ (front-context-string . ".git\n  -rw-r--r-")
+ (rear-context-string . "0B Apr 30 13:12 ")
+ (position . 178)
+ (last-modified 26161 9920 970219 0))
+(".emacs.d"
+ (filename . "~/.emacs.d/")
+ (front-context-string . ".\n  drwxr-xr-x+ ")
+ (rear-context-string . "2B Apr 30 13:05 ")
+ (position . 73)
+ (last-modified 26161 9908 497618 0))
+("web-next"
+ (filename . "~/work/web-next/services/storefront-mx-activation-service/")
+ (front-context-string . ".eslintignore\n  ")
+ (rear-context-string . "8B Feb 24  2023 ")
+ (position . 220)
+ (last-modified 26161 9486 521385 0))
+("work"
+ (filename . "~/work/")
+ (front-context-string . ".DS_Store\n  -rw-")
+ (rear-context-string . "0K Apr 14 14:02 ")
+ (position . 172)
+ (last-modified 26161 8831 999090 0))
+("kttest"
+ (filename . "~/code/misc/kotlin-corountine-demo/src/main/kotlin/Main.kt")
+ (front-context-string . "java.util.concur")
+ (rear-context-string)
+ (position . 8)
+ (last-modified 26161 3949 159986 0))
+("code"
+ (filename . "~/code/")
+ (front-context-string . "misc\n  drwxr-xr-")
+ (rear-context-string . "2B Apr 30 10:09 ")
+ (position . 557)
+ (last-modified 26161 68 735512 0))
+("bookmark.el"
+ (filename . "/usr/local/Cellar/emacs-plus@29/29.2/share/emacs/29.2/lisp/bookmark.el")
+ (front-context-string . "(defun bookmark-")
+ (rear-context-string . "e new-mtime)))\n\n")
+ (position . 49100)
+ (last-modified 26150 34106 284736 0))
+("term-color-hacks.el"
+ (filename . "~/code/dotfiles/emacs/lisp/hacks/term-color-hacks.el")
+ (front-context-string . "!\n  ;; '((t (:in")
+ (rear-context-string . "ne! I thought so")
+ (position . 1623)
+ (last-modified 26140 5319 133279 0))
+("sicp"
+ (filename . "~/code/sicp/ch2/2.97.scm")
+ (front-context-string)
+ (rear-context-string . "o figure out tha")
+ (position . 1547)
+ (last-modified 26170 21723 146107 0))
+("evil-maps.el"
+ (filename . "~/.emacs.d/elpa/evil-20240222.652/evil-maps.el")
+ (front-context-string . "C-w-in-emacs-sta")
+ (rear-context-string . "(when evil-want-")
+ (position . 25535)
+ (last-modified 26111 35668 265932 0))
+("mode-keymaps.el"
+ (filename . "~/code/dotfiles/emacs/lisp/mode-keymaps.el")
+ (front-context-string . "\n;;;;;;;;;;;;;;;")
+ (rear-context-string . "de-map-alist)))\n")
+ (position . 1887)
+ (last-modified 26111 7104 192962 0))
+("evil-keybindings.el"
+ (filename . "~/.emacs.d/elpa/evil-20240222.652/evil-keybindings.el")
+ (front-context-string . "\n(evil-add-hjkl-")
+ (rear-context-string . "tion)\n\n;;; Info\n")
+ (position . 2170)
+ (last-modified 26111 6817 534125 0))
+("dired-override-keybind"
+ (filename . "~/.emacs.d/elpa/evil-20240222.652/evil-keybindings.el")
+ (front-context-string . "\n(eval-after-loa")
+ (rear-context-string . " \"l\"\n\n;;; Dired\n")
+ (position . 1640)
+ (last-modified 26107 12066 644257 0))
+("mystuff.el"
+ (filename . "~/code/dotfiles/emacs/lisp/mystuff.el")
+ (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26107 11736 605406 0))
+("keymaps.el"
+ (filename . "~/code/dotfiles/emacs/lisp/keymaps.el")
+ (front-context-string . "(evil-set-leader")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26107 11729 278378 0))
+("init.el"
+ (filename . "~/code/dotfiles/emacs/init.el")
+ (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26107 11622 157470 0))
+)
