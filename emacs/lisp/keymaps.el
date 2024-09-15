@@ -1,4 +1,5 @@
-(evil-set-leader '(normal visual motion emacs) (kbd "SPC"))
+(evil-set-leader '(normal visual motion) (kbd "SPC"))
+(evil-set-leader 'emacs (kbd "C-SPC"))
 (setopt evil-want-Y-yank-to-eol t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
