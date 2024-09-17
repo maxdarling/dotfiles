@@ -2,14 +2,28 @@
 set -e
 set -x
 
-#######################
-# UTILS
-#######################
+# Todo:
+# - GET TERM COMPLETION WORKING???
+# - [final] try from scratch on a new mac profile (e.g. "mhd")
 
-# FZF
+# Prerequisites:
+# - install xcode(?)
+
+# Manual steps:
+# - [after] import iterm profile
+
+#######################
+# term
+#######################
+if ! command -v brew &> /dev/null
+then
+    echo "installing homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+brew install iterm2
+brew install font-hack-nerd-font
 brew install fzf
-
-# DIFF-SO-FANCY
 brew install diff-so-fancy
 # see repo for git color setup instructions
 # https://github.com/so-fancy/diff-so-fancy
@@ -24,7 +38,7 @@ if [[ ! -d $HOME/.zprezto ]]; then
 
     setopt EXTENDED_GLOB
     for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-      ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+      ln -sf "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
 fi
 
@@ -33,18 +47,15 @@ git pull
 git submodule update --init --recursive
 cd - 
 
-# use this .zshrc and put a symlink to it in the runcoms dir.
-ln -sf "$(pwd)/zsh/zshrc" "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc"
-
-
-#######################
-# NEOVIM
-#######################
-ln -sF "$(pwd)/nvim" ~/.config
+# link my zshrc
+ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
 
 #######################
 # VIM
 #######################
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 ln -sf "$(pwd)/vim/vimrc" ~/.vim/vimrc
 ln -sf "$(pwd)/vim/base_config.vim" ~/.vim/base_config.vim
 ln -sf "$(pwd)/vim/notes.vim" ~/.vim/notes.vim
@@ -55,23 +66,34 @@ ln -sF "$(pwd)/vim/ftplugin" ~/.vim
 ln -sF "$(pwd)/vim/autoload" ~/.vim
 
 #######################
+# NEOVIM
+#######################
+brew install nvim
+ln -sF "$(pwd)/nvim" ~/.config
+
+#######################
 # MISC
 #######################
+# git
+ln -sf "$(pwd)/git/.gitconfig" ~/.gitconfig
+
 # IntelliJ
+brew install intellij-idea-ce
 ln -sf "$(pwd)/intellij/ideavimrc" ~/.ideavimrc
 
 # Hammerspoon
 ln -sf "$(pwd)/hammerspoon/init.lua" ~/.hammerspoon/init.lua
 
 # VSCode
+brew install visual-studio-code
 ln -sf "$(pwd)/vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$(pwd)/vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
 
 # Emacs
+brew install emacs-plus
 ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
 ln -sF "$(pwd)/emacs/lisp" ~/.emacs.d
 ln -sF "$(pwd)/emacs/bookmarks" ~/.emacs.d/bookmarks
 ln -sF "$(pwd)/emacs/snippets" ~/.emacs.d
-
 
 echo "bootstrap complete"

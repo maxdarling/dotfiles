@@ -82,6 +82,12 @@
 
 (use-package magit)
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+  )
+
 (use-package fireplace)
 
 (use-package wgrep)
@@ -129,7 +135,7 @@
 (use-package term-toggle
   ;; is this better? way older... https://github.com/kyagi/shell-pop-el
   :ensure nil
-  :load-path "~/.emacs.d/lisp/emacs-term-toggle/term-toggle.el")
+  :load-path "~/.emacs.d/lisp/emacs-term-toggle")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language Packages
@@ -244,7 +250,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(go-mode lsp-ui lsp-mode rainbow-mode color-theme-buffer-local term-toggle evil-visualstar wgrep cape terraform-mode embark kotlin-mode kotlin-ts-mode treesit corfu magit fireplace yasnippet evil-surround undo-tree evil-easymotion evil)))
+   '(exec-path-from-shell go-mode lsp-ui lsp-mode rainbow-mode color-theme-buffer-local term-toggle evil-visualstar wgrep cape terraform-mode embark kotlin-mode kotlin-ts-mode treesit corfu magit fireplace yasnippet evil-surround undo-tree evil-easymotion evil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

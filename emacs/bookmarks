@@ -2,7 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("mit6824"
+((".zshrc"
+ (filename . "~/.zshrc")
+ (front-context-string . "# Source Prezto.")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26345 54580 230266 0))
+("~home~"
+ (filename . "~/")
+ (front-context-string . ".emacs.d\n  lrwxr")
+ (rear-context-string . "0B Sep 17 14:49 ")
+ (position . 564)
+ (last-modified 26345 54406 358256 0))
+("mit6824"
  (filename . "~/code/MIT-6.824/src/raft/")
  (front-context-string . "2C.txt\n  -rw-r--")
  (rear-context-string . "9M Jun  1 13:36 ")
@@ -46,10 +58,10 @@
  (last-modified 26161 9920 970219 0))
 (".emacs.d"
  (filename . "~/.emacs.d/")
- (front-context-string . ".\n  drwxr-xr-x+ ")
- (rear-context-string . "2B Apr 30 13:05 ")
- (position . 73)
- (last-modified 26161 9908 497618 0))
+ (front-context-string . "auto-save-list\n ")
+ (rear-context-string . "6B Sep 17 11:16 ")
+ (position . 221)
+ (last-modified 26345 52470 706407 0))
 ("web-next"
  (filename . "~/work/web-next/services/storefront-mx-activation-service/")
  (front-context-string . ".eslintignore\n  ")

@@ -37,6 +37,7 @@ end
 -- KEYBOARD
 -- F keys for common apps (more ergo than key-chord). this is Xah Lee floating app philosophy.
 -- 5/31/23: optimized for the glove (F4 and F7 are by far the easiest to reach).
+hs.hotkey.bind('shift', 'F3', function() hs.application.open('zoom.us') end)
 hs.hotkey.bind({}, 'F3', function() hs.application.open('Slack') end)
 hs.hotkey.bind({}, 'F4', function() hs.application.open('Google Chrome') end)
 hs.hotkey.bind('shift', 'F4', function() hs.application.open('Spotify') end)

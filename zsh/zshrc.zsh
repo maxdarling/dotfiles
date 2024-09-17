@@ -7,7 +7,7 @@ fi
 unsetopt correct
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # settings
 export VISUAL=nvim
@@ -19,8 +19,8 @@ alias v=nvim # note: 'e' is also aliased to $VISUAL by default...
 alias zrc="nvim ~/.zshrc && source ~/.zshrc"
 alias zpr="nvim ~/.zprezto/runcoms"
 
-alias ddbp="nvim ~/.doordash_bash_profile.sh && source ~/.doordash_bash_profile.sh && echo 'source completed'"
-source ~/.doordash_bash_profile.sh
+alias workrc="nvim ~/.work_bash_profile.sh && source ~/.work_bash_profile.sh && echo 'source completed'"
+source ~/.work_bash_profile.sh
 
 # personal projects
 alias code="cdls ~/code"
@@ -84,7 +84,7 @@ generate_random_words () {
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
-export PATH="$(go env GOBIN):$PATH"
+export PATH="$(go env GOPATH)/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
