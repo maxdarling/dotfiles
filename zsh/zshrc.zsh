@@ -10,7 +10,7 @@ unsetopt correct
 source <(fzf --zsh)
 
 # settings
-export VISUAL=nvim
+export VISUAL=emacs
 export EDITOR="$VISUAL"
 alias v=nvim # note: 'e' is also aliased to $VISUAL by default...
 # export MANPAGER='nvim +Man!'
@@ -84,6 +84,7 @@ generate_random_words () {
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
+export GOPATH="/opt/homebrew" # ideally I don't have to set this
 export PATH="$(go env GOPATH)/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
