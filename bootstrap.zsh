@@ -2,13 +2,11 @@
 set -e
 set -x
 
-# Todo:
-# - GET TERM COMPLETION WORKING???
-
 # Prerequisites:
 # - install xcode
 
 # Manual steps:
+# - [after] load 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
 # - [after] import iterm profile
 
 #######################
@@ -41,7 +39,7 @@ if [[ ! -d $HOME/.zprezto ]]; then
 
     setopt EXTENDED_GLOB
     for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-      ln -sf "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+      ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
 fi
 
