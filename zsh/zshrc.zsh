@@ -10,7 +10,7 @@ unsetopt correct
 source <(fzf --zsh)
 
 # settings
-export VISUAL=emacs
+export VISUAL=emacsclient
 export EDITOR="$VISUAL"
 alias v=nvim # note: 'e' is also aliased to $VISUAL by default...
 # export MANPAGER='nvim +Man!'

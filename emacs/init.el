@@ -212,6 +212,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;; so we can edit files from terminal with the "emacsclient" command.
+(server-start)
+
 ;; differentiate emacs kill ring and system clipboard
 (setq x-select-enable-clipboard nil)
 (global-set-key (kbd "s-v") 'clipboard-yank)
