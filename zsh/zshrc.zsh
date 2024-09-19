@@ -81,9 +81,6 @@ generate_random_words () {
     cat /usr/share/dict/words | awk 'length($0) > 6' | shuf | head -n 1000
 }
 
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
 export GOPATH="/opt/homebrew" # ideally I don't have to set this
 export PATH="$(go env GOPATH)/bin:$PATH"
 
