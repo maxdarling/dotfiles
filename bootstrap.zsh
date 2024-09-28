@@ -6,8 +6,9 @@ set -x
 # - install xcode
 
 # Manual steps:
-# - [after] load 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
+# - [after] uncomment 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
 # - [after] import iterm profile
+# - [after] run :PlugInstall in (neo)vim
 
 #######################
 # system
@@ -41,12 +42,12 @@ if [[ ! -d $HOME/.zprezto ]]; then
     for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
       ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
-fi
 
 cd $HOME/.zprezto
 git pull
 git submodule update --init --recursive
 cd - 
+fi
 
 # link my zshrc
 ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
@@ -80,6 +81,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 #######################
 brew install nvim
 ln -sF "$(pwd)/nvim" ~/.config
+
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 #######################
 # MISC

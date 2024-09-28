@@ -12,6 +12,7 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
+;; - setup ⌘← and ⌘→ (but should decide on semantics. in IJ, these are diff than C-i and C-o...)
 ;; - FIX: SPC leader in <E> is based on the assumption that we don't edit (but we do in shell/repl modes)
 ;; - decide on magit key (leader something)
 ;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)

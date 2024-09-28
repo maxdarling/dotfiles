@@ -1,3 +1,5 @@
 .vim/plugged/
+.vim/autoload/
 .vim/.netrwhist
 nvim/packer.nvim/
+nvim/autoload/
