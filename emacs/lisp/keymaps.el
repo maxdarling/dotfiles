@@ -126,6 +126,7 @@
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
 
   ;; testing - numbers and C-numbers are same by default. that's free real-estate since I don't use numbers much!
+  "7" 'magit
   "3" (lambda() (interactive) (kill-buffer nil))
   "9" 'my/align
 

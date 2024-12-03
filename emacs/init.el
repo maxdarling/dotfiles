@@ -12,6 +12,7 @@
 ;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
+;; - visual marks (e.g. IntelliJ style. highlight the line. or, use left "gutter", e.g. like bookmarks)
 ;; - setup ⌘← and ⌘→ (but should decide on semantics. in IJ, these are diff than C-i and C-o...)
 ;; - FIX: SPC leader in <E> is based on the assumption that we don't edit (but we do in shell/repl modes)
 ;; - decide on magit key (leader something)
@@ -61,6 +62,8 @@
 (use-package evil
   :init
   (setq evil-search-module 'isearch) ;; bug 8/2/24: 'evil-search breaks search in help/dired/info modes
+  (define-key isearch-mode-map (kbd "<down>") 'isearch-ring-advance)
+  (define-key isearch-mode-map (kbd "<up>") 'isearch-ring-retreat)
 
   :config
   (evil-mode 1)

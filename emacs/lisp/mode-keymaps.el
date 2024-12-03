@@ -2,6 +2,10 @@
 ;; these start from the core normal state bindings in 'keybinds.el', but mix in emacs keys where
 ;; it makes sense.
 
+;; todo 10/9/2024: below "stuff I do in response" #1 is dumb. I should pay the upfront cost of
+;; manually porting over all the dired keys I use. Reason: I want to be able to update my keymap
+;; in ./keymaps.el and not have to duplicate the effort here for dired.
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Discussion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
