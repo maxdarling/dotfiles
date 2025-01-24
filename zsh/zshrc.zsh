@@ -62,7 +62,7 @@ killports() {
 # example: git push https://maxdarling:${GITHUB_PAT}@github.com/maxdarling/algorithm-design-manual.git
 source ~/.github_pat.sh
 
-git_personal_remote() {
+github_pat_setup() {
     repo="$(pwd | sed -E 's#.*/##')"
     echo "[y/n] is this the repo name?: $repo"
     read yn
@@ -86,7 +86,7 @@ export PATH="$(go env GOPATH)/bin:$PATH"
 
 
 # pnpm
-export PNPM_HOME="/Users/mhd/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

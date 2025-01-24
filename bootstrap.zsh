@@ -55,7 +55,8 @@ ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
 #######################
 # EMACS
 #######################
-brew install emacs-plus
+brew tap d12frosted/emacs-plus
+brew install emacs-plus@31
 ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
 ln -sF "$(pwd)/emacs/lisp" ~/.emacs.d
 ln -sF "$(pwd)/emacs/bookmarks" ~/.emacs.d/bookmarks
@@ -71,6 +72,7 @@ ln -sf "$(pwd)/vim/notes.vim" ~/.vim/notes.vim
 ln -sF "$(pwd)/vim/plugin" ~/.vim
 ln -sF "$(pwd)/vim/pack" ~/.vim
 ln -sF "$(pwd)/vim/ftplugin" ~/.vim
+mkdir -p "$(pwd)/vim/autoload" # curling plug.vim fails if this folder doesn't exist
 ln -sF "$(pwd)/vim/autoload" ~/.vim
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -80,6 +82,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # NEOVIM
 #######################
 brew install nvim
+mkdir -p ~/.config
 ln -sF "$(pwd)/nvim" ~/.config
 
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
