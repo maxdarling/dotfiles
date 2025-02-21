@@ -1,54 +1,48 @@
--- SPOONS
--- hs.loadSpoon("ReloadConfiguration") -- broken!?
+------------
+-- SPOONS --
+------------
+-- hs.loadSpoon('ReloadConfiguration') -- broken!?
 -- spoon.ReloadConfiguration:start()
 
-hs.loadSpoon("ClipboardTool")
+hs.loadSpoon('ClipboardTool')
 spoon.ClipboardTool:start()
 spoon.ClipboardTool.show_copied_alert = false
 spoon.ClipboardTool.paste_on_select = true -- todo: try
 
--- WINDOW MANAGEMENT
-function expandWindowLeft() -- todo: parameterize L/R
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
 
-  f.x = max.x
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
-  win:setFrame(f)
+--------------
+-- KEYBOARD --
+--------------
+-- virtual layer (so that we can disable hotkeys later)
+hotkeys = hs.hotkey.modal.new({}, 'F20')
+
+hotkeys:bind('shift', 'F3', function() hs.application.open('zoom.us') end)
+hotkeys:bind({}, 'F3', function() hs.application.open('Slack') end)
+hotkeys:bind({}, 'F4', function() hs.application.open('Google Chrome') end)
+hotkeys:bind('shift', 'F4', function() hs.application.open('Spotify') end)
+hotkeys:bind({}, 'F6', function() hs.application.open('Emacs') end)
+hotkeys:bind({}, 'F7', function() hs.application.open('iTerm') end)
+hotkeys:bind('shift', 'F7', function() hs.application.open('Cursor') end)
+hotkeys:bind({}, 'F8', function() hs.application.open('Cursor') end)
+
+-- ignore certain apps. source: https://github.com/Hammerspoon/hammerspoon/issues/2081#issuecomment-668283868
+ignoredApps = {["RuneLite"] = true, ["League Of Legends"] = true}
+function disablerCallback(appName, eventType, appObject)
+  if (ignoredApps[appName]) then
+    if (eventType == hs.application.watcher.activated) then
+      hotkeys:exit()
+    elseif (eventType == hs.application.watcher.deactivated) then
+      hotkeys:enter()
+    end
+  end
 end
+watcher = hs.application.watcher.new(disablerCallback)
+watcher:start()
+hotkeys:enter()
 
-function expandWindowRight()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.x = max.x + (max.w / 2)
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
-  win:setFrame(f)
-end
-
--- KEYBOARD
--- F keys for common apps (more ergo than key-chord). this is Xah Lee floating app philosophy.
--- 5/31/23: optimized for the glove (F4 and F7 are by far the easiest to reach).
-hs.hotkey.bind('shift', 'F3', function() hs.application.open('zoom.us') end)
-hs.hotkey.bind({}, 'F3', function() hs.application.open('Slack') end)
-hs.hotkey.bind({}, 'F4', function() hs.application.open('Google Chrome') end)
-hs.hotkey.bind('shift', 'F4', function() hs.application.open('Spotify') end)
-hs.hotkey.bind({}, 'F6', function() hs.application.open('Emacs') end)
-hs.hotkey.bind({}, 'F7', function() hs.application.open('iTerm') end)
-hs.hotkey.bind('shift', 'F7', function() hs.application.open('Visual Studio Code') end)
-hs.hotkey.bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
-
--- strat: use a single key (e.g. F17) for hyper mode (instead of the traditional 4 mod keys)
--- so that in case I remove hyper I have a useful key (F17) to rebind instead of unusable mods.
-hyper = hs.hotkey.modal.new({}, 'F20') -- throwaway key
+-- HYPER
+-- note: I map F17 as my hyper modifier on my keyboard layout, as opposed to the traditional cmd+shift+alt+ctrl).
+hyper = hs.hotkey.modal.new({'shift'}, 'F20') -- virtual layer for hyper, similar to above 
 hs.hotkey.bind(
   {},
   'F17', -- this is the hyper key
@@ -76,3 +70,33 @@ hs.hotkey.bind(
       end
     end)
   end
+
+
+-----------------------
+-- WINDOW MANAGEMENT --
+-----------------------
+function expandWindowLeft() -- todo: parameterize L/R
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
+end
+
+function expandWindowRight()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  f.x = max.x + (max.w / 2)
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
+end
