@@ -1,0 +1,56 @@
+{
+    "window.commandCenter": 1,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.fontSize": 14,
+    "workbench.colorTheme": "Default Dark Modern",
+    "redhat.telemetry.enabled": false,
+    "files.autoSave": "afterDelay",
+    "makefile.configureOnOpen": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.inlayHints.enabled": "off", // I find this annoying. but everyone else uses it...
+
+    // vim stuff!
+    "vim.leader": "<space>",
+    "vim.useCtrlKeys": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["u"], // use native vscode undo/redo. buggy otherwise
+            "commands": ["undo"]
+        },
+        {
+            "before": ["<C-r>"], // use native vscode undo/redo. buggy otherwise
+            "commands": ["redo"]
+        },
+        {
+            "before": ["h"],
+            "after": ["<C-w>", "<C-w>"],
+        },
+        {
+            "before": ["r"],
+            "after": ["<C-^>"],
+        },
+        {
+            "before": ["leader", "c"],
+            // "after": ["g", "c", "c"],
+            "commands": ["editor.action.commentLine"]
+        },
+        {
+            "before": ["s"],
+            "after": ["leader", "leader", "2", "s"]
+        },
+        {
+            "before": ["S"],
+            "after": ["leader", "leader", "/"]
+        },
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["<leader>", "c"],
+            "commands": ["editor.action.commentLine"]
+        }
+    ],
+    "vim.easymotion": true,
+    "vim.easymotionKeys": "ahetiscnkrludowyxfbvgpqz'\",.-?"
+}

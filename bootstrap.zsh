@@ -6,7 +6,7 @@ set -x
 # - install xcode
 
 # Manual steps:
-# - [after] uncomment 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
+# - [after] enable 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
 # - [after] import iterm profile
 # - [after] run :PlugInstall in (neo)vim
 
@@ -51,6 +51,11 @@ fi
 
 # link my zshrc
 ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
+
+#######################
+# CURSOR
+#######################
+ln -sf "$(pwd)/cursor/settings.json" ~/Library/Application\ Support/Cursor/User/settings.json
 
 #######################
 # EMACS
