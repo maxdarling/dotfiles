@@ -31,6 +31,8 @@ alias skiena="cdls ~/code/algorithm-design-manual"
 alias hammer="nvim ~/.hammerspoon/init.lua"
 alias nand="cdls ~/code/nand2tetris"
 alias site="cdls ~/code/maxdarling.github.io"
+alias pico8="/Applications/PICO-8.app/Contents/MacOS/pico8 -root_path ~/code/pico8"
+alias maelstrom="~/code/gossip-glomers-sol/maelstrom/maelstrom"
 
 # git
 alias gp="git push -u origin"
@@ -58,22 +60,26 @@ killports() {
     done
 }
 
-# github personal access token
-# example: git push https://maxdarling:${GITHUB_PAT}@github.com/maxdarling/algorithm-design-manual.git
-source ~/.github_pat.sh
+rotate_github_pat() {
+  set -euo pipefail
+  local user host newpat
+  user="${1:-maxdarling}"
+  host="${2:-github.com}"
 
-github_pat_setup() {
-    repo="$(pwd | sed -E 's#.*/##')"
-    echo "[y/n] is this the repo name?: $repo"
-    read yn
-    if [[ "$yn" != "y" ]]; then
-        echo "exiting"
-        kill -INT $$
-    fi
-    git remote remove origin 2>/dev/null
-    str="git remote add origin https://maxdarling:${GITHUB_PAT}@github.com/maxdarling/${repo}.git"
-    eval "$str"
-    echo "done"
+  # prompt securely (not echoed; not in history)
+  echo -n "New Pat: "
+  read -r -s newpat
+  echo
+
+  # erase old entry (if any)
+  printf "protocol=https\nhost=%s\nusername=%s\n" "$host" "$user" \
+  | git credential-osxkeychain erase || true
+
+  # store new PAT
+  printf "protocol=https\nhost=%s\nusername=%s\npassword=%s\n" "$host" "$user" "$newpat" \
+  | git credential-osxkeychain store
+
+  echo "PAT rotated in Keychain for ${user}@${host}."
 }
 
 # for typing practice (can paste into monkeytype)
@@ -93,4 +99,10 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# jenv
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Cursor Agent
+export PATH="$HOME/.local/bin:$PATH"

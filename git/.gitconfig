@@ -3,6 +3,7 @@
 [user]
 	name = Max Darling
 	email = maxdarling11@gmail.com
+    username=maxdarling
 [push]
 	default = simple
     autoSetupRemote = true

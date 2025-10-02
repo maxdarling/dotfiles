@@ -18,7 +18,7 @@ hotkeys = hs.hotkey.modal.new({}, 'F20')
 
 -- hotkeys:bind('shift', 'F3', function() hs.application.open('zoom.us') end)
 -- hotkeys:bind({}, 'F3', function() hs.application.open('Slack') end)
-hotkeys:bind({}, 'F4', function() hs.application.open('Brave Browser') end)
+hotkeys:bind({}, 'F4', function() hs.application.open('Google Chrome') end)
 hotkeys:bind('shift', 'F4', function() hs.application.open('Spotify') end)
 -- F5 = whispr key
 

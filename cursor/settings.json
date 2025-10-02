@@ -1,8 +1,5 @@
 {
     "window.commandCenter": 1,
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
-    },
     "editor.fontSize": 14,
     "workbench.colorTheme": "Default Dark Modern",
     "redhat.telemetry.enabled": false,
@@ -38,11 +35,13 @@
         },
         {
             "before": ["s"],
-            "after": ["leader", "leader", "2", "s"]
+            // "after": ["leader", "leader", "2", "s"]
+            // "after": ["leader", "leader", "/"]
+            "commands": ["code-jump.startJump"] // this is the best alt i found for emacs avy-goto-char-timer
         },
         {
             "before": ["S"],
-            "after": ["leader", "leader", "/"]
+            "after": ["leader", "leader", "bdjk"] // easymotion line jump. doesn't work. sad.
         },
     ],
     "vim.visualModeKeyBindings": [
@@ -52,5 +51,6 @@
         }
     ],
     "vim.easymotion": true,
-    "vim.easymotionKeys": "ahetiscnkrludowyxfbvgpqz'\",.-?"
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
 }
