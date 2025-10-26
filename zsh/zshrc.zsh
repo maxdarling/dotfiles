@@ -23,16 +23,14 @@ alias workrc="nvim ~/.work_bash_profile.sh && source ~/.work_bash_profile.sh && 
 source ~/.work_bash_profile.sh
 
 # personal projects
-alias code="cdls ~/code"
-alias dot="cdls ~/code/dotfiles"
+alias code="cdls -l ~/code"
+alias dot="cdls -l ~/code/dotfiles"
 alias sicp="cdls ~/code/sicp"
 alias alg="cdls ~/code/algorithm-study"
 alias skiena="cdls ~/code/algorithm-design-manual"
 alias hammer="nvim ~/.hammerspoon/init.lua"
-alias nand="cdls ~/code/nand2tetris"
 alias site="cdls ~/code/maxdarling.github.io"
 alias pico8="/Applications/PICO-8.app/Contents/MacOS/pico8 -root_path ~/code/pico8"
-alias maelstrom="~/code/gossip-glomers-sol/maelstrom/maelstrom"
 
 # git
 alias gp="git push -u origin"
@@ -60,36 +58,10 @@ killports() {
     done
 }
 
-rotate_github_pat() {
-  set -euo pipefail
-  local user host newpat
-  user="${1:-maxdarling}"
-  host="${2:-github.com}"
-
-  # prompt securely (not echoed; not in history)
-  echo -n "New Pat: "
-  read -r -s newpat
-  echo
-
-  # erase old entry (if any)
-  printf "protocol=https\nhost=%s\nusername=%s\n" "$host" "$user" \
-  | git credential-osxkeychain erase || true
-
-  # store new PAT
-  printf "protocol=https\nhost=%s\nusername=%s\npassword=%s\n" "$host" "$user" "$newpat" \
-  | git credential-osxkeychain store
-
-  echo "PAT rotated in Keychain for ${user}@${host}."
-}
-
 # for typing practice (can paste into monkeytype)
 generate_random_words () {
     cat /usr/share/dict/words | awk 'length($0) > 6' | shuf | head -n 1000
 }
-
-export GOPATH="/opt/homebrew" # ideally I don't have to set this
-export PATH="$(go env GOPATH)/bin:$PATH"
-
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -106,3 +78,12 @@ eval "$(jenv init -)"
 
 # Cursor Agent
 export PATH="$HOME/.local/bin:$PATH"
+
+# Go
+export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$PATH:$GOBIN"
+
+# grocery bot
+source /Users/mhd/code/grocery-bot/grocery.sh
+alias gro="grocery"

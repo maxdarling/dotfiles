@@ -53,4 +53,13 @@
     "vim.easymotion": true,
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
+    // golang
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "go.formatTool": "gofmt",
+    "gopls": {
+        "ui.semanticTokens": true
+    },
+    "git.openRepositoryInParentFolders": "never",
 }

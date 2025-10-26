@@ -13,21 +13,27 @@ Based on `xah-run-current-file'"
 (defvar my/run-current-file-map
   '(("scm" . my/run-scheme-file)
     ("el" . my/run-elisp-file)
+    ("html" . my/run-html-file)
     ) 
-  "Maps file extension to file runner function, used by `my/run-current-file'.")
+  "Maps file extension to file-runner function. Used by `my/run-current-file'.")
 
-(defun my/run-scheme-file (&optional filepath) ;; todo: use interactive args
+(defun my/run-scheme-file (&optional filepath)
   "Run the given scheme file."
   (interactive)
   (message "Loaded scheme file.")
   (scheme-load-file filepath))
 
-(defun my/run-elisp-file (&optional filepath) ;; tood: use interactive args
+(defun my/run-elisp-file (&optional filepath)
   "Run the given elisp file."
   (interactive)
   (message "Evaluated elisp buffer.")
   (eval-buffer nil nil filepath))
 
+(defun my/run-html-file (&optional filepath)
+  "Run the given html file."
+  (interactive)
+  (message "Opened html file in browser.")
+  (browse-url filepath))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project Setup

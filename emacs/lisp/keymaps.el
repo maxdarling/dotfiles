@@ -48,6 +48,7 @@
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
   (kbd "<leader>j") 'eshell ;; I'm unpracticed with eshell
+  (kbd "<leader>x") 'my/run-current-file
   ;;
   (kbd "<leader>ie") 'switch-to-buffer
   (kbd "<leader>ia") 'find-file
