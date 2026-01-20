@@ -10,27 +10,24 @@
 [branch]
 	autosetuprebase = always
 
+# delta for diffs
+[core]
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    ; dark = true      # or light = true, or omit for auto-detection
+    side-by-side = true
+    syntax-theme = GitHub
+[merge]
+    conflictStyle = zdiff3
+[include]
+    path = ~/code/dotfiles/git/delta-themes.gitconfig
+
+[alias]
+    graph = log --all --graph --decorate --oneline
+
 # for work
 [includeIf "gitdir:~/work/"]
     path = ~/work/.gitconfig
-[core]
-	pager = diff-so-fancy | less --tabs=4 -RF
-[interactive]
-	diffFilter = diff-so-fancy --patch
-[color]
-	ui = true
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[alias]
-    graph = log --all --graph --decorate --oneline

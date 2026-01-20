@@ -126,10 +126,10 @@
   (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
 
-  ;; testing - numbers and C-numbers are same by default. that's free real-estate since I don't use numbers much!
-  "7" 'magit
-  "3" (lambda() (interactive) (kill-buffer nil))
-  "9" 'my/align
+  ;; testing - numbers and C-numbers are same by default.
+  (kbd "C-7") 'magit
+  (kbd "C-3") (lambda() (interactive) (kill-buffer nil))
+  (kbd "C-9") 'my/align
 
   ;; ;; * Windows/Frames *
   "h" 'evil-window-next
@@ -179,8 +179,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Term popups
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(evil-define-key '(normal motion) 'global "\C-j" 'term-toggle-term)
-(evil-define-key 'emacs 'global "\C-j" 'evil-window-delete)
+;; note, this is kinda jank. don't love it.
+;; issues:
+;; - line highlight persists, making it hard to read
+;; - does not always play nice with winner or changing windows
+;; - overwrites default C-j "newline without completion"
+;; (evil-define-key '(normal motion) 'global "\C-j" 'term-toggle-term)
+;; (evil-define-key 'emacs 'global "\C-j" 'evil-window-delete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes

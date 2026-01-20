@@ -2,7 +2,31 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".zshrc"
+(("cs142"
+  (filename . "~/code/FE/cs142/")
+  (front-context-string . ".git\n  -rw-r--r-")
+  (rear-context-string . "4B Nov 10 11:00 ")
+  (position . 178)
+  (last-modified 26902 24626 407970 0))
+("RC"
+ (filename . "~/code/RC/")
+ (front-context-string . "advent-of-code\n ")
+ (rear-context-string . "4B Oct 13 19:15 ")
+ (position . 172)
+ (last-modified 26894 16932 286013 0))
+("Downloads"
+ (filename . "~/Downloads/")
+ (front-context-string . ".DS_Store\n  -rw-")
+ (rear-context-string . "0K Oct 25 14:11 ")
+ (position . 174)
+ (last-modified 26882 22363 591372 0))
+("keyboard-vis"
+ (filename . "~/code/FE/keyboard-vis/")
+ (front-context-string . ".git\n  -rw-r--r-")
+ (rear-context-string . "4B Oct 27 13:13 ")
+ (position . 185)
+ (last-modified 26879 43145 604757 0))
+(".zshrc"
  (filename . "~/.zshrc")
  (front-context-string . "# Source Prezto.")
  (rear-context-string)

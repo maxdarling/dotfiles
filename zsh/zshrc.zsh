@@ -47,6 +47,16 @@ alias grc="git rebase --continue"
 alias gd="git diff"
 alias gemp="git commit -m \"empty commit\" --allow-empty"
 
+# torrent
+ipv6() {
+  # care: no ethernet handling
+  [[ "$1" == "0" ]] && sudo networksetup -setv6off Wi-Fi
+  [[ "$1" == "1" ]] && sudo networksetup -setv6automatic Wi-Fi
+}
+
+# personal bash
+alias ll="ls -lah"
+
 cdc() {
     mkdir "$1" && cd "$1"
 }
@@ -57,6 +67,17 @@ killports() {
         kill -9 $(lsof -t -i:$port)
     done
 }
+
+# api keys: i use macOS keychain for github, openai, etc.
+# openAI
+if command -v security >/dev/null; then
+  # note: might have to keychain access -> access control -> 
+  # cmd+shfit+G to add /usr/bin/security
+  key=$(security find-generic-password -s openai_api_key -w 2>/dev/null)
+  if [[ -n "$key" ]]; then
+    export OPENAI_API_KEY="$key"
+  fi
+fi
 
 # for typing practice (can paste into monkeytype)
 generate_random_words () {
@@ -85,5 +106,15 @@ export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
 
 # grocery bot
-source /Users/mhd/code/grocery-bot/grocery.sh
+source /Users/mhd/code/RC/grocery-bot/grocery.sh
 alias gro="grocery"
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# bun completions
+[ -s "/Users/mhd/.bun/_bun" ] && source "/Users/mhd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

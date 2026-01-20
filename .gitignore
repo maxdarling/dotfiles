@@ -3,3 +3,7 @@ vim/autoload/
 vim/.netrwhist
 nvim/packer.nvim/
 nvim/autoload/
+
+# Emacs
+emacs/.DS_Store
+emacs/**/#*#

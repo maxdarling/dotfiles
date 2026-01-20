@@ -229,6 +229,7 @@
 (setq use-short-answers t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
+(setq auto-save-default nil) ;; stop creating autosave files e.g. #file#
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-dwim-target t)
 (setq dired-listing-switches "-alh")
@@ -240,7 +241,9 @@
       read-process-output-max (* 1024 1024))
 
 (winner-mode 1)
-(add-hook 'scheme-mode-hook (lambda () (setq indent-tabs-mode -1))) ;; not working!!
+
+(setq indent-tabs-mode nil)
+(setq tab-width 4)
 
 (setq make-backup-files nil) ; stop creating ~ files
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
@@ -250,6 +253,9 @@
 ;; fido mode
 (fido-vertical-mode 1)
 (setq completions-detailed t) ;; add docstrings to each item in completion prompt
+(with-eval-after-load 'icomplete
+  ;; Make C-j exit literally instead of forcing completion
+  (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
