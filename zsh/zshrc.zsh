@@ -1,34 +1,19 @@
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# disable auto correct
+eval "$(/opt/homebrew/bin/brew shellenv)"
+typeset -gU path fpath cdpath mailpath
+bindkey -e
 unsetopt correct
-
-# fzf
-source <(fzf --zsh)
-
-# settings
+export LANG='en_US.UTF-8'
+export LESS='-g -i -M -R -S -w -X -z-4'
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-alias v=nvim # note: 'e' is also aliased to $VISUAL by default...
-# export MANPAGER='nvim +Man!'
+alias v=nvim
 
-# mine...
-alias zrc="nvim ~/.zshrc && source ~/.zshrc"
-alias zpr="nvim ~/.zprezto/runcoms"
-
-alias workrc="nvim ~/.work_bash_profile.sh && source ~/.work_bash_profile.sh && echo 'source completed'"
-source ~/.work_bash_profile.sh
-
+# ** ALIASES, ETC. **
+alias zrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 # personal projects
-alias code="cdls -l ~/code"
-alias dot="cdls -l ~/code/dotfiles"
+alias code="cdls ~/code -l"
+alias dot="cdls ~/code/dotfiles -l"
 alias sicp="cdls ~/code/sicp"
-alias alg="cdls ~/code/algorithm-study"
-alias skiena="cdls ~/code/algorithm-design-manual"
-alias hammer="nvim ~/.hammerspoon/init.lua"
 alias site="cdls ~/code/maxdarling.github.io"
 alias pico8="/Applications/PICO-8.app/Contents/MacOS/pico8 -root_path ~/code/pico8"
 
@@ -47,19 +32,12 @@ alias grc="git rebase --continue"
 alias gd="git diff"
 alias gemp="git commit -m \"empty commit\" --allow-empty"
 
-# torrent
-ipv6() {
-  # care: no ethernet handling
-  [[ "$1" == "0" ]] && sudo networksetup -setv6off Wi-Fi
-  [[ "$1" == "1" ]] && sudo networksetup -setv6automatic Wi-Fi
-}
-
 # personal bash
+# alias ls="eza --icons --group-directories-first"
+alias ls="eza --group-directories-first"
 alias ll="ls -lah"
-
-cdc() {
-    mkdir "$1" && cd "$1"
-}
+cdc() { mkdir -p "$1" && cd "$1" }
+cdls() { cd "$1" && ls "${@:2}"; }
 
 killports() {
     for port in "$@"
@@ -84,6 +62,38 @@ generate_random_words () {
     cat /usr/share/dict/words | awk 'length($0) > 6' | shuf | head -n 1000
 }
 
+# torrent
+ipv6() {
+  # care: no ethernet handling
+  [[ "$1" == "0" ]] && sudo networksetup -setv6off Wi-Fi
+  [[ "$1" == "1" ]] && sudo networksetup -setv6automatic Wi-Fi
+}
+
+# ** TERM STUFF **
+# zsh prompt
+autoload -U promptinit; promptinit
+# hacks to get single-line prompt
+prompt_newline=$'\u200B'   # zero-width space (or: prompt_newline='%666v')
+PROMPT=" $PROMPT"
+prompt pure
+
+# zsh completion
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# zsh autosuggestions
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# fzf
+source <(fzf --zsh)
+
+# ** BELOW: PATH STUFF ONLY **
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
@@ -104,10 +114,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
-
-# grocery bot
-source /Users/mhd/code/RC/grocery-bot/grocery.sh
-alias gro="grocery"
 
 # direnv
 eval "$(direnv hook zsh)"

@@ -6,7 +6,6 @@ set -x
 # - install xcode
 
 # Manual steps:
-# - [after] enable 'syntax-highlighting' and 'autosuggestions' modules in zpreztorc
 # - [after] import iterm profile
 # - [after] run :PlugInstall in (neo)vim
 
@@ -29,26 +28,14 @@ brew install pandoc
 brew install iterm2
 brew install font-hack-nerd-font
 brew install fzf
-brew install diff-so-fancy # see repo for git diff setup instructions
+brew install zsh-autosuggestions
+brew install git-delta
+brew install eza
+brew install pure
 
 #######################
 # ZSH
 #######################
-# standard zprezto setup
-if [[ ! -d $HOME/.zprezto ]]; then
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-
-    setopt EXTENDED_GLOB
-    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-      ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-    done
-
-cd $HOME/.zprezto
-git pull
-git submodule update --init --recursive
-cd - 
-fi
-
 # link my zshrc
 ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
 
@@ -99,16 +86,12 @@ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 # git
 ln -sf "$(pwd)/git/.gitconfig" ~/.gitconfig
 
-# IntelliJ
-brew install intellij-idea-ce
-ln -sf "$(pwd)/intellij/ideavimrc" ~/.ideavimrc
-
 # Hammerspoon
 brew install hammerspoon
 ln -sf "$(pwd)/hammerspoon/init.lua" ~/.hammerspoon/init.lua
 
 # VSCode
-brew install visual-studio-code
+# brew install visual-studio-code
 ln -sf "$(pwd)/vscode/settings.json" ~/Library/Application\ Support/Code/User/settings.json
 ln -sf "$(pwd)/vscode/keybindings.json" ~/Library/Application\ Support/Code/User/keybindings.json
 
