@@ -25,7 +25,7 @@ hotkeys:bind('shift', 'F4', function() hs.application.open('Spotify') end)
 hotkeys:bind({}, 'F6', function() hs.application.open('Cursor') end)
 hotkeys:bind({}, 'F7', function() hs.application.open('iTerm') end)
 hotkeys:bind('shift', 'F7', function() hs.application.open('Emacs') end)
-hotkeys:bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
+-- hotkeys:bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)
 
 -- ignore certain apps. source: https://github.com/Hammerspoon/hammerspoon/issues/2081#issuecomment-668283868
 ignoredApps = {["RuneLite"] = true, ["League Of Legends"] = true}
