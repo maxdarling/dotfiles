@@ -1,0 +1,12 @@
+auto-save-list/
+eln-cahce/
+elpa/
+eshell/
+games/
+projects.eld
+recentf
+tramp
+transient/
+
+# temp files
+**/#*#
