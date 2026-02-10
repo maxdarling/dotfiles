@@ -2,12 +2,48 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cs142"
-  (filename . "~/code/FE/cs142/")
-  (front-context-string . ".git\n  -rw-r--r-")
-  (rear-context-string . "4B Nov 10 11:00 ")
-  (position . 178)
-  (last-modified 26902 24626 407970 0))
+(("customization.el"
+  (filename . "~/code/dotfiles/emacs/customization.el")
+  (front-context-string . ";; -*- lexical-b")
+  (rear-context-string)
+  (position . 1)
+  (last-modified 27018 14496 216357 0))
+("man-projects"
+ (front-context-string . "0.2 Working with")
+ (rear-context-string . ": Maintaining\n\n3")
+ (position . 1347386)
+ (last-modified 27017 13706 661853 0)
+ (filename . "/opt/homebrew/Cellar/emacs-plus@31/31.0.50/share/info/emacs/emacs")
+ (info-node . "Projects")
+ (handler . Info-bookmark-jump))
+("elisp-primer"
+ (front-context-string . "\n3 How To Write ")
+ (rear-context-string . "ation,  Up: Top\n")
+ (position . 104500)
+ (last-modified 27017 10069 43420 0)
+ (filename . "/opt/homebrew/Cellar/emacs-plus@31/31.0.50/share/info/emacs/eintr")
+ (info-node . "Writing Defuns")
+ (handler . Info-bookmark-jump))
+("katas.el"
+ (filename . "~/code/dotfiles/emacs/lisp/katas.el")
+ (front-context-string . ";; For practicin")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27010 14154 396957 0))
+("elisp-primer"
+ (front-context-string . "A Note for Novic")
+ (rear-context-string . ",  Up: Preface\n\n")
+ (position . 28180)
+ (last-modified 27008 58300 956466 0)
+ (filename . "/opt/homebrew/Cellar/emacs-plus@31/31.0.50/share/info/emacs/eintr")
+ (info-node . "Note for Novices")
+ (handler . Info-bookmark-jump))
+("cs142"
+ (filename . "~/code/FE/cs142/")
+ (front-context-string . ".git\n  -rw-r--r-")
+ (rear-context-string . "4B Nov 10 11:00 ")
+ (position . 178)
+ (last-modified 26902 24626 407970 0))
 ("RC"
  (filename . "~/code/RC/")
  (front-context-string . "advent-of-code\n ")
@@ -44,36 +80,12 @@
  (rear-context-string . "9M Jun  1 13:36 ")
  (position . 253)
  (last-modified 26330 63401 104269 0))
-("test"
- (filename . "~/code/dotfiles/emacs/lisp/mystuff.el")
- (front-context-string . "	))\n\n;;;;;;;;;;;")
- (rear-context-string . "lay-file)))\n	 )\n")
- (position . 4329)
- (last-modified 26324 32746 934337 0))
-("theme.el"
- (filename . "~/code/dotfiles/emacs/lisp/theme.el")
+("my-theme.el"
+ (filename . "~/code/dotfiles/emacs/lisp/themes/mytheme.el")
  (front-context-string . ";; Xah theme\n(if")
  (rear-context-string)
  (position . 1)
- (last-modified 26286 23023 654890 0))
-("tt"
- (filename . "~/code/dotfiles/emacs/init.el")
- (front-context-string . "\n(add-hook\n 'bef")
- (rear-context-string . "lt-frame-alist \n")
- (position . 8769)
- (last-modified 26286 22530 957272 0))
-("raft.go"
- (filename . "~/code/MIT-6.824/src/raft/raft.go")
- (front-context-string . "\n// A Go object ")
- (rear-context-string . "\n	data string\n}\n")
- (position . 1528)
- (last-modified 26186 5968 808348 0))
-("temp"
- (filename . "~/code/dotfiles/emacs/init.el")
- (front-context-string . "(global-set-key ")
- (rear-context-string . "kill-ring-save)\n")
- (position . 7751)
- (last-modified 26183 36148 897969 0))
+ (last-modified 27019 28598 371426 0))
 ("dotfiles"
  (filename . "~/code/dotfiles/")
  (front-context-string . ".git\n  -rw-r--r-")
@@ -86,36 +98,12 @@
  (rear-context-string . "6B Sep 17 11:16 ")
  (position . 221)
  (last-modified 26345 52470 706407 0))
-("web-next"
- (filename . "~/work/web-next/services/storefront-mx-activation-service/")
- (front-context-string . ".eslintignore\n  ")
- (rear-context-string . "8B Feb 24  2023 ")
- (position . 220)
- (last-modified 26161 9486 521385 0))
-("work"
- (filename . "~/work/")
- (front-context-string . ".DS_Store\n  -rw-")
- (rear-context-string . "0K Apr 14 14:02 ")
- (position . 172)
- (last-modified 26161 8831 999090 0))
-("kttest"
- (filename . "~/code/misc/kotlin-corountine-demo/src/main/kotlin/Main.kt")
- (front-context-string . "java.util.concur")
- (rear-context-string)
- (position . 8)
- (last-modified 26161 3949 159986 0))
 ("code"
  (filename . "~/code/")
  (front-context-string . "misc\n  drwxr-xr-")
  (rear-context-string . "2B Apr 30 10:09 ")
  (position . 557)
  (last-modified 26161 68 735512 0))
-("bookmark.el"
- (filename . "/usr/local/Cellar/emacs-plus@29/29.2/share/emacs/29.2/lisp/bookmark.el")
- (front-context-string . "(defun bookmark-")
- (rear-context-string . "e new-mtime)))\n\n")
- (position . 49100)
- (last-modified 26150 34106 284736 0))
 ("term-color-hacks.el"
  (filename . "~/code/dotfiles/emacs/lisp/hacks/term-color-hacks.el")
  (front-context-string . "!\n  ;; '((t (:in")

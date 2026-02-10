@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; goal: get this: http://xahlee.info/emacs/emacs/emacs_theme_gallery.html
 ;; todo: more keyword highlighting (blue, gold, etc)
 ;; this is from xah elisp mode ($32) http://xahlee.info/emacs/emacs/xah-elisp-mode.html

@@ -50,8 +50,9 @@ ln -sf "$(pwd)/cursor/settings.json" ~/Library/Application\ Support/Cursor/User/
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@31
 ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
+ln -sf "$(pwd)/emacs/customization.el" ~/.emacs.d/init.el
 ln -sF "$(pwd)/emacs/lisp" ~/.emacs.d
-ln -sF "$(pwd)/emacs/bookmarks" ~/.emacs.d/bookmarks
+ln -sF "$(pwd)/emacs/bookmarks" ~/.emacs.d
 ln -sF "$(pwd)/emacs/snippets" ~/.emacs.d
 
 #######################

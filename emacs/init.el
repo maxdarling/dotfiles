@@ -1,6 +1,46 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;  -*- lexical-binding: t; -*-
 ;; Todo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; done:
+;; - continue comment by default (elisp), S-RET to not.
+;; - try vterm a bit, get M-<right/left> working
+;; - setup fzf file and dir.
+;; - debug/fix custom-file
+;; - setup vscode M-<up>/<down>
+;; - fix lexical binding warnings (and understand them...)
+;; - make s-, switch to init file
+
+;; todo:
+;; - themes!
+;; - literate emacs config? (via org)
+;;   - this would give me functionality for bullets in comments: autocontinue and tab to nest
+;;     - this is more like gdocs and markdown
+;; - vs-code style git diff colored indicators on each line
+;;   - and enable autosave?
+;; - prot consult/vertico/marginalia/embark/orderless video
+;;   - vertico - how is it different than fido? i wanna understand, e.g. see "learning" note.
+;;   - marg seems good. too busy for files tho.
+;;   - consult seems beast? impressed at his "buffer vs. bookmark is just an impl. detail"
+;;   - orderless: ...
+;;   - embark: ...
+;; -
+;; - look into early-init.el
+;;   - misc list: user-lisp-directory, ...
+;; - start file with emacs katas, challenges, etc.
+
+;; theme
+;; - consolidate my theme stuff into a file/package?
+;; - check out modus themes
+;; - goal: be able to load prot's theme (in beframe vid)
+
+;; terminal workflow notes:
+;; - bind find-dir and find-file :)
+;; - try vterm.
+;; - except C-c? Big choice, but likely worth. C-z is my escape hatch.
+;; - how to get multi-tab?
+;; - explore vterm-toggle, vterm hotkey, vtm
+
+
 ;; LEARNING:
 ;; - what is xref?
 ;; - flymake
@@ -46,6 +86,44 @@
 ;; - copy his syntax highlighting for elisp. see `custom-elisp-mode.el`
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+
+(setq custom-file "~/.emacs.d/customization.el")
+(load-file custom-file)
+
+(setq my/init-file "~/.emacs.d/init.el")
+(setq initial-buffer-choice my/init-file)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Theme
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; essentials
+(set-frame-font "Menlo-15" t t) ;; todo: try prot
+(global-hl-line-mode 1)
+(blink-cursor-mode -1)
+
+(setq default-frame-alist 
+      `(
+	    (tool-bar-lines . 0)
+	    (vertical-scroll-bars . nil)
+	    (fullscreen . maximized)
+	    ))
+
+;; 
+
+(load-file "~/.emacs.d/lisp/themes/modeline.el")
+
+;; prot theme
+(use-package modus-themes
+  :config
+  ;; todo
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t) ;; testing
+  (modus-themes-load-theme 'modus-operandi)
+  )
+
+;; (load-file "~/.emacs.d/lisp/themes/mytheme.el")
+;; (load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -59,6 +137,20 @@
   (package-initialize)
   (package-refresh-contents t))
 
+;; todo:
+;; - hard to see shit. should use a diff theme
+;; - read this: https://karthinks.com/software/fringe-matters-finding-the-right-difference/?utm_source=chatgpt.com
+;; - hooks not working? how to test?
+(use-package diff-hl
+  :hook ((prog-mode . diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :config
+  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
+  (setq diff-hl-fringe-bmp-function nil)
+  (setq diff-hl-update-async nil)
+  (setq diff-hl-draw-borders nil))
+
 (use-package evil
   :init
   (setq evil-search-module 'isearch) ;; bug 8/2/24: 'evil-search breaks search in help/dired/info modes
@@ -71,7 +163,8 @@
   (use-package evil-surround)
   (global-evil-surround-mode 1)
   (use-package evil-visualstar)
-  (global-evil-visualstar-mode t))
+  (global-evil-visualstar-mode t)
+  (load-file "~/.emacs.d/lisp/move-text.el"))
 
 (use-package avy
   :config
@@ -89,7 +182,7 @@
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+    (exec-path-from-shell-initialize))
   )
 
 (use-package fireplace)
@@ -102,7 +195,7 @@
   (use-package cape)
   :config
   (setq corfu-auto t
-	corfu-auto-delay .1) ;; .2 default
+	    corfu-auto-delay .1) ;; .2 default
   (add-to-list 'completion-styles 'flex) 
 
   ;; order matters (first in list = highest priority)
@@ -121,19 +214,19 @@
 (use-package embark
   :ensure t
   :bind (:map minibuffer-mode-map
-	      (("C-e" . embark-act)
-	       ("C-a" . embark-dwim)))
+	          (("C-e" . embark-act)
+	           ("C-a" . embark-dwim)))
   :config
   ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
   ;; see 'lisp/hacks/embark-hacks.el' for more ideas
   (setq embark-default-action-overrides
-	'(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
-	  ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
-	  ;; opens dired, and not even on right file.
-	  ;; note: same behavior as builtin find-file 'o' option.
-	  ((file . find-file) . find-file-other-window) 
-	  )
-	)
+	    '(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
+	      ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
+	      ;; opens dired, and not even on right file.
+	      ;; note: same behavior as builtin find-file 'o' option.
+	      ((file . find-file) . find-file-other-window) 
+	      )
+	    )
   )
 
 (use-package term-toggle
@@ -175,9 +268,9 @@
   ;; (setq lsp-ui-sideline-show-hover t) ;; just types, very noisy
 
   :hook (
-	 (go-mode . lsp) ;; maybe lsp-deferred?
-	 (kotlin-mode . lsp)
-	 (typescript-ts-mode . lsp))
+	     (go-mode . lsp) ;; maybe lsp-deferred?
+	     (kotlin-mode . lsp)
+	     (typescript-ts-mode . lsp))
   :commands (lsp lsp-deferred))
 (use-package lsp-ui :commands lsp-ui-mode)
 
@@ -195,12 +288,6 @@
 (add-hook 'prog-mode-hook (lambda () (abbrev-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Theme
-;;;;;;;;;;;;;;;;;;;;;;;;;
-(load-file "~/.emacs.d/lisp/theme.el")
-(load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Binds
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file "~/.emacs.d/lisp/keymaps.el")
@@ -211,7 +298,7 @@
 (setq xah-fly-use-control-key nil)
 (setq xah-fly-use-meta-key nil)
 (setq xah-fly-use-isearch-arrows nil)
-(load-file "~/.emacs.d/lisp/xah-fly-keys.el")
+;; (load-file "~/.emacs.d/lisp/pedagogy/xah-fly-keys.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc Settings
@@ -225,11 +312,11 @@
 (global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "s-x") 'clipboard-kill-region)
 
+;; misc low-level
 (setq vc-follow-symlinks t)
 (setq use-short-answers t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
-(setq auto-save-default nil) ;; stop creating autosave files e.g. #file#
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-dwim-target t)
 (setq dired-listing-switches "-alh")
@@ -240,11 +327,14 @@
 (setq gc-cons-threshold (* 100 1024 1024) ;; recommended for LSP
       read-process-output-max (* 1024 1024))
 
+;; misc
 (winner-mode 1)
+(which-key-mode 1)
 
 (setq indent-tabs-mode nil)
 (setq tab-width 4)
 
+(setq auto-save-default nil) ;; stop creating autosave files e.g. #file#
 (setq make-backup-files nil) ; stop creating ~ files
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
@@ -256,26 +346,3 @@
 (with-eval-after-load 'icomplete
   ;; Make C-j exit literally instead of forcing completion
   (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(term-color-black ((t (:foreground "#3F3F3F" :background "#2B2B2B"))))
- '(term-color-blue ((t (:foreground "#7CB8BB" :background "#4C7073"))))
- '(term-color-cyan ((t (:foreground "#93E0E3" :background "#8CD0D3"))))
- '(term-color-green ((t (:foreground "#7F9F7F" :background "#9FC59F"))))
- '(term-color-magenta ((t (:foreground "#DC8CC3" :background "#CC9393"))))
- '(term-color-red ((t (:foreground "#AC7373" :background "#8C5353"))))
- '(term-color-white ((t (:foreground "#DCDCCC" :background "#656555"))))
- '(term-color-yellow ((t (:foreground "#DFAF8F" :background "#9FC59F"))))
- '(term-default-bg-color ((t (:inherit term-color-black))))
- '(term-default-fg-color ((t (:inherit term-color-white)))))

@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;  -*- lexical-binding: t; -*-
 ;; Run Current File
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my/run-current-file ()
@@ -82,13 +82,22 @@ Based on `xah-run-current-file'"
 
 ;; source: https://www.reddit.com/r/emacs/comments/13y5k9j/simple_fuzzy_find_file/
 (defun my/find-file-rec ()
-  "Find a file recursively from the current working directory."
+  "Find a file recursively from the current working directory. rg highly recommended."
   (interactive)
   (let ((find-files-program
 	 (cond ((executable-find "rg") '("rg" "--color=never" "--files"))
                ((executable-find "find") '("find" "." "-type" "f")))))
     (find-file
      (completing-read "Find file: " (apply #'process-lines find-files-program)))))
+
+(defun my/find-dir-rec ()
+  "Find a directory recursively from the current working directory. rg highly recommended."
+  (interactive)
+  (let ((find-files-program
+	 (cond ((executable-find "fd") '("fd" "--type=d"))
+               ((executable-find "find") '("find" "." "-type" "f")))))
+    (find-file
+     (completing-read "Find dir: " (apply #'process-lines find-files-program)))))
 
 ;; source: https://emacs.stackexchange.com/questions/51592/enable-follow-mode-in-dired
 ;; goal: emulate grep follow mode

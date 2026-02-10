@@ -1,12 +1,18 @@
+;; -*- lexical-binding: t; -*-
 (evil-set-leader '(normal visual motion) (kbd "SPC"))
-(evil-set-leader 'emacs (kbd "C-SPC"))
+(evil-set-leader 'emacs (kbd "C-SPC")) ;; not great on my keyboard...
 (setopt evil-want-Y-yank-to-eol t)
+
+;; todo:
+;; - "all modes" contains many leader sequences that are not relevant for
+;; emacs state. i should move them to the next section "normal mode". I likely
+;; confused the sections as one before(?).
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (evil-define-key '(normal visual motion emacs) 'global
-(evil-define-key nil 'global
+(evil-define-key '(normal visual motion emacs) 'global
+  ;; (evil-define-key nil 'global ;; this is lower precedence than above. evil -> maj. mode -> global
   ;; philosophy:
   ;; - SPC leader in <E> is good/harmless. can rebind or use another way if it overwrites something
   ;; useful (e.g. "dc" == SPC in magit). Note: <E>-specific leader combos might be desirable
@@ -19,6 +25,9 @@
   ;; keep it)
   
   ;; * Core Nav *
+  ;; (kbd "s-,") (lambda () (switch-to-buffer my/init-file))
+  (kbd "s-,") (lambda () (interactive) (switch-to-buffer "init.el")) ;; todo: fix
+
   (kbd "<leader>q") 'evil-record-macro ;; ballsy?! but quit window >often than creating macro.
   ;; todo: map C-i and C-o in all modes? (alternative is s-<left> and s-<right>, as I do in IJ)
   (kbd "C-u") 'evil-scroll-up
@@ -47,7 +56,6 @@
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
-  (kbd "<leader>j") 'eshell ;; I'm unpracticed with eshell
   (kbd "<leader>x") 'my/run-current-file
   ;;
   (kbd "<leader>ie") 'switch-to-buffer
@@ -119,9 +127,12 @@
   "r" 'evil-buffer
   "l" 'execute-extended-command ;; testing.
   "L" 'evil-ex
-  ;; (kbd "C-u") 'evil-scroll-up
   ;; (kbd "<leader>v") 'universal-argument
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
+
+  (kbd "M-<up>")   #'my/move-text-up
+  (kbd "M-<down>") #'my/move-text-down
+
   (kbd "C-a") 'my/inc-number-after-point
   (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
@@ -165,8 +176,9 @@
 (evil-define-key 'insert 'global
   ;; make RET continue comments by default. use S-RET to bypass.
   ;; https://emacs.stackexchange.com/questions/59575/continue-comment-while-editing-lisp-and-when-hitting-enter
-  ;; (kbd "RET") 'comment-indent-new-line
+  (kbd "RET") 'comment-indent-new-line
   (kbd "<S-return>") 'newline
+  (kbd "M-<delete>") 'kill-word
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -177,15 +189,24 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Term popups
+;; Terminal
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key '(normal visual motion) 'global
+  ;; issues:
+  ;; - how to toggle back from eshell? (currently using winner). way better if it's same key to toggle.
+  (kbd "s-j") 'eshell
+  ;; issues:
+  ;; - line highlight persists, making it hard to read
+  ;; - does not always play nice with winner or changing windows
+  ;; - overwrites default C-j "newline without completion"
+  (kbd "C-j") 'term-toggle-term
+  )
 ;; note, this is kinda jank. don't love it.
-;; issues:
-;; - line highlight persists, making it hard to read
-;; - does not always play nice with winner or changing windows
-;; - overwrites default C-j "newline without completion"
-;; (evil-define-key '(normal motion) 'global "\C-j" 'term-toggle-term)
-;; (evil-define-key 'emacs 'global "\C-j" 'evil-window-delete)
+(evil-define-key 'emacs 'global
+  (kbd "s-j") 'evil-window-delete
+  (kbd "C-j") 'evil-window-delete
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes

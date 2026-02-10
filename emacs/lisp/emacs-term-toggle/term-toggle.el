@@ -1,6 +1,4 @@
-;;; term-toggle.el --- Toggle to and from the *terminal* buffer   -*- lexical-binding: t; -*-
-
-;; Filename: term-toggle.el
+;; Filename: term-toggle.el  -*- lexical-binding: t; -*-
 ;; Description: Toggle a dedicated terminal
 ;; Author: Joseph <jixiuf@gmail.com>, Yatao <yatao.li@live.com>, Arthur <arthur.miller@live.com>
 ;; Created: 2011-03-02

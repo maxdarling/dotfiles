@@ -1,4 +1,4 @@
-;; my custom binds for special modes like Dired, Info, help, grep, eshell, etc.
+;; my custom binds for special modes like Dired, Info, help, grep, eshell, etc.  -*- lexical-binding: t; -*-
 ;; these start from the core normal state bindings in 'keybinds.el', but mix in emacs keys where
 ;; it makes sense.
 
@@ -41,16 +41,22 @@
 ;; todo: build abstraction on top of this. 
 (defvar normal-mode-map (cdr (alist-get 'evil-normal-state-minor-mode evil-mode-map-alist)))
 
+;; below: testing cleaner methods
+(alist-get ?h normal-mode-map)
+(lookup-key normal-mode-map (kbd "h"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Index
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Repl modes (emacs state)
+(evil-set-initial-state 'vterm-mode 'emacs)
 (evil-set-initial-state 'eshell-mode 'emacs)
 (evil-set-initial-state 'term-mode 'emacs)
 (evil-set-initial-state 'inferior-scheme-mode 'emacs)
 
 ;; Other
 (evil-set-initial-state 'wdired-mode 'normal)
+(evil-set-initial-state 'package-menu-mode 'normal)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired
@@ -70,6 +76,7 @@
   "G" 'evil-goto-line        ;; dired-do-chgrp. useless.
   (kbd "C-o") 'evil-jump-backward
   (kbd "<S-return>") 'dired-display-file ;; this is what *grep* does, very sensible
+  "@" 'evil-execute-macro
 
   ;; match grep follow and writable modes
   (kbd "C-c C-p") 'wdired-change-to-wdired-mode
@@ -122,6 +129,8 @@
   "A" 'Info-history
   "u" 'Info-toc
 
+  (kbd "<down>") 'Info-scroll-up
+  (kbd "<up>") 'Info-scroll-down
   "[" 'Info-backward-node
   "]" 'Info-forward-node
   "^" 'Info-up
@@ -145,6 +154,22 @@
   "[" 'previous-error-no-select ;; trying these (formerly n/p). they seem *good*.
   "]" 'next-error-no-select
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; vterm
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(with-eval-after-load 'vterm
+  ;; let Emacs handle these keys (don’t send them straight to the pty)
+  (add-to-list 'vterm-keymap-exceptions "M-<right>")
+  (add-to-list 'vterm-keymap-exceptions "M-<left>"))
+
+(with-eval-after-load 'evil
+  (with-eval-after-load 'vterm
+    ;; only for vterm + evil emacs state
+    (evil-define-key 'emacs vterm-mode-map (kbd "M-<right>")
+      (lambda () (interactive) (vterm-send-string "\ef"))) ; ESC f = forward-word
+    (evil-define-key 'emacs vterm-mode-map (kbd "M-<left>")
+      (lambda () (interactive) (vterm-send-string "\eb"))))) ; ESC b = backward-word
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Messages

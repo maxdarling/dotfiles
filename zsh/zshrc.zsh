@@ -4,8 +4,9 @@ bindkey -e
 unsetopt correct
 export LANG='en_US.UTF-8'
 export LESS='-g -i -M -R -S -w -X -z-4'
-export VISUAL=nvim
+export VISUAL="emacsclient -c"
 export EDITOR="$VISUAL"
+alias e="$VISUAL"
 alias v=nvim
 
 # ** ALIASES, ETC. **

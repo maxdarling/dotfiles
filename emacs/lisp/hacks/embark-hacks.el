@@ -1,4 +1,4 @@
-;; source: https://karthinks.com/software/fifteen-ways-to-use-embark/
+;; source: https://karthinks.com/software/fifteen-ways-to-use-embark/  -*- lexical-binding: t; -*-
 ;; above is great. makes heavy use of ace-window, too.
 
 (eval-when-compile
