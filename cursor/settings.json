@@ -13,119 +13,85 @@
   "vim.useCtrlKeys": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "u"
-      ], // use native vscode undo/redo. buggy otherwise
-      "commands": [
-        "undo"
-      ]
+      "before": ["u"], // use native vscode undo/redo. buggy otherwise
+      "commands": ["undo"],
     },
     {
-      "before": [
-        "<C-r>"
-      ], // use native vscode undo/redo. buggy otherwise
-      "commands": [
-        "redo"
-      ]
+      "before": ["<C-r>"], // use native vscode undo/redo. buggy otherwise
+      "commands": ["redo"],
     },
     {
-      "before": [
-        "h"
-      ],
-      "after": [
-        "<C-w>",
-        "<C-w>"
-      ]
+      "before": ["h"],
+      "after": ["<C-w>", "<C-w>"],
     },
     {
-      "before": [
-        "r"
-      ],
-      "after": [
-        "<C-^>"
-      ]
+      "before": ["r"],
+      "after": ["<C-^>"],
     },
     {
-      "before": [
-        "leader",
-        "c"
-      ],
+      "before": ["leader", "c"],
       // "after": ["g", "c", "c"],
-      "commands": [
-        "editor.action.commentLine"
-      ]
+      "commands": ["editor.action.commentLine"],
     },
     {
-      "before": [
-        "s"
-      ],
+      "before": ["s"],
       // "after": ["leader", "leader", "2", "s"]
       // "after": ["leader", "leader", "/"]
-      "commands": [
-        "code-jump.startJump"
-      ] // this is the best alt i found for emacs avy-goto-char-timer
+      "commands": ["code-jump.startJump"], // this is the best alt i found for emacs avy-goto-char-timer
     },
     {
-      "before": [
-        "S"
-      ],
-      "after": [
-        "leader",
-        "leader",
-        "bdjk"
-      ] // easymotion line jump. doesn't work. sad.
-    }
+      "before": ["S"],
+      "after": ["leader", "leader", "bdjk"], // easymotion line jump. doesn't work. sad.
+    },
   ],
   "vim.visualModeKeyBindings": [
     {
-      "before": [
-        "<leader>",
-        "c"
-      ],
-      "commands": [
-        "editor.action.commentLine"
-      ]
-    }
+      "before": ["<leader>", "c"],
+      "commands": ["editor.action.commentLine"],
+    },
   ],
   "vim.easymotion": true,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
   // golang
   "[go]": {
-    "editor.defaultFormatter": "golang.go"
+    "editor.defaultFormatter": "golang.go",
   },
   "go.formatTool": "gofmt",
   "gopls": {
-    "ui.semanticTokens": true
+    "ui.semanticTokens": true,
   },
   "git.openRepositoryInParentFolders": "never",
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[markdown]": {
     // "editor.defaultFormatter": "esbenp.prettier-vscode" // i don't like this.
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one" // using this only to stop errmsg.
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one", // using this only to stop errmsg.
   },
   "[jsx]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
 }
