@@ -10,3 +10,5 @@ transient/
 
 # temp files
 **/#*#
+*~
+*.elc

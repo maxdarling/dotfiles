@@ -2,12 +2,18 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("customization.el"
-  (filename . "~/code/dotfiles/emacs/customization.el")
-  (front-context-string . ";; -*- lexical-b")
-  (rear-context-string)
-  (position . 1)
-  (last-modified 27018 14496 216357 0))
+(("my-frame.el"
+  (filename . "~/code/dotfiles/emacs/lisp/themes/my-frame.el")
+  (front-context-string . "\n;; notes\n;; - s")
+  (rear-context-string . "boro\"\n			   )))\n")
+  (position . 920)
+  (last-modified 27020 51802 940974 0))
+("customization.el"
+ (filename . "~/code/dotfiles/emacs/customization.el")
+ (front-context-string . ";; -*- lexical-b")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27018 14496 216357 0))
 ("man-projects"
  (front-context-string . "0.2 Working with")
  (rear-context-string . ": Maintaining\n\n3")
@@ -80,12 +86,6 @@
  (rear-context-string . "9M Jun  1 13:36 ")
  (position . 253)
  (last-modified 26330 63401 104269 0))
-("my-theme.el"
- (filename . "~/code/dotfiles/emacs/lisp/themes/mytheme.el")
- (front-context-string . ";; Xah theme\n(if")
- (rear-context-string)
- (position . 1)
- (last-modified 27019 28598 371426 0))
 ("dotfiles"
  (filename . "~/code/dotfiles/")
  (front-context-string . ".git\n  -rw-r--r-")

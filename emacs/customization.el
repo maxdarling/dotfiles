@@ -8,10 +8,9 @@
    '("8fbf2d585f1138caaafa9e523fa3a20614c1d1dcc6002c9808c3e40028e21df4"
      default))
  '(package-selected-packages
-   '(avy cape corfu diff-hl embark evil-surround evil-visualstar
-	 exec-path-from-shell fireplace go-mode kotlin-mode lsp-ui
-	 magit modus-themes terraform-mode vterm wgrep which-key
-	 yasnippet))
+   '(avy cape diff-hl embark evil-surround evil-visualstar
+	 exec-path-from-shell fireplace go-mode lsp-ui magit
+	 modus-themes vterm wgrep which-key yasnippet))
  '(project-mode-line 'non-remote))
 
 (custom-set-faces

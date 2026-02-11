@@ -9,14 +9,22 @@
 ;; - setup vscode M-<up>/<down>
 ;; - fix lexical binding warnings (and understand them...)
 ;; - make s-, switch to init file
+;; - cleanup my-theme.el
+;;   - factor out frame sizing.
+;;   - refactor into options for background color toggles
 
 ;; todo:
-;; - themes!
+;; - study modus themes config
+;; - cleanup init file
+;;   - general cleanups
+;;   - outline mode?
+;; - diff-hl
+;;   - make it look cleaner (no symbols, thicker, etc.). (e.g. read karthinks article linked)
+;;   - and enable autosave?
 ;; - literate emacs config? (via org)
 ;;   - this would give me functionality for bullets in comments: autocontinue and tab to nest
 ;;     - this is more like gdocs and markdown
-;; - vs-code style git diff colored indicators on each line
-;;   - and enable autosave?
+;; - embark: shift-RET should do otherwindow by default (or "O"?) (e.g. for bookmark, switch to buffer, etc.)
 ;; - prot consult/vertico/marginalia/embark/orderless video
 ;;   - vertico - how is it different than fido? i wanna understand, e.g. see "learning" note.
 ;;   - marg seems good. too busy for files tho.
@@ -24,6 +32,7 @@
 ;;   - orderless: ...
 ;;   - embark: ...
 ;; -
+;; - make fn (e.g. SPC-C) that comments out AND copies current line/region.
 ;; - look into early-init.el
 ;;   - misc list: user-lisp-directory, ...
 ;; - start file with emacs katas, challenges, etc.
@@ -61,7 +70,6 @@
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)
 ;; - figure out how to fill region while respecting comments.
 ;; - setup treesitter (elisp/scheme highlighting??) (evil-treesitter-text-obj!) (read karthinks post)
-;; - develop Kotlin in Emacs (corfu, treesitter, LSP, magit) video: https://www.youtube.com/watch?v=J4s3T0dd5CY
 
 ;; MEDIUM IMPORT:
 ;; - use C-x p f (and rest of "project" commands)
@@ -87,6 +95,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
+;; put package-manager-generated stuff in another file
 (setq custom-file "~/.emacs.d/customization.el")
 (load-file custom-file)
 
@@ -100,16 +109,25 @@
 (set-frame-font "Menlo-15" t t) ;; todo: try prot
 (global-hl-line-mode 1)
 (blink-cursor-mode -1)
+(display-line-numbers-mode)
 
-(setq default-frame-alist 
-      `(
-	    (tool-bar-lines . 0)
-	    (vertical-scroll-bars . nil)
-	    (fullscreen . maximized)
-	    ))
+;; frame
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(top . 1))
+(add-to-list 'default-frame-alist '(left . 1))
+;; rather than '(fullscreen . maximized), we use below method to clamp.
+;; otherwise it breaks corfu's completion popup window.
+(setq frame-resize-pixelwise t)
+(add-to-list 'default-frame-alist '(width . 150))
+(add-to-list 'default-frame-alist '(height . 70))
 
-;; 
+;; custom frame stuff
+(setq my/frame-should-cycle-colors nil
+      my/frame-should-offset-position nil)
+(load-file "~/.emacs.d/lisp/themes/my-frame.el")
 
+;; modeline
 (load-file "~/.emacs.d/lisp/themes/modeline.el")
 
 ;; prot theme
@@ -117,11 +135,10 @@
   :config
   ;; todo
   (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t) ;; testing
+        modus-themes-bold-constructs nil) ;; testing
   (modus-themes-load-theme 'modus-operandi)
   )
 
-;; (load-file "~/.emacs.d/lisp/themes/mytheme.el")
 ;; (load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -140,14 +157,12 @@
 ;; todo:
 ;; - hard to see shit. should use a diff theme
 ;; - read this: https://karthinks.com/software/fringe-matters-finding-the-right-difference/?utm_source=chatgpt.com
-;; - hooks not working? how to test?
 (use-package diff-hl
   :hook ((prog-mode . diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
-  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
-  (setq diff-hl-fringe-bmp-function nil)
+  (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
   (setq diff-hl-update-async nil)
   (setq diff-hl-draw-borders nil))
 
@@ -212,7 +227,6 @@
   )
 
 (use-package embark
-  :ensure t
   :bind (:map minibuffer-mode-map
 	          (("C-e" . embark-act)
 	           ("C-a" . embark-dwim)))
@@ -247,15 +261,12 @@
 (use-package go-mode
   ;; :mode ("\.go$") ;; needed?
   :init
-  ;; workaround GUI emacs path being different than term/system
+  ;; work around GUI emacs path being different than term/system
   (add-to-list 'exec-path "/Users/mhd/go/bin/") ;; gopls
   )
 
 (use-package typescript-ts-mode
   :mode ("\.ts$") ;; needed?
-  )
-
-(use-package kotlin-mode ;; (ts mode is shit)
   )
 
 (use-package lsp-mode
@@ -269,16 +280,9 @@
 
   :hook (
 	     (go-mode . lsp) ;; maybe lsp-deferred?
-	     (kotlin-mode . lsp)
 	     (typescript-ts-mode . lsp))
   :commands (lsp lsp-deferred))
 (use-package lsp-ui :commands lsp-ui-mode)
-
-;; (lsp-register-custom-settings
-;;  '(("gopls.completeUnimported" t t)
-;;    ("gopls.staticcheck" t t)))
-
-(use-package terraform-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Testing
