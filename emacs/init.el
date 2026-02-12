@@ -14,6 +14,11 @@
 ;;   - refactor into options for background color toggles
 
 ;; todo:
+;; - revamp keymaps (ongoing)
+;; - "operation: term replacement"
+;;   - bind find-file, find-dir, grep (NOT LEADER)
+;;   - rg for grep and rgrep
+;; 
 ;; - study modus themes config
 ;; - cleanup init file
 ;;   - general cleanups
@@ -116,11 +121,14 @@
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(top . 1))
 (add-to-list 'default-frame-alist '(left . 1))
-;; rather than '(fullscreen . maximized), we use below method to clamp.
-;; otherwise it breaks corfu's completion popup window.
+;; 2/11/26: sadly, setting '(fullscreen . maximized), breaks corfu's popup window.
+;; we must do below hack instead for fullscreen.
 (setq frame-resize-pixelwise t)
-(add-to-list 'default-frame-alist '(width . 150))
-(add-to-list 'default-frame-alist '(height . 70))
+;; 13" laptop: 1450x900
+;; 24" monitor: 1500x800
+(add-to-list 'default-frame-alist '(width  . (text-pixels . 1500)))
+(add-to-list 'default-frame-alist '(height . (text-pixels . 900)))
+(setq initial-frame-alist default-frame-alist)
 
 ;; custom frame stuff
 (setq my/frame-should-cycle-colors nil
@@ -343,6 +351,10 @@
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 (global-set-key [remap list-buffers] 'ibuffer) ;; replace list-buffers with ibuffer
+
+;; rg for grep
+(setq grep-command "rg -nS --no-heading "
+      grep-use-null-device nil)
 
 ;; fido mode
 (fido-vertical-mode 1)

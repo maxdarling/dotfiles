@@ -10,7 +10,7 @@
  '(package-selected-packages
    '(avy cape diff-hl embark evil-surround evil-visualstar
 	 exec-path-from-shell fireplace go-mode lsp-ui magit
-	 modus-themes vterm wgrep which-key yasnippet))
+	 modus-themes rg vterm wgrep which-key yasnippet))
  '(project-mode-line 'non-remote))
 
 (custom-set-faces

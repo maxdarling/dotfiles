@@ -3,16 +3,89 @@
 (evil-set-leader 'emacs (kbd "C-SPC")) ;; not great on my keyboard...
 (setopt evil-want-Y-yank-to-eol t)
 
+;; C-o prefix
+(define-prefix-command 'my/c-o-map)
+
+;; phase 1 (start 2/11/26, comfy ??/??/??)
+;; - remove C-o and C-i. too vim-specific. I like s-<left/right>.
+;; - bind C-o (strongest available key) as a prefix for core stuff (fzf file/dir, grep, etc)
+;; - revamp "h" to be pan-modal (C-i)
+;; - revamp "r" to be pan-modal (C-k)
+;; - change inc (C-[S-]a) to (C-[S-]p)
+;; - scrolling revamp
+;;   - C-e and C-y for single line scroll, and C-u and C-d for multi line
+;;   - why not just combine the above and use shift for the less common one?
+;;   - it's more divergence from vim, but who cares. i'm on engram for the long haul.
+;;   - cleanup:
+;;     - C-a and C-S-a are inc. but too good a key for that. C-y is fine.
+;;     - C-u/C-d free (keep C-u default)
+
+;; todo (habits):
+;; - use C-l more for centering screen on cursor when scrolling up/down
+
 ;; todo:
+;; - force phase 1 changes on cursor, too :)
+;; - more vs-code and browser unification
+;;   - s-n for new empty file and s-S-n for new frame ("window")
+;;   - ...
+;; - M-<L/R> default in normal mode, winner to C-<L/R>, help-fwd/back to ???
+;;   - by default, help fwd/back is n/p. but n is search next in vim (and e.g. manpages).
+;;   but magit, grep, etc want n/p free. I bind [/] for grep, for example.
+;;     - if only i used another search style, i'd be chillin. maybe s-f?
+;; - cleanup xah-bound keys
+;;   - i can keep many to look at for inspo, but i should put somewhere out of the way.
 ;; - "all modes" contains many leader sequences that are not relevant for
 ;; emacs state. i should move them to the next section "normal mode". I likely
 ;; confused the sections as one before(?).
 
+;; available keys:
+;; - C (L): C-y, C-b, C-', C-,, ...
+;; - C (R): C-d, C-n, C-q, C-m, C-f
+;; - S: s-LOTS
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key '(normal visual motion emacs insert) 'global
+  ;; philosophy:
+  ;; - be mindful of hand-balance for chords. C is on R side, s is on left. most of the time
+  ;; it feels better to press modifier on one hand and actual keys on the other.
+
+  (kbd "s-p") 'switch-to-buffer ;; todo: use consult for vs-code style behavior
+  (kbd "s-P") 'execute-extended-command
+
+  (kbd "<control-i>") 'evil-window-next
+  (kbd "C-k") 'evil-buffer 
+
+  (kbd "C-o") my/c-o-map
+
+  ;; todo: harpoon
+
+  (kbd "s-s") 'save-buffer
+  (kbd "s-d") 'kill-buffer ;; this kinda sucks. default should be not have to press RET
+  (kbd "s-S-d") (lambda () (interactive)
+		       (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
+
+  (kbd "M-<down>") 'my/move-text-down
+  (kbd "M-<up>") 'my/move-text-up
+  )
+
+(define-key my/c-o-map (kbd "C-c") #'my/find-dir-rec)
+(define-key my/c-o-map (kbd "C-u") #'my/find-file-rec)
+(define-key my/c-o-map (kbd "C-g") #'grep)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Non-insert modes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion emacs) 'global
   ;; (evil-define-key nil 'global ;; this is lower precedence than above. evil -> maj. mode -> global
+
+  ;; below have meaning in insert mode (e.g. i do this alot in gdocs)
+  (kbd "C-e") 'evil-scroll-line-up
+  (kbd "C-a") 'evil-scroll-line-down
+  (kbd "C-S-e") 'evil-scroll-up
+  (kbd "C-S-a") 'evil-scroll-down
+
   ;; philosophy:
   ;; - SPC leader in <E> is good/harmless. can rebind or use another way if it overwrites something
   ;; useful (e.g. "dc" == SPC in magit). Note: <E>-specific leader combos might be desirable
@@ -23,27 +96,18 @@
   ;; - note: editing commands aren't needed in <E>. I'll put those in the <NVM> map where
   ;; convenient (e.g. if there's just 1 editing command that fits nicely into a group, cleaner to
   ;; keep it)
-  
+
   ;; * Core Nav *
   ;; (kbd "s-,") (lambda () (switch-to-buffer my/init-file))
   (kbd "s-,") (lambda () (interactive) (switch-to-buffer "init.el")) ;; todo: fix
+  (kbd "s-<left>") 'evil-jump-backward  ;; testing
+  (kbd "s-<right>")  'evil-jump-forward ;; testing
 
   (kbd "<leader>q") 'evil-record-macro ;; ballsy?! but quit window >often than creating macro.
-  ;; todo: map C-i and C-o in all modes? (alternative is s-<left> and s-<right>, as I do in IJ)
-  (kbd "C-u") 'evil-scroll-up
-  (kbd "C-d") 'evil-scroll-down ;; (already bound in <N>)
-  (kbd "<leader>v") 'universal-argument
-  ;; "h" 'evil-window-next ;; holding off binding for all modes. using for magit currently.
-  ;; todo: decide on below
-  ;; (kbd "s-e") 'evil-window-next ;; e.g. useful in scheme repl. but is there a better chord?
-  ;; (kbd "s-w") 'delete-window
-  ;; (kbd "s-o") 'delete-other-windows
-  ;; (kbd "s-W") 'delete-frame ;; alternative to above
 
   ;; * Windows/Frames *
   (kbd "M-<left>") 'winner-undo
   (kbd "M-<right>") 'winner-redo
-  (kbd "<leader>-") 'delete-window
   ;; ...
   (kbd "<leader>ws") 'evil-window-split
   (kbd "<leader>wv") 'evil-window-vsplit
@@ -51,25 +115,17 @@
 
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer
-  (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. helm?
-  (kbd "<leader>a") 'find-file ;; todo: need directory-recursive version (via helm, likely?)
+  (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. embark?
+  (kbd "<leader>a") 'find-file
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
   (kbd "<leader>x") 'my/run-current-file
   ;;
-  (kbd "<leader>ie") 'switch-to-buffer
-  (kbd "<leader>ia") 'find-file
   ;; ...
-  (kbd "<leader>io") 'bookmark-jump
   (kbd "<leader>ir") 'bookmark-set
   (kbd "<leader>im") 'bookmark-bmenu-list
   ;; ...
-  (kbd "<leader>is") 'save-buffer
-  (kbd "<leader>iS") (lambda () (interactive) (save-some-buffers t) (message "Saved all buffers."))
-  (kbd "<leader>id") 'kill-buffer ;; this kinda sucks. default should be not have to press RET
-  (kbd "<leader>iD") (lambda () (interactive)
-		       (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
   ;; ...
   (kbd "<leader>in") 'xah-new-empty-buffer  
   ;; ;; ...
@@ -77,15 +133,12 @@
   ;; 'xah-list-recently-closed
   (kbd "<leader>iw") 'recentf
   ;; ;; ...
-  (kbd "<leader>ix") 'my/run-current-file
-  (kbd "<leader>ik") 'my/run-current-file
   (kbd "<leader>i1") 'xah-open-in-terminal
   ;; xah-show-in-desktop
   ;; ;; ...
   (kbd "<leader>ic") 'xah-copy-file-path
 
   ;; * Common *
-  (kbd "<leader>tg") 'rgrep
   (kbd "<leader>ti") 'query-replace-regexp ;; todo: incremental replace preview like :%s
   (kbd "<leader>tt") 'repeat-complex-command
   (kbd "<leader>tl") 'list-matching-lines
@@ -120,31 +173,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion) 'global
   ;; * Core *
-  (kbd "<control-i>") 'evil-jump-forward ;; fix <C-i>. see Tab vs. <C-i> discussion below.
+  "h" 'evil-window-next
   "q" 'quit-window
+  "-" 'delete-other-windows
   "s" 'avy-goto-char-timer
   "S" 'avy-goto-line ;'avy-goto-char
   "r" 'evil-buffer
   "l" 'execute-extended-command ;; testing.
   "L" 'evil-ex
-  ;; (kbd "<leader>v") 'universal-argument
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
 
-  (kbd "M-<up>")   #'my/move-text-up
-  (kbd "M-<down>") #'my/move-text-down
-
-  (kbd "C-a") 'my/inc-number-after-point
-  (kbd "C-S-a") (lambda() (interactive) (my/inc-number-after-point (- 1)))
+  (kbd "C-p") 'my/inc-number-after-point
+  (kbd "C-S-p") (lambda() (interactive) (my/inc-number-after-point (- 1)))
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
-
-  ;; testing - numbers and C-numbers are same by default.
-  (kbd "C-7") 'magit
-  (kbd "C-3") (lambda() (interactive) (kill-buffer nil))
-  (kbd "C-9") 'my/align
-
-  ;; ;; * Windows/Frames *
-  "h" 'evil-window-next
-  "-" 'delete-other-windows ;; this is most important. help/info windows are simply closed with 'q'
 
   ;; * Commenting + Indentation *
   (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
@@ -229,5 +270,4 @@
 ;; - source: https://stackoverflow.com/questions/916797/emacs-global-set-key-to-c-tab
 (define-key input-decode-map [(control ?i)] [control-i])
 (define-key input-decode-map [(control ?I)] [(shift control-i)])
-;; last, I need to rebind <C-i> to the evil defaults
 

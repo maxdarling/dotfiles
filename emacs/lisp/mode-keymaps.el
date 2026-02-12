@@ -1,10 +1,12 @@
-;; my custom binds for special modes like Dired, Info, help, grep, eshell, etc.  -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
+;; my custom binds for special modes like Dired, Info, help, grep, eshell, etc.  
 ;; these start from the core normal state bindings in 'keybinds.el', but mix in emacs keys where
 ;; it makes sense.
 
 ;; todo 10/9/2024: below "stuff I do in response" #1 is dumb. I should pay the upfront cost of
 ;; manually porting over all the dired keys I use. Reason: I want to be able to update my keymap
 ;; in ./keymaps.el and not have to duplicate the effort here for dired.
+;; - 2/12/26: maybe. but it works fine for now. no biggie.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Discussion
@@ -37,13 +39,15 @@
 ;; this would save some headache? and then I can put that into my own state, I guess (or motion, still)
 ;; this tip came from https://github.com/noctuid/evil-guide?tab=readme-ov-file#using-emacs-keybindings-in-normal-state 
 
-
-;; todo: build abstraction on top of this. 
-(defvar normal-mode-map (cdr (alist-get 'evil-normal-state-minor-mode evil-mode-map-alist)))
-
-;; below: testing cleaner methods
-(alist-get ?h normal-mode-map)
-(lookup-key normal-mode-map (kbd "h"))
+(defun my/evil-normal-binding (keys)
+  "Return the command bound to KEYS in Evil normal state.
+KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"C-o\"))."
+  (let* ((map (cdr (assq 'evil-normal-state-minor-mode evil-mode-map-alist)))
+         (keyvec (cond
+                  ((stringp keys) (kbd keys))
+                  ((vectorp keys) keys)
+                  (t (error "KEYS must be a string or vector: %S" keys)))))
+    (key-binding keyvec t map)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Index
@@ -61,12 +65,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (evil-define-key 'normal dired-mode-map
   ;; vim
-  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map)
-  "h" (alist-get ?h normal-mode-map)
-  "l" (alist-get ?l normal-mode-map)
-  "r" (alist-get ?r normal-mode-map)
+  (kbd "C-o") (my/evil-normal-binding "C-o")
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
+  "l" (my/evil-normal-binding "l")
+  "r" (my/evil-normal-binding "r")
   "n" 'evil-search-next
   "N" 'evil-search-previous
   "-" 'delete-other-windows
@@ -74,7 +80,6 @@
   ;; override dired
   "gg" 'evil-goto-first-line ;; revert buffer. call via M-x. or, gg not that useful...?
   "G" 'evil-goto-line        ;; dired-do-chgrp. useless.
-  (kbd "C-o") 'evil-jump-backward
   (kbd "<S-return>") 'dired-display-file ;; this is what *grep* does, very sensible
   "@" 'evil-execute-macro
 
@@ -90,10 +95,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'motion help-mode-map
   ;; vim
-  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map)
-  "h" (alist-get ?h normal-mode-map)
-  "l" (alist-get ?l normal-mode-map)
-  "r" (alist-get ?r normal-mode-map)
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
+  "l" (my/evil-normal-binding "l")
+  "r" (my/evil-normal-binding "r")
   "n" 'evil-search-next
   "N" 'evil-search-previous
 
@@ -109,10 +114,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'motion Info-mode-map
   ;; vim
-  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map)
-  "h" (alist-get ?h normal-mode-map)
-  "l" (alist-get ?l normal-mode-map)
-  "r" (alist-get ?r normal-mode-map)
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
+  "l" (my/evil-normal-binding "l")
+  "r" (my/evil-normal-binding "r")
   "n" 'evil-search-next
   "N" 'evil-search-previous
 
@@ -156,7 +161,7 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; vterm
+;; Vterm
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (with-eval-after-load 'vterm
   ;; let Emacs handle these keys (don’t send them straight to the pty)
@@ -182,10 +187,10 @@
 (add-hook 'messages-buffer-mode-hook (lambda () (interactive) (message "hello!") (evil-motion-state)))
 (evil-define-key 'motion message-mode-map
   ;; vim
-  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map)
-  "h" (alist-get ?h normal-mode-map)
-  "l" (alist-get ?l normal-mode-map)
-  "r" (alist-get ?r normal-mode-map)
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
+  "l" (my/evil-normal-binding "l")
+  "r" (my/evil-normal-binding "r")
   "n" 'evil-search-next
   "N" 'evil-search-previous
   )
@@ -195,8 +200,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'emacs magit-mode-map
   ;; vim
-  (kbd "SPC") (alist-get (string-to-char " ") normal-mode-map) ;; doesn't work because emacs leader doesn't work (see keymaps.el)
-  "h" (alist-get ?h normal-mode-map)
+  ;; doesn't work because emacs leader doesn't work (see keymaps.el)
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
