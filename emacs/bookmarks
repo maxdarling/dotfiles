@@ -2,12 +2,18 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("my-frame.el"
-  (filename . "~/code/dotfiles/emacs/lisp/themes/my-frame.el")
-  (front-context-string . "\n;; notes\n;; - s")
-  (rear-context-string . "boro\"\n			   )))\n")
-  (position . 920)
-  (last-modified 27020 51802 940974 0))
+(("early-init.el"
+  (filename . "~/code/dotfiles/emacs/early-init.el")
+  (front-context-string . ";; frame  -*- le")
+  (rear-context-string)
+  (position . 1)
+  (last-modified 27022 5993 729070 0))
+("my-frame.el"
+ (filename . "~/code/dotfiles/emacs/lisp/themes/my-frame.el")
+ (front-context-string . "\n;; notes\n;; - s")
+ (rear-context-string . "boro\"\n			   )))\n")
+ (position . 920)
+ (last-modified 27020 51802 940974 0))
 ("customization.el"
  (filename . "~/code/dotfiles/emacs/customization.el")
  (front-context-string . ";; -*- lexical-b")

@@ -116,24 +116,7 @@
 (blink-cursor-mode -1)
 (display-line-numbers-mode)
 
-;; frame
-(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-(add-to-list 'default-frame-alist '(top . 1))
-(add-to-list 'default-frame-alist '(left . 1))
-;; 2/11/26: sadly, setting '(fullscreen . maximized), breaks corfu's popup window.
-;; we must do below hack instead for fullscreen.
-(setq frame-resize-pixelwise t)
-;; 13" laptop: 1450x900
-;; 24" monitor: 1500x800
-(add-to-list 'default-frame-alist '(width  . (text-pixels . 1500)))
-(add-to-list 'default-frame-alist '(height . (text-pixels . 900)))
-(setq initial-frame-alist default-frame-alist)
-
-;; custom frame stuff
-(setq my/frame-should-cycle-colors nil
-      my/frame-should-offset-position nil)
-(load-file "~/.emacs.d/lisp/themes/my-frame.el")
+;; frame: see 'early-init.el'
 
 ;; modeline
 (load-file "~/.emacs.d/lisp/themes/modeline.el")
