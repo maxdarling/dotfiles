@@ -43,6 +43,7 @@ ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
 # CURSOR
 #######################
 ln -sf "$(pwd)/cursor/settings.json" ~/Library/Application\ Support/Cursor/User/settings.json
+ln -sf "$(pwd)/cursor/keybindings.json" ~/Library/Application\ Support/Cursor/User/keybindings.json
 
 #######################
 # EMACS
