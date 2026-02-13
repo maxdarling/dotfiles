@@ -65,7 +65,6 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dired
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (evil-define-key 'normal dired-mode-map
   ;; vim
   (kbd "C-o") (my/evil-normal-binding "C-o")
