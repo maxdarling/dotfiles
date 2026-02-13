@@ -9,7 +9,7 @@
      default))
  '(package-selected-packages
    '(avy cape diff-hl embark evil-surround evil-visualstar
-	 exec-path-from-shell fireplace go-mode lsp-ui magit
+	 exec-path-from-shell fireplace go-mode harpoon lsp-ui magit
 	 modus-themes rg vterm wgrep which-key yasnippet))
  '(project-mode-line 'non-remote))
 

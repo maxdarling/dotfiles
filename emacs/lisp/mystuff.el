@@ -129,3 +129,9 @@ Based on `xah-run-current-file'"
   (interactive "r")
   (let ((indent-tabs-mode nil))
     (align-regexp BEG END (concat "\\(\\s-*\\)" " ") 1 1)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Inspo
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; - nice workflow for "search-and-replace on steroids" https://lambdaland.org/posts/2023-05-31_warp_factor_refactor/

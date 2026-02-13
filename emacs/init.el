@@ -12,8 +12,14 @@
 ;; - cleanup my-theme.el
 ;;   - factor out frame sizing.
 ;;   - refactor into options for background color toggles
+;; - keymap revamp phase 1 (and cleanups)
+;; - early-init.el (for window stuff)
+;; - try harpoon plugin in emacs
 
 ;; todo:
+;; - consult omni search (vscode style)
+;; - corfu show "src" next to popup (e.g. like in the screenshots here:
+;; https://github.com/minad/corfu)
 ;; - revamp keymaps (ongoing)
 ;; - "operation: term replacement"
 ;;   - bind find-file, find-dir, grep (NOT LEADER)
@@ -177,7 +183,7 @@
   (setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
   (setq avy-all-windows nil)
   (setq avy-case-fold-search nil)
-  (setq avy-timeout-seconds 0.4))
+  (setq avy-timeout-seconds 0.3))
 
 (use-package yasnippet
   :config

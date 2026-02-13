@@ -59,15 +59,35 @@
 
   (kbd "C-o") my/c-o-map
 
-  ;; todo: harpoon
-
   (kbd "s-s") 'save-buffer
   (kbd "s-d") 'kill-buffer ;; this kinda sucks. default should be not have to press RET
   (kbd "s-S-d") (lambda () (interactive)
-		       (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
+		  (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
 
   (kbd "M-<down>") 'my/move-text-down
   (kbd "M-<up>") 'my/move-text-up
+
+  ;; testing: harpoon
+  ;; notes:
+  ;; - i'm totally used to the visual indicators in vscode. hmm. but i could memorize e.g. for
+  ;; emacs dotfiles the seq: init, keymaps, mode keymaps, or something.
+  ;; - i should probably push myself to memorize for a couple weeks and see how it goes.
+  ;; - todo: C-c C-c as a common "apply changes" pattern on a virtual file a la. wgrep, wdired, magit.
+  ;; but i'd need to make a major mode? Why not?!
+  ;; - make it appear as a popup buffer in the center of the screen? or the minibuffer at least?
+  ;; upper left is uncomfortable for me. and modal better signifies that it's for quick changes.
+  ;;   - todo: quick win: make it appear in a tiny window at bottom, mimicking the minibuffer
+  (kbd "C-c h a") 'harpoon-add-file
+  (kbd "C-c h h") 'harpoon-toggle-file
+  (kbd "C-c h f") 'harpoon-toggle-quick-menu
+  (kbd "C-1") 'harpoon-go-to-1
+  (kbd "C-2") 'harpoon-go-to-2
+  (kbd "C-2") 'harpoon-go-to-2
+  (kbd "C-3") 'harpoon-go-to-3
+  (kbd "C-4") 'harpoon-go-to-4
+  (kbd "C-5") 'harpoon-go-to-5
+  (kbd "C-6") 'harpoon-go-to-6
+  
   )
 
 (define-key my/c-o-map (kbd "C-c") #'my/find-dir-rec)
@@ -80,7 +100,7 @@
 (evil-define-key '(normal visual motion emacs) 'global
   ;; (evil-define-key nil 'global ;; this is lower precedence than above. evil -> maj. mode -> global
 
-  ;; below have meaning in insert mode (e.g. i do this alot in gdocs)
+  ;; below have different meaning in insert mode (e.g. i do this alot in gdocs)
   (kbd "C-e") 'evil-scroll-line-up
   (kbd "C-a") 'evil-scroll-line-down
   (kbd "C-S-e") 'evil-scroll-up
