@@ -1,0 +1,78 @@
+[
+  // basics
+  {
+    "key": "cmd+right",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "cmd+left",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  // emacs key revamp phase 1
+  { "key": "ctrl+i", "command": "workbench.action.focusNextGroup" },
+  {
+    "key": "ctrl+k",
+    "command": "vim.remap",
+    "args": { "after": ["<C-^>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "vim.remap",
+    "args": { "after": ["<C-^>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // Note: the fzf file/dir commands (C-o C-u/C-c) don't make sense in vscode,
+  // which is workspace-based.
+  { "key": "ctrl+o ctrl+g", "command": "workbench.action.findInFiles" },
+  {
+    "key": "ctrl+p",
+    "command": "vim.remap",
+    "args": { "after": ["<C-a>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "vim.remap",
+    "args": { "after": ["<C-x>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "alt+q", // mirror (for dotfiles bookkeeping)
+    "command": "rewrap.rewrapComment",
+    "when": "editorTextFocus"
+  },
+  //
+  // DEFAULTS BELOW
+  //
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  {
+    "key": "ctrl+shift+-",
+    "command": "-workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-aichat.insertselectionintochat"
+  },
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus || terminalEditorFocus"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus || terminalEditorFocus"
+  }
+]

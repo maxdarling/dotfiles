@@ -6,12 +6,57 @@
 ;; C-o prefix
 (define-prefix-command 'my/c-o-map)
 
+;; philosophy (top-level)
+;; - speed + ergonomics
+;; - consider omni-modal vs. vim-only
+;;   - e.g. embrace C- and s- and consider SPC leader for vim-only
+;; - consider conflicts in other workflows, e.g:
+;;   - terminal, GDocs, etc: emacs commands C-k/a/e are essential
+;;
+;; reflections (start of phase 1) - C-k and C-i are likely better than
+;; "r" and "h". the latter were a bold play to make the most-common
+;; actions 1-keystroke, which i stand by in theory. the issue is that
+;; it doesn't work in some modes: 1. insert-always modes like terminal
+;; (can't think of other examples) and 2. <E>-always modes like magit
+;; (and more examples likely to follow over time). sure, you can C-x o
+;; your way out in those cases, but that lack of uniformity actually
+;; bugs me more I think. I hold a subconscious of those modes because
+;; of it - they feel foreign and unwieldy to me.  And then there's
+;; considering the next point: C-i/k is basically as comfy as h/r.  an
+;; L/R chord is pretty decent. specifically C- because my thumb hovers
+;; that by default when i'm in navigation-mode via C-d/u/e/y, and of
+;; course spacebar right below it when i'm in typing mode. it's very
+;; natural. cneitahicneainsetaicseaticens
+
+
 ;; phase 1 (start 2/11/26, comfy ??/??/??)
 ;; - remove C-o and C-i. too vim-specific. I like s-<left/right>.
 ;; - bind C-o (strongest available key) as a prefix for core stuff (fzf file/dir, grep, etc)
 ;; - revamp "h" to be pan-modal (C-i)
-;; - revamp "r" to be pan-modal (C-k)
+;; - revamp "r" to be pan-modal (C-k OR C-t)
 ;; - change inc (C-[S-]a) to (C-[S-]p)
+;; - force phase 1 changes on cursor, too :)
+
+;; todo (habits):
+;; - use C-l more for centering screen on cursor when scrolling up/down
+
+;; todo:
+;; - vterm conf (enable C-c, decide C-k, ...)
+;; - M-<L/R> default in normal mode (and working in term) , winner to C-<L/R>
+;; - unbind h, r (and restore help mode defaults?)
+;; - sift though C-x to understand groupings
+;; - read up on C-c conventions in different modes (e.g. C-c C-c is "apply changes") 
+;; - more vs-code and browser unification
+;;   - s-n for new empty file and s-S-n for new frame ("window")
+;;   - ...
+;; - cleanup xah-bound keys
+;;   - i can keep many to look at for inspo, but i should put somewhere out of the way.
+;; - "all modes" contains many leader sequences that are not relevant for
+;; emacs state. i should move them to the next section "normal mode". I likely
+;; confused the sections as one before(?).
+;; - switch to C-s for search (this frees n for magit and other "n/p" modes)
+
+;; abandoned:
 ;; - scrolling revamp
 ;;   - C-e and C-y for single line scroll, and C-u and C-d for multi line
 ;;   - why not just combine the above and use shift for the less common one?
@@ -19,29 +64,22 @@
 ;;   - cleanup:
 ;;     - C-a and C-S-a are inc. but too good a key for that. C-y is fine.
 ;;     - C-u/C-d free (keep C-u default)
-
-;; todo (habits):
-;; - use C-l more for centering screen on cursor when scrolling up/down
-
-;; todo:
-;; - force phase 1 changes on cursor, too :)
-;; - more vs-code and browser unification
-;;   - s-n for new empty file and s-S-n for new frame ("window")
-;;   - ...
-;; - M-<L/R> default in normal mode, winner to C-<L/R>, help-fwd/back to ???
-;;   - by default, help fwd/back is n/p. but n is search next in vim (and e.g. manpages).
-;;   but magit, grep, etc want n/p free. I bind [/] for grep, for example.
-;;     - if only i used another search style, i'd be chillin. maybe s-f?
-;; - cleanup xah-bound keys
-;;   - i can keep many to look at for inspo, but i should put somewhere out of the way.
-;; - "all modes" contains many leader sequences that are not relevant for
-;; emacs state. i should move them to the next section "normal mode". I likely
-;; confused the sections as one before(?).
+;;   - reason abandoned: minor bonus to free up some keys in exchange for slightly but
+;;   meaningfully more awkward binds for core actions. plus minor con in defying vim
+;;   defaults. plenty of benefit in just scrapping C-a and putting universal arg on C-'
 
 ;; available keys:
-;; - C (L): C-y, C-b, C-', C-,, ...
-;; - C (R): C-d, C-n, C-q, C-m, C-f
+;; - C (L): C-a, C-b, C-,, ...
+;; - C (R): C-t, C-n, C-q, C-m, C-f
 ;; - S: s-LOTS
+
+;; key replacement ideas:
+;; - r and C-r.
+;;   - why are u and C-r undo/redo? weird. i could map r to redo and then
+;;   free up C-r for something juicy.
+;; - C-h
+;;   - it's core in emacs, but only as a newb now. in theory it should be less important.
+;;   i should power-finger real estate for something more important and universal! 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All modes
@@ -56,6 +94,7 @@
 
   (kbd "<control-i>") 'evil-window-next
   (kbd "C-k") 'evil-buffer 
+  (kbd "C-t") 'evil-buffer ;; testing
 
   (kbd "C-o") my/c-o-map
 
@@ -64,8 +103,6 @@
   (kbd "s-S-d") (lambda () (interactive)
 		  (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
 
-  (kbd "M-<down>") 'my/move-text-down
-  (kbd "M-<up>") 'my/move-text-up
 
   ;; testing: harpoon
   ;; notes:
@@ -87,7 +124,6 @@
   (kbd "C-4") 'harpoon-go-to-4
   (kbd "C-5") 'harpoon-go-to-5
   (kbd "C-6") 'harpoon-go-to-6
-  
   )
 
 (define-key my/c-o-map (kbd "C-c") #'my/find-dir-rec)
@@ -95,16 +131,34 @@
 (define-key my/c-o-map (kbd "C-g") #'grep)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Non-emacs state
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key '(normal visual motion insert) 'global
+  ;; quandry: *most* <E> modes are readonly. but the terminal is an annoying exception (side note,
+  ;; could i use vterm in insert mode?).
+  ;;
+  ;; this leads to conflicts. e.g. I like M-<left/right> as an "editing-style" command in terminal
+  ;; (<E> state) as well as all other editing situations. but there may be a mode such as magit
+  ;; (<E> state) where such an editing-style command is bound to something useful (e.g. M-<up/down>
+  ;; for git rebase).
+  ;;
+  ;; what is the solution?
+  ;; 1. divide commands into "editing" and "navigation".
+  ;; 2. only bind nav commands to <E> state (this is solving for the common case)
+  ;; 3. if there's ever a situation where you're in an <E> state and you want editing commands,
+  ;; you fucked up (or, it's a valid exception like vterm, and the solution is to setup binds for that
+  ;; mode ad-hoc).
+
+  (kbd "M-<down>") 'my/move-text-down
+  (kbd "M-<up>") 'my/move-text-up
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Non-insert modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion emacs) 'global
-  ;; (evil-define-key nil 'global ;; this is lower precedence than above. evil -> maj. mode -> global
-
-  ;; below have different meaning in insert mode (e.g. i do this alot in gdocs)
-  (kbd "C-e") 'evil-scroll-line-up
-  (kbd "C-a") 'evil-scroll-line-down
-  (kbd "C-S-e") 'evil-scroll-up
-  (kbd "C-S-a") 'evil-scroll-down
+  (kbd "C-u")'evil-scroll-up
+  (kbd "C-\'") 'universal-argument ;; testing. 
 
   ;; philosophy:
   ;; - SPC leader in <E> is good/harmless. can rebind or use another way if it overwrites something
@@ -126,8 +180,8 @@
   (kbd "<leader>q") 'evil-record-macro ;; ballsy?! but quit window >often than creating macro.
 
   ;; * Windows/Frames *
-  (kbd "M-<left>") 'winner-undo
-  (kbd "M-<right>") 'winner-redo
+  (kbd "C-<left>") 'winner-undo
+  (kbd "C-<right>") 'winner-redo
   ;; ...
   (kbd "<leader>ws") 'evil-window-split
   (kbd "<leader>wv") 'evil-window-vsplit
@@ -253,14 +307,17 @@
 ;; Terminal
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion) 'global
+  (kbd "s-j") 'vterm
+  
   ;; issues:
   ;; - how to toggle back from eshell? (currently using winner). way better if it's same key to toggle.
-  (kbd "s-j") 'eshell
+  ;; (kbd "s-j") 'eshell
+
   ;; issues:
   ;; - line highlight persists, making it hard to read
   ;; - does not always play nice with winner or changing windows
   ;; - overwrites default C-j "newline without completion"
-  (kbd "C-j") 'term-toggle-term
+  ;; (kbd "C-j") 'term-toggle-term
   )
 ;; note, this is kinda jank. don't love it.
 (evil-define-key 'emacs 'global

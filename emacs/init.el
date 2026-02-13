@@ -15,15 +15,16 @@
 ;; - keymap revamp phase 1 (and cleanups)
 ;; - early-init.el (for window stuff)
 ;; - try harpoon plugin in emacs
+;; - bind find-file, find-dir, grep (NOT LEADER)
+;; - rg for grep and rgrep
+;; - auto-fill-mode for comments only (and learned M-q manual approach too)
 
 ;; todo:
+;; - setup format-on-save (a good pattern IMO)
 ;; - consult omni search (vscode style)
 ;; - corfu show "src" next to popup (e.g. like in the screenshots here:
 ;; https://github.com/minad/corfu)
 ;; - revamp keymaps (ongoing)
-;; - "operation: term replacement"
-;;   - bind find-file, find-dir, grep (NOT LEADER)
-;;   - rg for grep and rgrep
 ;; 
 ;; - study modus themes config
 ;; - cleanup init file
@@ -48,14 +49,7 @@
 ;;   - misc list: user-lisp-directory, ...
 ;; - start file with emacs katas, challenges, etc.
 
-;; theme
-;; - consolidate my theme stuff into a file/package?
-;; - check out modus themes
-;; - goal: be able to load prot's theme (in beframe vid)
-
 ;; terminal workflow notes:
-;; - bind find-dir and find-file :)
-;; - try vterm.
 ;; - except C-c? Big choice, but likely worth. C-z is my escape hatch.
 ;; - how to get multi-tab?
 ;; - explore vterm-toggle, vterm hotkey, vtm
@@ -334,6 +328,10 @@
 
 (setq indent-tabs-mode nil)
 (setq tab-width 4)
+
+;; autofill comments
+(auto-fill-mode 1)
+(setq comment-auto-fill-only-comments t)
 
 (setq auto-save-default nil) ;; stop creating autosave files e.g. #file#
 (setq make-backup-files nil) ; stop creating ~ files
