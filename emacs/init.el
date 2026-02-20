@@ -18,21 +18,26 @@
 ;; - bind find-file, find-dir, grep (NOT LEADER)
 ;; - rg for grep and rgrep
 ;; - auto-fill-mode for comments only (and learned M-q manual approach too)
+;; - project: "H" for custom duplicate and comment func.
+
+;; projects:
+;; - keyboard diagram visualizer
+;; - harpoon: show list in minibuffer (for better ergo looking down than up)
 
 ;; todo:
+;; - get fill (M-q) to work for not just comments (didn't work for defun docstring)
+;; - research autosave (and why .#init.el is being generated)
 ;; - setup format-on-save (a good pattern IMO)
-;; - consult omni search (vscode style)
+;; - consult omni search bound to s-p (vscode style)
 ;; - corfu show "src" next to popup (e.g. like in the screenshots here:
 ;; https://github.com/minad/corfu)
 ;; - revamp keymaps (ongoing)
 ;; 
 ;; - study modus themes config
 ;; - cleanup init file
+;;   - research user-lisp-directory
 ;;   - general cleanups
 ;;   - outline mode?
-;; - diff-hl
-;;   - make it look cleaner (no symbols, thicker, etc.). (e.g. read karthinks article linked)
-;;   - and enable autosave?
 ;; - literate emacs config? (via org)
 ;;   - this would give me functionality for bullets in comments: autocontinue and tab to nest
 ;;     - this is more like gdocs and markdown
@@ -43,17 +48,11 @@
 ;;   - consult seems beast? impressed at his "buffer vs. bookmark is just an impl. detail"
 ;;   - orderless: ...
 ;;   - embark: ...
-;; -
-;; - make fn (e.g. SPC-C) that comments out AND copies current line/region.
-;; - look into early-init.el
-;;   - misc list: user-lisp-directory, ...
-;; - start file with emacs katas, challenges, etc.
 
 ;; terminal workflow notes:
 ;; - except C-c? Big choice, but likely worth. C-z is my escape hatch.
 ;; - how to get multi-tab?
 ;; - explore vterm-toggle, vterm hotkey, vtm
-
 
 ;; LEARNING:
 ;; - what is xref?
@@ -67,13 +66,8 @@
 
 ;; IMPORTANT: 
 ;; - visual marks (e.g. IntelliJ style. highlight the line. or, use left "gutter", e.g. like bookmarks)
-;; - setup ⌘← and ⌘→ (but should decide on semantics. in IJ, these are diff than C-i and C-o...)
-;; - FIX: SPC leader in <E> is based on the assumption that we don't edit (but we do in shell/repl modes)
 ;; - decide on magit key (leader something)
-;; - figure out how to auto-disable hl-line-mode in term (hook not working!!)
-;; - figure out how to continue comments (but, corfu relies on normal RET?)
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)
-;; - figure out how to fill region while respecting comments.
 ;; - setup treesitter (elisp/scheme highlighting??) (evil-treesitter-text-obj!) (read karthinks post)
 
 ;; MEDIUM IMPORT:
@@ -114,7 +108,7 @@
 (set-frame-font "Menlo-15" t t) ;; todo: try prot
 (global-hl-line-mode 1)
 (blink-cursor-mode -1)
-(display-line-numbers-mode)
+(setq-default display-line-numbers t)
 
 ;; frame: see 'early-init.el'
 
@@ -321,7 +315,8 @@
 (setq ring-bell-function 'ignore)
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-dwim-target t)
-(setq dired-listing-switches "-alh")
+(setq dired-listing-switches "-alh --group-directories-first")
+(setq insert-directory-program "gls") ;; needed to get above option
 (setq help-window-select t) ;; start cursor in help windows. easy exit with 'q'
 ;; (global-prettify-symbols-mode 1) ;; e.g. lambda
 (setq garbage-collection-messages t) ;; starting point before gcmh
@@ -337,6 +332,8 @@
 (setq tab-width 4)
 
 ;; autofill comments (or, just M-q it manually)
+(column-number-mode 1)
+(setq-default fill-column 90)
 ;; (auto-fill-mode 1)
 ;; (setq comment-auto-fill-only-comments t)
 

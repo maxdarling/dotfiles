@@ -93,15 +93,17 @@
   (kbd "s-P") 'execute-extended-command
 
   (kbd "<control-i>") 'evil-window-next
-  (kbd "C-k") 'evil-buffer 
   (kbd "C-t") 'evil-buffer ;; testing
+  (kbd "s-e") 'evil-buffer ;; testing
+  ;; (kbd "C-k") 'evil-buffer 
 
   (kbd "C-o") my/c-o-map
 
   (kbd "s-s") 'save-buffer
   (kbd "s-d") 'kill-buffer ;; this kinda sucks. default should be not have to press RET
-  (kbd "s-S-d") (lambda () (interactive)
-		  (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
+  ;; below doesn't work - maps to "s-D"
+  ;; (kbd "s-S-d") (lambda () (interactive)
+  ;; 		  (save-buffer) (kill-buffer) (message "Saved and killed buffer."))
 
 
   ;; testing: harpoon
@@ -247,12 +249,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion) 'global
   ;; * Core *
-  "h" 'evil-window-next
+  "h" 'comment-line
+  "H" 'my/comment-and-duplicate
+  ;; "h" 'evil-window-next
+  ;; "r" 'evil-buffer
   "q" 'quit-window
   "-" 'delete-other-windows
   "s" 'avy-goto-char-timer
   "S" 'avy-goto-line ;'avy-goto-char
-  "r" 'evil-buffer
   "l" 'execute-extended-command ;; testing.
   "L" 'evil-ex
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
@@ -263,8 +267,8 @@
 
   ;; * Commenting + Indentation *
   (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
-  (kbd "<leader>c") 'comment-line
-  (kbd "<leader>c") 'my/comment-dwim
+  (kbd "<leader>c") 'my/comment-line-dwim
+  (kbd "<leader>C") 'comment-line
   "gq" 'evil-indent
   ;; xah inspiration:
   ;; ("TAB TAB" . indent-for-tab-command)
