@@ -41,7 +41,3 @@
     (forward-line 1)
     (transpose-lines 1)
     (forward-line -1)))
-
-;; test
-;; test2
-;; test3

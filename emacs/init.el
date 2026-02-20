@@ -153,9 +153,16 @@
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
-  (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
-  (setq diff-hl-update-async nil)
-  (setq diff-hl-draw-borders nil))
+  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
+  (setq diff-hl-update-async t)
+  (setq diff-hl-draw-borders nil)
+  ;; to test:
+  ;; - async update on?
+  ;; - bmp max width
+  ;; - draw borders
+  ;; - face ("change", "delete")
+  )
+
 
 (use-package evil
   :init
@@ -329,9 +336,9 @@
 (setq indent-tabs-mode nil)
 (setq tab-width 4)
 
-;; autofill comments
-(auto-fill-mode 1)
-(setq comment-auto-fill-only-comments t)
+;; autofill comments (or, just M-q it manually)
+;; (auto-fill-mode 1)
+;; (setq comment-auto-fill-only-comments t)
 
 (setq auto-save-default nil) ;; stop creating autosave files e.g. #file#
 (setq make-backup-files nil) ; stop creating ~ files
