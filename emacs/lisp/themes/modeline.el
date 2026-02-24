@@ -20,3 +20,4 @@
       (when trg
         (setcar trg "")))))
 (add-hook 'after-change-major-mode-hook 'purge-minor-modes)
+

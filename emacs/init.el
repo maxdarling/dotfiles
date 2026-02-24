@@ -25,6 +25,7 @@
 ;; - harpoon: show list in minibuffer (for better ergo looking down than up)
 
 ;; todo:
+;; - cleanup keymaps + mode keymaps. total mess. too many old comments.
 ;; - get fill (M-q) to work for not just comments (didn't work for defun docstring)
 ;; - research autosave (and why .#init.el is being generated)
 ;; - setup format-on-save (a good pattern IMO)
@@ -49,10 +50,10 @@
 ;;   - orderless: ...
 ;;   - embark: ...
 
-;; terminal workflow notes:
+;; vterm notes:
 ;; - except C-c? Big choice, but likely worth. C-z is my escape hatch.
 ;; - how to get multi-tab?
-;; - explore vterm-toggle, vterm hotkey, vtm
+;; - explore packages: vterm-toggle, vterm hotkey, vtm
 
 ;; LEARNING:
 ;; - what is xref?
@@ -60,36 +61,25 @@
 ;; - compile commands
 ;; - elisp fundamentals
 ;; - recentf mode
-;; - ido vs icomplete vs fido (look at source?) (xah?)
 ;; - imenu
-;; - study avy (https://karthinks.com/software/avy-can-do-anything/)
 
 ;; IMPORTANT: 
 ;; - visual marks (e.g. IntelliJ style. highlight the line. or, use left "gutter", e.g. like bookmarks)
-;; - decide on magit key (leader something)
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)
 ;; - setup treesitter (elisp/scheme highlighting??) (evil-treesitter-text-obj!) (read karthinks post)
 
-;; MEDIUM IMPORT:
-;; - use C-x p f (and rest of "project" commands)
-;; - try consult (e.g. consult-dir in the Embark karthinks article) 
-;; - setup section folding (like my vimrc) for this file. does it exist in emacs? make my own?? outline mode?
-
 ;; BACKBURNER:
-;; - I can bind number keys. I rarely use em in vim. I'm fine to prefix it to use em as numbers if needed. 
-;; - popper. very powerful. terms and more. per-project. dedicated help toggle could be nice.
-;; - harpoon
 ;; - paredit (and aggressive-indent-mode)
+;; - use emacs transpose functionality. seems powerful. e.g. word, sexp, line with M-t, C-M-t, C-x C-t
+;; seems evil has unbound these, though
+;; - use sexp-based movement. e.g. C-M-f forward-sexp (but, this doesn't go to next lines, wtf?
+;; note that C-M-b/n are related. b works nicely. but n won't let me skip to new lines, wtf.
 ;; - setup advanced abbrev completion system, like Xah (http://xahlee.info/emacs/emacs/emacs_interactive_abbrev.html)
 ;; - try ace-window (and combine with embark)
 ;; - yank-from-kill-ring
-;; - use emacs transpose functionality. seems powerful. e.g. word, sexp, line with M-t, C-M-t, C-x C-t
-;; seems evil has unbound these, though
 ;; - TAB -> xah-elisp-complete-or-indent (https://www.youtube.com/live/bHGVp9c7fPg?si=2sPVPRMfTvpqHByF&t=1030)
 ;; I don't see this in XFK, it must be part of his elisp mode. but I do see xah-reformat-lines.
 ;; - xah-comment-dwim (set to ;). kinda lit.
-;; - use sexp-based movement. e.g. C-M-f forward-sexp (but, this doesn't go to next lines, wtf?
-;; note that C-M-b/n are related. b works nicely. but n won't let me skip to new lines, wtf.
 ;; - copy his syntax highlighting for elisp. see `custom-elisp-mode.el`
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -108,19 +98,109 @@
 (set-frame-font "Menlo-15" t t) ;; todo: try prot
 (global-hl-line-mode 1)
 (blink-cursor-mode -1)
-(setq-default display-line-numbers t)
+;; line numbers for prog-mode only
+(setq-default display-line-numbers nil)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; frame: see 'early-init.el'
 
 ;; modeline
-(load-file "~/.emacs.d/lisp/themes/modeline.el")
+;; strip lexical binding hint (not working)
+(setq-default mode-name
+	          '(:eval (replace-regexp-in-string "/l\\'" "" (format-mode-line mode-name))))
+;; hide minor modes
+(setq mode-line-modes
+      '("[" (:propertize mode-name face mode-line-buffer-id) "]"))
+
+;; default
+;; (setq mode-line-format
+;;       ("%e" mode-line-front-space
+;;        (:propertize
+;;         ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
+;;          mode-line-window-dedicated)
+;;         display (min-width (6.0)))
+;;        mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
+;;        evil-mode-line-tag (project-mode-line project-mode-line-format) (vc-mode vc-mode) "  "
+;;        mode-line-modes mode-line-misc-info mode-line-end-spaces)
+;;       )
+
+
+;; todo
+;; - missing %, and slow to update
+;; - line:col needs default padding. otherwise when it grows/shrinks it offsets the rest
+;; - 
+
+;; (setq-default
+;;  mode-line-modified
+;;  '(:eval
+;;    (format "%s%s-"
+;;            (if (buffer-modified-p) "M" "U")
+;;            (propertize
+;;             (if buffer-read-only "R" "-")
+;;             'face (if buffer-read-only 'font-lock-warning-face 'mode-line)))))
+
+(setq my/mode-line-right
+      '(" %p  "
+        (:eval (when vc-mode
+                 (concat ":" (substring-no-properties vc-mode 5)))) ; strip leading " Git:"
+        "  " mode-line-modes mode-line-misc-info))
+
+(setq my/crichton-mode-line
+      `(
+        " " (:eval (format "%7s"
+                       (format-mode-line "%l:%c")))
+
+        " " mode-line-modified " "
+        ;; " " (:eval (if (buffer-modified-p) "*" "-"))
+
+        ;; evil-mode-line-tag " " ; bug: disappearing after entering insert mode
+        ;; (:eval (format-mode-line evil-mode-line-tag)) " "
+
+        ;; "[project]buffer"
+        (:eval
+         (let ((p (string-trim
+                   (format-mode-line '(project-mode-line project-mode-line-format)))))
+           (if (string-empty-p p) "" (concat "[" p "]"))))
+        mode-line-buffer-identification
+
+        "    "
+        ;; spacer: right-justify everything after this
+        ;; (:eval (propertize
+        ;;         " "
+        ;;         'display
+        ;;         `((space :align-to
+        ;;                  (- (+ right right-fringe right-margin)
+        ;;                     ,(string-width (format-mode-line my/mode-line-right)))))))
+
+        ;; Right: render the list
+        (:eval (format-mode-line my/mode-line-right))
+
+        mode-line-end-spaces))
+
+(setq-default mode-line-format my/crichton-mode-line) 
+
+
+;; (load-file "~/.emacs.d/lisp/themes/modeline.el")
 
 ;; prot theme
 (use-package modus-themes
   :config
   ;; todo
+
+  (setq modus-themes-common-palette-overrides
+        '(
+	      ;; mode line: borderless - set to "unspecified" for thinner border
+	      (border-mode-line-active bg-mode-line-active)
+          (border-mode-line-inactive bg-mode-line-inactive)
+          ;; mode line: color
+	      (bg-mode-line-active bg-blue-subtle)
+          (fg-mode-line-active fg-main)
+          ;; (border-mode-line-active blue-intense)
+	      ))
+
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs nil) ;; testing
+
   (modus-themes-load-theme 'modus-operandi)
   )
 
@@ -327,6 +407,7 @@
 ;; misc
 (winner-mode 1)
 (which-key-mode 1)
+(savehist-mode 1)
 
 (setq indent-tabs-mode nil)
 (setq tab-width 4)

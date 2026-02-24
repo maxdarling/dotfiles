@@ -84,7 +84,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; All modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(evil-define-key '(normal visual motion emacs insert) 'global
+(evil-define-key* '(normal visual motion emacs insert) 'global
   ;; philosophy:
   ;; - be mindful of hand-balance for chords. C is on R side, s is on left. most of the time
   ;; it feels better to press modifier on one hand and actual keys on the other.
@@ -182,8 +182,8 @@
   (kbd "<leader>q") 'evil-record-macro ;; ballsy?! but quit window >often than creating macro.
 
   ;; * Windows/Frames *
-  (kbd "C-<left>") 'winner-undo
-  (kbd "C-<right>") 'winner-redo
+  (kbd "M-s-<left>") 'winner-undo
+  (kbd "M-s-<right>") 'winner-redo
   ;; ...
   (kbd "<leader>ws") 'evil-window-split
   (kbd "<leader>wv") 'evil-window-vsplit

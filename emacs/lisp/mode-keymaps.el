@@ -68,6 +68,7 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 (evil-define-key 'normal dired-mode-map
   ;; vim
   (kbd "C-o") (my/evil-normal-binding "C-o")
+  (kbd "C-t") (my/evil-normal-binding "C-t")
   (kbd "SPC") (my/evil-normal-binding "SPC")
   "h" (my/evil-normal-binding "h")
   "l" (my/evil-normal-binding "l")
@@ -113,6 +114,8 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'motion Info-mode-map
   ;; vim
+  (kbd "C-o") (my/evil-normal-binding "C-o")
+  (kbd "C-t") (my/evil-normal-binding "C-t")
   (kbd "SPC") (my/evil-normal-binding "SPC")
   "h" (my/evil-normal-binding "h")
   "l" (my/evil-normal-binding "l")
