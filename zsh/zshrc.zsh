@@ -31,6 +31,7 @@ alias gmast="git checkout master && git pull origin master"
 alias gm="git checkout master && git pull origin master"
 alias grc="git rebase --continue"
 alias gd="git diff"
+alias gde='emacsclient -ce "(magit-diff-unstaged)"'
 alias gemp="git commit -m \"empty commit\" --allow-empty"
 
 # personal bash

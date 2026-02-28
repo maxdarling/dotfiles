@@ -23,8 +23,28 @@
 ;; projects:
 ;; - keyboard diagram visualizer
 ;; - harpoon: show list in minibuffer (for better ergo looking down than up)
+;; - port code-jump from vscode (superior to avy, imo!)
+
+;; emacs as pager deep-dive:
+;; - problem: i'm using delta as my differ. not great!
+;;   - i want next hunk, normal search, and next file.
+;;   - also want files more clearly highlighted
+;; - emacs pros:
+;;   - supports desires above (keybinds, theming, etc)
+;;   - bonus magit features (if i want to learn)
+;; - open questions:
+;;   - n/N for hunk conflicts with vim search.
+;;     - i should look into isearch
+;;     - first guess: bind "{" and "}" to file jumps?
+;;     - second guess: use M-n/p
+;;     - third guess: use s-f style (e.g. vscode-style)
+;;     - read up on view mode.
+;;       - u and d is mega extra comfort.
+;;       - how about motion mode as my own sort of view mode? in magit but also just for perusal
+;;     - yak shave reminder: this is essentially keybind planning, it makes me want 
 
 ;; todo:
+;; - bug: fix transient-magit incompatibility (e.g. when pressing "d" to bring up a split diff)
 ;; - cleanup keymaps + mode keymaps. total mess. too many old comments.
 ;; - get fill (M-q) to work for not just comments (didn't work for defun docstring)
 ;; - research autosave (and why .#init.el is being generated)
@@ -105,82 +125,7 @@
 ;; frame: see 'early-init.el'
 
 ;; modeline
-;; strip lexical binding hint (not working)
-(setq-default mode-name
-	          '(:eval (replace-regexp-in-string "/l\\'" "" (format-mode-line mode-name))))
-;; hide minor modes
-(setq mode-line-modes
-      '("[" (:propertize mode-name face mode-line-buffer-id) "]"))
-
-;; default
-;; (setq mode-line-format
-;;       ("%e" mode-line-front-space
-;;        (:propertize
-;;         ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
-;;          mode-line-window-dedicated)
-;;         display (min-width (6.0)))
-;;        mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
-;;        evil-mode-line-tag (project-mode-line project-mode-line-format) (vc-mode vc-mode) "  "
-;;        mode-line-modes mode-line-misc-info mode-line-end-spaces)
-;;       )
-
-
-;; todo
-;; - missing %, and slow to update
-;; - line:col needs default padding. otherwise when it grows/shrinks it offsets the rest
-;; - 
-
-;; (setq-default
-;;  mode-line-modified
-;;  '(:eval
-;;    (format "%s%s-"
-;;            (if (buffer-modified-p) "M" "U")
-;;            (propertize
-;;             (if buffer-read-only "R" "-")
-;;             'face (if buffer-read-only 'font-lock-warning-face 'mode-line)))))
-
-(setq my/mode-line-right
-      '(" %p  "
-        (:eval (when vc-mode
-                 (concat ":" (substring-no-properties vc-mode 5)))) ; strip leading " Git:"
-        "  " mode-line-modes mode-line-misc-info))
-
-(setq my/crichton-mode-line
-      `(
-        " " (:eval (format "%7s"
-                       (format-mode-line "%l:%c")))
-
-        " " mode-line-modified " "
-        ;; " " (:eval (if (buffer-modified-p) "*" "-"))
-
-        ;; evil-mode-line-tag " " ; bug: disappearing after entering insert mode
-        ;; (:eval (format-mode-line evil-mode-line-tag)) " "
-
-        ;; "[project]buffer"
-        (:eval
-         (let ((p (string-trim
-                   (format-mode-line '(project-mode-line project-mode-line-format)))))
-           (if (string-empty-p p) "" (concat "[" p "]"))))
-        mode-line-buffer-identification
-
-        "    "
-        ;; spacer: right-justify everything after this
-        ;; (:eval (propertize
-        ;;         " "
-        ;;         'display
-        ;;         `((space :align-to
-        ;;                  (- (+ right right-fringe right-margin)
-        ;;                     ,(string-width (format-mode-line my/mode-line-right)))))))
-
-        ;; Right: render the list
-        (:eval (format-mode-line my/mode-line-right))
-
-        mode-line-end-spaces))
-
-(setq-default mode-line-format my/crichton-mode-line) 
-
-
-;; (load-file "~/.emacs.d/lisp/themes/modeline.el")
+(load-file "~/.emacs.d/lisp/themes/modeline.el")
 
 ;; prot theme
 (use-package modus-themes
@@ -217,7 +162,9 @@
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
-  (package-refresh-contents t))
+  ;; (package-refresh-contents t)
+  (unless package-archive-contents
+    (package-refresh-contents)))
 
 ;; todo:
 ;; - hard to see shit. should use a diff theme
@@ -315,11 +262,6 @@
 	    )
   )
 
-(use-package term-toggle
-  ;; is this better? way older... https://github.com/kyagi/shell-pop-el
-  :ensure nil
-  :load-path "~/.emacs.d/lisp/emacs-term-toggle")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -330,12 +272,12 @@
 ;; - https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
 ;; - https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 
-(use-package go-mode
-  ;; :mode ("\.go$") ;; needed?
-  :init
-  ;; work around GUI emacs path being different than term/system
-  (add-to-list 'exec-path "/Users/mhd/go/bin/") ;; gopls
-  )
+;; (use-package go-mode
+;;   ;; :mode ("\.go$") ;; needed?
+;;   :init
+;;   ;; work around GUI emacs path being different than term/system
+;;   (add-to-list 'exec-path "/Users/mhd/go/bin/") ;; gopls
+;;   )
 
 (use-package typescript-ts-mode
   :mode ("\.ts$") ;; needed?
@@ -434,3 +376,9 @@
 (with-eval-after-load 'icomplete
   ;; Make C-j exit literally instead of forcing completion
   (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
+
+(run-at-time
+ 0 nil
+ (lambda ()
+   (message "Init loaded in %.2fs"
+            (float-time (time-subtract after-init-time before-init-time)))))

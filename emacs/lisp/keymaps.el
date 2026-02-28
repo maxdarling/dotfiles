@@ -89,7 +89,7 @@
   ;; - be mindful of hand-balance for chords. C is on R side, s is on left. most of the time
   ;; it feels better to press modifier on one hand and actual keys on the other.
 
-  (kbd "s-p") 'switch-to-buffer ;; todo: use consult for vs-code style behavior
+  (kbd "s-p") 'project-find-file
   (kbd "s-P") 'execute-extended-command
 
   (kbd "<control-i>") 'evil-window-next
@@ -196,7 +196,7 @@
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
-  (kbd "<leader>x") 'my/run-current-file
+  (kbd "<leader>x") 'my/run-file
   ;;
   ;; ...
   (kbd "<leader>ir") 'bookmark-set
@@ -235,7 +235,7 @@
   (kbd "<leader>bf") 'xah-show-formfeed-as-line ;; note: should be on almost always
 
   ;; * Evaluations *
-  (kbd "<leader>kh") 'my/run-current-file
+  (kbd "<leader>kh") 'my/run-file
   (kbd "<leader>kf") 'eval-buffer
   (kbd "<leader>kd") 'eval-defun
   (kbd "<leader>kl") 'eval-last-sexp
@@ -249,7 +249,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion) 'global
   ;; * Core *
-  "h" 'comment-line
+  "h" 'my/comment-line-dwim
   "H" 'my/comment-and-duplicate
   ;; "h" 'evil-window-next
   ;; "r" 'evil-buffer
@@ -268,7 +268,6 @@
   ;; * Commenting + Indentation *
   (kbd "<leader>0") (lambda () (interactive) (indent-region (point-min) (point-max)))
   (kbd "<leader>c") 'my/comment-line-dwim
-  (kbd "<leader>C") 'comment-line
   "gq" 'evil-indent
   ;; xah inspiration:
   ;; ("TAB TAB" . indent-for-tab-command)

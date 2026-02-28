@@ -201,10 +201,14 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'emacs magit-mode-map
-  ;; vim
-  ;; doesn't work because emacs leader doesn't work (see keymaps.el)
   (kbd "SPC") (my/evil-normal-binding "SPC")
   "h" (my/evil-normal-binding "h")
+
+  ;; native (non-invasive overrides)
+  (kbd "C-d") (my/evil-normal-binding "C-d")
+  (kbd "C-e") (my/evil-normal-binding "C-e")
+  (kbd "C-y") (my/evil-normal-binding "C-y")
+  "N" 'magit-section-backward
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;

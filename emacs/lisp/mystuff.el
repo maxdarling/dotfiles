@@ -1,39 +1,37 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;  -*- lexical-binding: t; -*-
 ;; Run Current File
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun my/run-current-file ()
-  "Run a file. E.g. for scheme, eval it and send to repl.
-Based on `xah-run-current-file'"
-  (interactive)
-  (let* ((fileExt (file-name-extension buffer-file-name))
-	 (run-func (cdr (assoc fileExt my/run-current-file-map))))
-    (funcall run-func buffer-file-name) 
-    ))
+(defvar my//run-file-map
+  '((el   . my/run-elisp-file)
+    (scm  . my/run-scheme-file)
+    (html . my/run-html-file)))
 
-(defvar my/run-current-file-map
-  '(("scm" . my/run-scheme-file)
-    ("el" . my/run-elisp-file)
-    ("html" . my/run-html-file)
-    ) 
-  "Maps file extension to file-runner function. Used by `my/run-current-file'.")
-
-(defun my/run-scheme-file (&optional filepath)
-  "Run the given scheme file."
+(defun my/run-file ()
+  "Run current file based on its extension. Simplified adaptation of `xah-run-current-file'"
   (interactive)
-  (message "Loaded scheme file.")
-  (scheme-load-file filepath))
+  (let* ((ext (file-name-extension (or buffer-file-name ""))))
+    (funcall
+     (alist-get (and ext (intern ext))
+                my//run-file-map
+                #'my/run-elisp-file))))
 
 (defun my/run-elisp-file (&optional filepath)
   "Run the given elisp file."
-  (interactive)
-  (message "Evaluated elisp buffer.")
-  (eval-buffer nil nil filepath))
+  (interactive "bEval buffer: ")
+  (eval-buffer filepath)
+  (message "Evaluated elisp buffer."))
+
+(defun my/run-scheme-file (&optional filepath)
+  "Run the given scheme file."
+  (interactive "bEval scheme buffer: ")
+  (scheme-load-file (or filepath buffer-file-name))
+  (message "Loaded scheme file."))
 
 (defun my/run-html-file (&optional filepath)
   "Run the given html file."
-  (interactive)
-  (message "Opened html file in browser.")
-  (browse-url filepath))
+  (interactive "bFile to run: ")
+  (browse-url (or filepath buffer-file-name))
+  (message "Opened html file in browser."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project Setup
@@ -48,8 +46,7 @@ Based on `xah-run-current-file'"
   (split-window-right)
   (other-window 1)
   (call-interactively 'run-scheme)
-  (other-window 1)
-  )
+  (other-window 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc 
