@@ -104,77 +104,40 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-;; put package-manager-generated stuff in another file
-(setq custom-file "~/.emacs.d/customization.el")
-(load-file custom-file)
-
 (setq my/init-file "~/.emacs.d/init.el")
 (setq initial-buffer-choice my/init-file)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Theme
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; essentials
-(set-frame-font "Menlo-15" t t) ;; todo: try prot
-(global-hl-line-mode 1)
-(blink-cursor-mode -1)
-;; line numbers for prog-mode only
-(setq-default display-line-numbers nil)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package Setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'package)
 
-;; frame: see 'early-init.el'
+(setq package-install-upgrade-built-in t)
 
-;; modeline
-(load-file "~/.emacs.d/lisp/themes/modeline.el")
+(setq package-archives
+      '(("gnu"   . "https://elpa.gnu.org/packages/")
+        ("nongnu". "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")))
 
-;; prot theme
-(use-package modus-themes
-  :config
-  ;; todo
+(package-initialize)
+;; (package-refresh-contents) ; tip: only do this manually when desired
 
-  (setq modus-themes-common-palette-overrides
-        '(
-	      ;; mode line: borderless - set to "unspecified" for thinner border
-	      (border-mode-line-active bg-mode-line-active)
-          (border-mode-line-inactive bg-mode-line-inactive)
-          ;; mode line: color
-	      (bg-mode-line-active bg-blue-subtle)
-          (fg-mode-line-active fg-main)
-          ;; (border-mode-line-active blue-intense)
-	      ))
+(require 'use-package)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs nil) ;; testing
+(setq custom-file "~/.emacs.d/customization.el")
+(load-file custom-file)
 
-  (modus-themes-load-theme 'modus-operandi)
-  )
-
-;; (load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Packages
-;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package package
-  :config
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
-
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
-  (package-initialize)
-  ;; (package-refresh-contents t)
-  (unless package-archive-contents
-    (package-refresh-contents)))
-
-;; todo:
-;; - hard to see shit. should use a diff theme
-;; - read this: https://karthinks.com/software/fringe-matters-finding-the-right-difference/?utm_source=chatgpt.com
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package diff-hl
   :hook ((prog-mode . diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
-  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type)
+  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type) ;; adds symbols. bad.
   (setq diff-hl-update-async t)
   (setq diff-hl-draw-borders nil)
   ;; to test:
@@ -183,7 +146,6 @@
   ;; - draw borders
   ;; - face ("change", "delete")
   )
-
 
 (use-package evil
   :init
@@ -229,7 +191,7 @@
   (use-package cape)
   :config
   (setq corfu-auto t
-	    corfu-auto-delay .1) ;; .2 default
+	corfu-auto-delay .1) ;; .2 default
   (add-to-list 'completion-styles 'flex) 
 
   ;; order matters (first in list = highest priority)
@@ -247,19 +209,19 @@
 
 (use-package embark
   :bind (:map minibuffer-mode-map
-	          (("C-e" . embark-act)
-	           ("C-a" . embark-dwim)))
+	      (("C-e" . embark-act)
+	       ("C-a" . embark-dwim)))
   :config
   ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
   ;; see 'lisp/hacks/embark-hacks.el' for more ideas
   (setq embark-default-action-overrides
-	    '(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
-	      ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
-	      ;; opens dired, and not even on right file.
-	      ;; note: same behavior as builtin find-file 'o' option.
-	      ((file . find-file) . find-file-other-window) 
-	      )
-	    )
+	'(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
+	  ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
+	  ;; opens dired, and not even on right file.
+	  ;; note: same behavior as builtin find-file 'o' option.
+	  ((file . find-file) . find-file-other-window) 
+	  )
+	)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -293,8 +255,8 @@
   ;; (setq lsp-ui-sideline-show-hover t) ;; just types, very noisy
 
   :hook (
-	     (go-mode . lsp) ;; maybe lsp-deferred?
-	     (typescript-ts-mode . lsp))
+	 (go-mode . lsp) ;; maybe lsp-deferred?
+	 (typescript-ts-mode . lsp))
   :commands (lsp lsp-deferred))
 (use-package lsp-ui :commands lsp-ui-mode)
 
@@ -304,6 +266,46 @@
 ;; global enable abbrevs
 (add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
 (add-hook 'prog-mode-hook (lambda () (abbrev-mode 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Theme
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; essentials
+(set-frame-font "Menlo-15" t t) ;; todo: try prot
+(global-hl-line-mode 1)
+(blink-cursor-mode -1)
+;; line numbers for prog-mode only
+(setq-default display-line-numbers nil)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+;; frame: see 'early-init.el'
+
+;; modeline
+(load-file "~/.emacs.d/lisp/themes/modeline.el")
+
+;; prot theme
+(use-package modus-themes
+  :config
+  ;; todo
+
+  (setq modus-themes-common-palette-overrides
+        '(
+	  ;; mode line: borderless - set to "unspecified" for thinner border
+	  (border-mode-line-active bg-mode-line-active)
+          (border-mode-line-inactive bg-mode-line-inactive)
+          ;; mode line: color
+	  (bg-mode-line-active bg-blue-subtle)
+          (fg-mode-line-active fg-main)
+          ;; (border-mode-line-active blue-intense)
+	  ))
+
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil) ;; testing
+
+  (modus-themes-load-theme 'modus-operandi)
+  )
+
+;; (load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Binds
