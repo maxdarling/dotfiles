@@ -29,6 +29,7 @@
 ;; - problem: i'm using delta as my differ. not great!
 ;;   - i want next hunk, normal search, and next file.
 ;;   - also want files more clearly highlighted
+;;   - how good is ediff??
 ;; - emacs pros:
 ;;   - supports desires above (keybinds, theming, etc)
 ;;   - bonus magit features (if i want to learn)
@@ -272,11 +273,25 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; essentials
 (set-frame-font "Menlo-15" t t) ;; todo: try prot
-(global-hl-line-mode 1)
-(blink-cursor-mode -1)
+
 ;; line numbers for prog-mode only
 (setq-default display-line-numbers nil)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+(blink-cursor-mode -1)
+
+;; hl line (not in some buffers)
+(global-hl-line-mode 1)
+(dolist (hook '(ediff-control-mode-hook
+                ediff-mode-hook
+                term-mode-hook
+                vterm-mode-hook
+                eshell-mode-hook
+                shell-mode-hook
+                magit-status-mode-hook
+                magit-log-mode-hook
+                magit-diff-mode-hook))
+  (add-hook hook (lambda () (setq-local global-hl-line-mode nil))))
 
 ;; frame: see 'early-init.el'
 
@@ -378,6 +393,12 @@
 (with-eval-after-load 'icomplete
   ;; Make C-j exit literally instead of forcing completion
   (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
+
+;; ediff
+(setq ediff-window-setup-function #'ediff-setup-windows-plain)
+(setq ediff-split-window-function #'split-window-horizontally)
+(setq ediff-keep-variants nil)
+(setq ediff-auto-refine 'on)
 
 (run-at-time
  0 nil
