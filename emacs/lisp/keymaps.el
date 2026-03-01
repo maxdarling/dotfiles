@@ -262,7 +262,7 @@
   ":" 'repeat-complex-command ;; testing. idea: mirrors the '.' command
 
   (kbd "C-p") 'my/inc-number-after-point
-  (kbd "C-S-p") (lambda() (interactive) (my/inc-number-after-point (- 1)))
+  (kbd "C-S-p") 'my/dec-number-after-point
   (kbd "C-@") (lambda() (interactive) (set-buffer-modified-p nil) (kill-buffer)) ;; forcibly delete buffer
 
   ;; * Commenting + Indentation *

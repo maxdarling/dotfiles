@@ -93,18 +93,43 @@
     (comment-line 1)
     (if dont-advance-point (previous-line))))
 
-;; todo: fix for decimals, e.g 3.28 goes crazy...? must be a precision thing?
-;; todo: fix removal of period, e.g. in "5."
-;; todo: make number scoped only to right of cursor, e.g. 10.14.11 -> 10.14.12 intead of 10.15.11
+;; below: chatGPT 5.2
 (defun my/inc-number-after-point (&optional incval)
-  "Increment the current/next number on the current line by 1 (or `incval' if specified)."
-  (let ((inc (or incval 1))
-	(origPoint (point)))
-    (skip-chars-backward "0-9")
-    (skip-chars-forward "^0-9" (pos-eol))
-    (if (number-at-point)
-	(replace-match (number-to-string (+ inc (number-at-point))))
-      (goto-char origPoint))))
+  "Increment number at point, or the next number on the line.
+
+Vim-ish point behavior:
+- If point is already on/inside a number, keep point where it was.
+- If we jump forward to the next number, move point to that number."
+  (interactive "p")
+  (let* ((inc (or incval 1))
+         (orig (point))
+         (eol  (line-end-position))
+         (jumped nil))
+    ;; If we're inside digits, back up to the start of the number.
+    (when (and (< (point) eol)
+               (or (looking-at "[0-9]")
+                   (and (> (point) (line-beginning-position))
+                        (save-excursion (backward-char 1) (looking-at "[0-9]")))))
+      (skip-chars-backward "0-9"))
+    ;; If not on a number, search forward to the next one on this line.
+    (unless (looking-at "-?[0-9]+")
+      (when (re-search-forward "-?[0-9]+" eol t)
+        (setq jumped t)
+        (goto-char (match-beginning 0))))
+    ;; Replace if found.
+    (when (looking-at "-?[0-9]+")
+      (let ((beg (match-beginning 0))
+            (num (string-to-number (match-string 0))))
+        (replace-match (number-to-string (+ num inc)) t t)
+        (when jumped
+          (goto-char beg))))
+    ;; If we didn't find anything, restore point.
+    (unless (or (looking-at "-?[0-9]+") jumped)
+      (goto-char orig))))
+
+(defun my/dec-number-after-point (&optional incval)
+  (interactive "p")
+  (my/inc-number-after-point (- incval)))
 
 ;; source: https://www.reddit.com/r/emacs/comments/13y5k9j/simple_fuzzy_find_file/
 (defun my/find-file-rec ()
