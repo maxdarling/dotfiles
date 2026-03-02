@@ -209,9 +209,10 @@
   )
 
 (use-package embark
-  :bind (:map minibuffer-mode-map
-	      (("C-e" . embark-act)
-	       ("C-a" . embark-dwim)))
+  ;; :bind (:map minibuffer-mode-map
+	      ;; note: can't be these, i use these as emacs editing commands in minibuffer
+	      ;; (("C-e" . embark-act)
+	       ;; ("C-a" . embark-dwim)))
   :config
   ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
   ;; see 'lisp/hacks/embark-hacks.el' for more ideas
