@@ -53,6 +53,7 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 ;; Index
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Repl modes (emacs state)
+(evil-set-initial-state 'agent-shell-mode 'emacs)
 (evil-set-initial-state 'vterm-mode 'emacs)
 (evil-set-initial-state 'eshell-mode 'emacs)
 (evil-set-initial-state 'term-mode 'emacs)
@@ -210,6 +211,24 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
   (kbd "C-y") (my/evil-normal-binding "C-y")
   "N" 'magit-section-backward
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(evil-define-key 'normal org-mode-map
+  (kbd "SPC") (my/evil-normal-binding "SPC")
+  "h" (my/evil-normal-binding "h")
+
+  ;; native (non-invasive overrides)
+  (kbd "C-d") (my/evil-normal-binding "C-d")
+  (kbd "C-e") (my/evil-normal-binding "C-e")
+  (kbd "C-y") (my/evil-normal-binding "C-y")
+
+  ;; org
+  (kbd "TAB") 'org-cycle ;; not working? 
+
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Term

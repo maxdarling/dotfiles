@@ -163,6 +163,15 @@
   (global-evil-visualstar-mode t)
   (load-file "~/.emacs.d/lisp/move-text.el"))
 
+(use-package agent-shell
+    :ensure t
+    :ensure-system-package
+    ;; Add agent installation configs here
+    ((codex . "brew intstall codex")
+     (codex-acp . "brew install codex-acp")))
+    ;; ((claude . "brew install claude-code")
+     ;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
+
 (use-package avy
   :config
   (setq avy-keys '(?a ?h ?e ?t ?i ?s ?c ?n ?y ?x ?w ?v ?u ?r ?p ?o ?m ?l ?k ?j ?g ?f ?d ?b))
@@ -291,7 +300,8 @@
                 shell-mode-hook
                 magit-status-mode-hook
                 magit-log-mode-hook
-                magit-diff-mode-hook))
+                magit-diff-mode-hook
+                agent-shell-mode-hook))
   (add-hook hook (lambda () (setq-local global-hl-line-mode nil))))
 
 ;; frame: see 'early-init.el'
