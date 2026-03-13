@@ -229,6 +229,47 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 
   )
 
+(defun my/org-tab-dwim ()
+  (interactive)
+  (cond
+   ;; Evil insert-state bindings outrank Corfu's map, so forward TAB when popup is open.
+   ((and (bound-and-true-p corfu-mode)
+         (bound-and-true-p corfu--candidates))
+    (let ((cmd (and (boundp 'corfu-map)
+                    (lookup-key corfu-map (kbd "TAB")))))
+      (if (commandp cmd)
+          (call-interactively cmd)
+        (completion-at-point))))
+   ((org-at-item-p) (org-metaright))
+   (t (org-cycle))))
+
+(defun my/org-backtab-dwim ()
+  (interactive)
+  (cond
+   ;; Same for S-TAB: let Corfu handle candidate navigation first.
+   ((and (bound-and-true-p corfu-mode)
+         (bound-and-true-p corfu--candidates))
+    (let ((cmd (and (boundp 'corfu-map)
+                    (lookup-key corfu-map (kbd "<backtab>")))))
+      (if (commandp cmd)
+          (call-interactively cmd)
+        (when (fboundp 'corfu-previous)
+          (call-interactively #'corfu-previous)))))
+   ((org-at-item-p) (org-metaleft))
+   (t (org-shifttab))))
+
+
+(evil-define-key 'insert org-mode-map
+  ;; gdocs style
+  (kbd "RET") #'my/org-return-dwim
+
+  (kbd "TAB") #'my/org-tab-dwim
+  (kbd "<backtab>") #'my/org-backtab-dwim
+
+  ;; override RET -> comment-indent-new-line 
+  ;; (kbd "RET") 'org-return
+  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Term
@@ -237,3 +278,62 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
   ;; vim
   "S-v" 'term-paste
   )
+
+(defun my/org-in-empty-item-p ()
+  "Non-nil when point is in an empty Org list item."
+  (when (org-at-item-p)
+    (save-excursion
+      (beginning-of-line)
+      (when (looking-at org-list-full-item-re)
+        (string-blank-p
+         (buffer-substring-no-properties
+          (match-end 0)
+          (line-end-position)))))))
+
+(defun my/org-top-level-item-p ()
+  "Non-nil if current Org list item is top-level."
+  (and (org-at-item-p)
+       (= (save-excursion
+            (beginning-of-line)
+            (current-indentation))
+          0)))
+
+(defun my/org-remove-item-marker ()
+  "Remove the current empty Org item marker."
+  (beginning-of-line)
+  (when (looking-at org-list-full-item-re)
+    (replace-match ""))
+  (delete-horizontal-space))
+
+(defun my/org-continue-checkbox-item ()
+  "Continue current checkbox item at same level."
+  (let ((had-checkbox
+         (save-excursion
+           (beginning-of-line)
+           (looking-at-p
+            (rx (* blank)
+                (or "-" "+" "*"
+                    (seq (+ digit) (or "." ")")))
+                (+ blank)
+                "[" (any " X-") "]")))))
+    (org-insert-item)
+    (when had-checkbox
+      (insert "[ ] ")
+      ;; Remove any extra whitespace Org may already have inserted.
+      (just-one-space 1))))
+
+(defun my/org-return-dwim ()
+  (interactive)
+  (cond
+   ((my/org-in-empty-item-p)
+    (if (my/org-top-level-item-p)
+        (my/org-remove-item-marker)
+      (org-outdent-item-tree)))
+
+   ((org-at-item-p)
+    (if (org-at-item-checkbox-p)
+        (my/org-continue-checkbox-item)
+      (org-insert-item)))
+
+   (t
+    (org-return nil))))
