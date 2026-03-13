@@ -217,6 +217,15 @@
   ;; to get more completion in scheme mode.
   )
 
+(use-package vertico
+  :init
+  (vertico-mode 1))
+
+(use-package consult
+  :config
+  ;; Keep the plural command name available for local keybinding ergonomics.
+  (defalias 'consult-org-headings #'consult-org-heading))
+
 (use-package embark
   ;; :bind (:map minibuffer-mode-map
 	      ;; note: can't be these, i use these as emacs editing commands in minibuffer
@@ -397,13 +406,6 @@
 ;; rg for grep
 (setq grep-command "rg -nS --no-heading "
       grep-use-null-device nil)
-
-;; fido mode
-(fido-vertical-mode 1)
-(setq completions-detailed t) ;; add docstrings to each item in completion prompt
-(with-eval-after-load 'icomplete
-  ;; Make C-j exit literally instead of forcing completion
-  (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
 
 ;; ediff
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
