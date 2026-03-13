@@ -197,6 +197,10 @@
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
   (kbd "<leader>x") 'my/run-file
+
+  ;; org (testing)
+  (kbd "<leader>h") 'org-capture
+  (kbd "<leader>j") 'my/journal
   ;;
   ;; ...
   (kbd "<leader>ir") 'bookmark-set
@@ -292,10 +296,16 @@
 ;; Insert Mode Maps
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key 'insert 'global
+  ;; edit 3/8/26: below is weird, i'm trying to not use it. i added it in
+  ;; the first place because i write so much documentation and i wanted
+  ;; markdown-like beavior. but i'd rather do what all other editors do.
+  ;; write config file in org if documentation feels weird.
+  ;;
   ;; make RET continue comments by default. use S-RET to bypass.
   ;; https://emacs.stackexchange.com/questions/59575/continue-comment-while-editing-lisp-and-when-hitting-enter
-  (kbd "RET") 'comment-indent-new-line
-  (kbd "<S-return>") 'newline
+  ;; (kbd "RET") 'comment-indent-new-line
+  ;; (kbd "<S-return>") 'newline
+
   (kbd "M-<delete>") 'kill-word
   )
 

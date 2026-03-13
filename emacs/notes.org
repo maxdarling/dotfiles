@@ -1,0 +1,30 @@
+#+title Notes
+#+author: MD
+#+date: 3/8/2026
+
+* TODO org-boring-lists cleanup
+
+** TODO package steps
+- test package vars and options
+  - i suspect that chat misunderstood my second ret-on-empty-item behavior. it matches [[https://stackedit.io/app#][online md editor]].
+
+** TODO cleanup below information
+- S-TAB in insert mode should not call org-shifttab. rather, tab and S-tab
+  should just indent normally as in a md editor or gdocs
+- corfu completion accept with tab no longer works after new tab binds.
+  - a more verbose fix than id like but ok for now...
+- [ ] [[https://www.reddit.com/r/emacs/comments/qk15ru/cant_make_sense_of_orgmodes_indentation/][reddit]]
+  
+* TODO copy emacs init comments to org doc (projects, todos, etc)
+
+* TODO learn org shortcuts
+- [ ] toggle checkbox: C-c C-c (prefix arg to toggle presence)
+  - it'd be nice if the dot command could repeat this! (or repeat mode?)
+- org-insert-todo-heading: M-S-<RET> (need to rebind)
+- C-# org-update-statistics-cookies
+- more structural navigation (e.g. "{", "[[". other good ones?)
+
+* TODO agent shell stuff
+- [ ] '@' in shell completes files with /standard/ mechanism
+  (*completions* buffer).
+

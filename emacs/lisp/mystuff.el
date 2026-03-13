@@ -186,3 +186,23 @@ Vim-ish point behavior:
 ;; Inspo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; - nice workflow for "search-and-replace on steroids" https://lambdaland.org/posts/2023-05-31_warp_factor_refactor/
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org + Journaling
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun my/journal ()
+  (interactive)
+  (find-file "~/org/journal.org")
+  (org-datetree-find-date-create (calendar-current-date))
+  (org-show-subtree)
+  (org-end-of-subtree t t)
+  (unless (bolp) (insert "\n"))
+  (unless (save-excursion
+            (re-search-backward "^\\*\\*\\*\\* Notes$"
+                                (save-excursion
+                                  (org-back-to-heading t)
+                                  (point))
+                                t))
+    (insert "**** Notes\n\n"))
+  (goto-char (point-max)))

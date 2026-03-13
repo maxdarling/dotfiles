@@ -21,6 +21,10 @@
 ;; - project: "H" for custom duplicate and comment func.
 
 ;; projects:
+;; - emacs as a note taking app
+;;   - google docs is the baseline. not my favorite.
+;;   - could use obsidian, for sure. but emacs is fun as a hobby? and it
+;;   should be able to do all the same stuff.
 ;; - keyboard diagram visualizer
 ;; - harpoon: show list in minibuffer (for better ergo looking down than up)
 ;; - port code-jump from vscode (superior to avy, imo!)
@@ -161,16 +165,17 @@
   (global-evil-surround-mode 1)
   (use-package evil-visualstar)
   (global-evil-visualstar-mode t)
+  (setq evil-vsplit-window-right t)
   (load-file "~/.emacs.d/lisp/move-text.el"))
 
 (use-package agent-shell
-    :ensure t
-    :ensure-system-package
-    ;; Add agent installation configs here
-    ((codex . "brew intstall codex")
-     (codex-acp . "brew install codex-acp")))
-    ;; ((claude . "brew install claude-code")
-     ;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
+  :ensure t
+  :ensure-system-package
+  ;; Add agent installation configs here
+  ((codex . "brew intstall codex")
+   (codex-acp . "brew install codex-acp")))
+;; ((claude . "brew install claude-code")
+;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
 
 (use-package avy
   :config
@@ -217,6 +222,12 @@
   ;; to get more completion in scheme mode.
   )
 
+;; fido mode
+;; (fido-vertical-mode 1)
+;; (setq completions-detailed t) ;; add docstrings to each item in completion prompt
+;; (with-eval-after-load 'icomplete
+;; Make C-j exit literally instead of forcing completion
+;; (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
 (use-package vertico
   :init
   (vertico-mode 1))
@@ -228,9 +239,9 @@
 
 (use-package embark
   ;; :bind (:map minibuffer-mode-map
-	      ;; note: can't be these, i use these as emacs editing commands in minibuffer
-	      ;; (("C-e" . embark-act)
-	       ;; ("C-a" . embark-dwim)))
+  ;; note: can't be these, i use these as emacs editing commands in minibuffer
+  ;; (("C-e" . embark-act)
+  ;; ("C-a" . embark-dwim)))
   :config
   ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
   ;; see 'lisp/hacks/embark-hacks.el' for more ideas
@@ -243,6 +254,12 @@
 	  )
 	)
   )
+
+(use-package visual-fill-column
+  :hook (org-mode . visual-fill-column-mode)
+  :config
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language Packages
@@ -354,6 +371,27 @@
 (setq xah-fly-use-meta-key nil)
 (setq xah-fly-use-isearch-arrows nil)
 ;; (load-file "~/.emacs.d/lisp/pedagogy/xah-fly-keys.el")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (load-file "~/.emacs.d/lisp/hacks/org-hacks.el")
+(load-file "~/.emacs.d/lisp/packages/org-boring-lists.el") ;; do i need this and the require below?
+(require 'org-boring-lists)
+(add-hook 'org-mode-hook #'org-boring-lists-mode)
+(add-hook 'org-mode-hook #'visual-line-mode)
+(add-hook 'org-mode-hook #'org-indent-mode)
+
+;; Less surprising indentation behavior
+(setq org-adapt-indentation nil)
+;; Allow alphabetical list markers
+(setq org-list-allow-alphabetical t)
+
+(setq org-capture-templates
+      '(("j" "Journal note"
+         entry
+         (file+datetree "~/org/journal.org")
+         "* %<%H:%M>\n\n%?")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc Settings

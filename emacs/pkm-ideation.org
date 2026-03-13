@@ -1,0 +1,49 @@
+* PKM starter plan
+- move emacs config to org
+- do X project management via org
+- start writing some CS notes in org (e.g. explaining react to myself)
+
+* PKM future plan
+misc ideas:
+- have strong "people" notes. where i can keep track of conversations, etc. This will be huge for generating gift ideas! Which is seems like a one-off but is actually a hugely meaningful part of life.
+
+
+* Discussion
+** desired features
+- quick navigation
+  - global searches: grep follow mode would be ideal scanning context around results. this is impossible in drive.
+  - indexed searches: e.g. completion across org headings with a context preview (a consult feature). this is super powerful for e.g. needle in a haystack searches.
+- templates
+  - e.g. diary entries should follow a template, be created-able with a keychord. all quickly. web mouse-based UI is too slow.
+- outline UI
+  - outlines are powerful. not all information should be visible all the time. drive can do this, but its just mouse-based section hide toggles. in org you can use the keyboard /and/ navigate by sections, for example. 
+    
+*** bonus emacs features
+- runnable code blocks in the style of jupyter notebook. aka. "literate programming".
+  - underrated in the programming world, i concur, but unclear how useful it might become.
+    
+*** desired usecases
+- when I spontaneously want to jot down new knowledge or add to existing documentation, i'm confident i can find/create the right doc *fast*
+
+** discussion: knowledge database?
+i think it will be crucial to make a knowledge database for CS. to:
+- track things i dont know about and want to understand
+- allow a space to chew through ideas via the writing process
+- organize a library of polished conceptual knowledge
+
+My one reservation is whether to lock in more to emacs or use the much more ubiquitous and polished tool, Obsidian.
+After talking to ChatGPT a bit, though, i think emacs is totally reasoanble. and the lock-in is not a big issue. pandoc should do a decent job converting for me (esp. since i don't plan on using that many advanced features yet).
+
+
+| *pro emacs*                           | *pro obsidian*                           |
+| preview view comes with nav           |                                          |
+| more fun (hackable, retro)            |                                          |
+| austere UI is better for pure thought |                                          |
+| literate programming in future        |                                          |
+| code blocks                           |                                          |
+|                                       | lower learning curve                     |
+|                                       | files are in MD, which are more portable |
+| free, mildly-effortful mobile syncing | $3/mo effortless sync                    |
+
+
+I'm gonna go with emacs to just have some fun! and it's truly harmless because i'm going to start the migration slowly. 
