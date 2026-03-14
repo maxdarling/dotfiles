@@ -1,33 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;  -*- lexical-binding: t; -*-
 ;; Todo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; done:
-;; - continue comment by default (elisp), S-RET to not.
-;; - try vterm a bit, get M-<right/left> working
-;; - setup fzf file and dir.
-;; - debug/fix custom-file
-;; - setup vscode M-<up>/<down>
-;; - fix lexical binding warnings (and understand them...)
-;; - make s-, switch to init file
-;; - cleanup my-theme.el
-;;   - factor out frame sizing.
-;;   - refactor into options for background color toggles
-;; - keymap revamp phase 1 (and cleanups)
-;; - early-init.el (for window stuff)
-;; - try harpoon plugin in emacs
-;; - bind find-file, find-dir, grep (NOT LEADER)
-;; - rg for grep and rgrep
-;; - auto-fill-mode for comments only (and learned M-q manual approach too)
-;; - project: "H" for custom duplicate and comment func.
-
 ;; projects:
-;; - emacs as a note taking app
-;;   - google docs is the baseline. not my favorite.
-;;   - could use obsidian, for sure. but emacs is fun as a hobby? and it
-;;   should be able to do all the same stuff.
+;; - learn consult-grep and consult-fd
+;; - emacs for PKM (ongoing)
 ;; - keyboard diagram visualizer
 ;; - harpoon: show list in minibuffer (for better ergo looking down than up)
-;; - port code-jump from vscode (superior to avy, imo!)
+;; - port code-jump from vscode (slightly superior to avy, imo! also an interesting exercise.)
 
 ;; emacs as pager deep-dive:
 ;; - problem: i'm using delta as my differ. not great!
@@ -46,7 +25,7 @@
 ;;     - read up on view mode.
 ;;       - u and d is mega extra comfort.
 ;;       - how about motion mode as my own sort of view mode? in magit but also just for perusal
-;;     - yak shave reminder: this is essentially keybind planning, it makes me want
+;;     - yak shave reminder: this is essentially keybind planning, it makes me want the tool.
 
 ;; todo:
 ;; - bug: fix transient-magit incompatibility (e.g. when pressing "d" to bring up a split diff)
@@ -164,9 +143,17 @@
   :ensure-system-package
   ;; Add agent installation configs here
   ((codex . "brew intstall codex")
-   (codex-acp . "brew install codex-acp")))
+   (codex-acp . "brew install codex-acp"))
 ;; ((claude . "brew install claude-code")
 ;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
+
+  :config
+  (setq agent-shell-cwd-function
+      (lambda ()
+        (expand-file-name
+         (concat "~/.cache/agent-shell/"
+                 (file-name-nondirectory
+                  (directory-file-name default-directory)))))))
 
 (use-package avy
   :config
@@ -248,42 +235,6 @@
   :config
   (setq visual-fill-column-width 100))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Language Packages
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; treesitter
-(require 'treesit)
-;; (language definitions built via https://github.com/casouri/tree-sitter-module.git)
-;; resources:
-;; - https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
-;; - https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
-
-;; (use-package go-mode
-;;   ;; :mode ("\.go$") ;; needed?
-;;   :init
-;;   ;; work around GUI emacs path being different than term/system
-;;   (add-to-list 'exec-path "/Users/mhd/go/bin/") ;; gopls
-;;   )
-
-(use-package typescript-ts-mode
-  :mode ("\.ts$") ;; needed?
-  )
-
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l") ;; needs to happen initially?
-  :config
-  ;; (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-ui-sideline-show-code-actions t)
-  ;; (setq lsp-ui-sideline-show-diagnostics t) ;; useless?
-  ;; (setq lsp-ui-sideline-show-hover t) ;; just types, very noisy
-
-  :hook (
-	     (go-mode . lsp) ;; maybe lsp-deferred?
-	     (typescript-ts-mode . lsp))
-  :commands (lsp lsp-deferred))
-(use-package lsp-ui :commands lsp-ui-mode)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Testing
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -299,6 +250,7 @@
 
 ;; line numbers for prog-mode only
 (setq-default display-line-numbers nil)
+(setq-default display-line-numbers-width 3)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (blink-cursor-mode -1)

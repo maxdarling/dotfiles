@@ -142,7 +142,7 @@ Vim-ish point behavior:
      (completing-read "Find file: " (apply #'process-lines find-files-program)))))
 
 (defun my/find-dir-rec ()
-  "Find a directory recursively from the current working directory. rg highly recommended."
+  "Find a directory recursively from the current working directory. fd highly recommended."
   (interactive)
   (let ((find-files-program
 	 (cond ((executable-find "fd") '("fd" "--type=d"))
