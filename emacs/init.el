@@ -46,7 +46,7 @@
 ;;     - read up on view mode.
 ;;       - u and d is mega extra comfort.
 ;;       - how about motion mode as my own sort of view mode? in magit but also just for perusal
-;;     - yak shave reminder: this is essentially keybind planning, it makes me want 
+;;     - yak shave reminder: this is essentially keybind planning, it makes me want
 
 ;; todo:
 ;; - bug: fix transient-magit incompatibility (e.g. when pressing "d" to bring up a split diff)
@@ -59,7 +59,6 @@
 ;; https://github.com/minad/corfu)
 ;; - revamp keymaps (ongoing)
 ;; 
-;; - study modus themes config
 ;; - cleanup init file
 ;;   - research user-lisp-directory
 ;;   - general cleanups
@@ -67,13 +66,6 @@
 ;; - literate emacs config? (via org)
 ;;   - this would give me functionality for bullets in comments: autocontinue and tab to nest
 ;;     - this is more like gdocs and markdown
-;; - embark: shift-RET should do otherwindow by default (or "O"?) (e.g. for bookmark, switch to buffer, etc.)
-;; - prot consult/vertico/marginalia/embark/orderless video
-;;   - vertico - how is it different than fido? i wanna understand, e.g. see "learning" note.
-;;   - marg seems good. too busy for files tho.
-;;   - consult seems beast? impressed at his "buffer vs. bookmark is just an impl. detail"
-;;   - orderless: ...
-;;   - embark: ...
 
 ;; vterm notes:
 ;; - except C-c? Big choice, but likely worth. C-z is my escape hatch.
@@ -82,13 +74,12 @@
 
 ;; LEARNING:
 ;; - what is xref?
-;; - flymake
 ;; - compile commands
 ;; - elisp fundamentals
 ;; - recentf mode
 ;; - imenu
 
-;; IMPORTANT: 
+;; IMPORTANT:
 ;; - visual marks (e.g. IntelliJ style. highlight the line. or, use left "gutter", e.g. like bookmarks)
 ;; - disable corfu inside comments (no problem in elisp, but it is in go...?)
 ;; - setup treesitter (elisp/scheme highlighting??) (evil-treesitter-text-obj!) (read karthinks post)
@@ -206,8 +197,8 @@
   (use-package cape)
   :config
   (setq corfu-auto t
-	corfu-auto-delay .1) ;; .2 default
-  (add-to-list 'completion-styles 'flex) 
+	    corfu-auto-delay .1) ;; .2 default
+  (add-to-list 'completion-styles 'flex)
 
   ;; order matters (first in list = highest priority)
   (advice-add #'cape-dabbrev :around #'cape-wrap-inside-code)
@@ -223,43 +214,39 @@
   )
 
 ;; fido mode
-;; (fido-vertical-mode 1)
-;; (setq completions-detailed t) ;; add docstrings to each item in completion prompt
-;; (with-eval-after-load 'icomplete
-;; Make C-j exit literally instead of forcing completion
-;; (define-key icomplete-minibuffer-map (kbd "C-j") #'exit-minibuffer))
-(use-package vertico
-  :init
-  (vertico-mode 1))
+(fido-vertical-mode 1)
+(setq completions-detailed t) ;; add docstrings to each item in completion prompt
+(with-eval-after-load 'icomplete
+  ;; below is needed when e.g. creating a new file that's a subseq of another
+  (define-key icomplete-minibuffer-map (kbd "M-RET") #'exit-minibuffer))
+;; (use-package vertico
+;; :init
+;; (vertico-mode 1))
 
-(use-package consult
-  :config
-  ;; Keep the plural command name available for local keybinding ergonomics.
-  (defalias 'consult-org-headings #'consult-org-heading))
+(use-package consult)
 
-(use-package embark
-  ;; :bind (:map minibuffer-mode-map
-  ;; note: can't be these, i use these as emacs editing commands in minibuffer
-  ;; (("C-e" . embark-act)
-  ;; ("C-a" . embark-dwim)))
-  :config
-  ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
-  ;; see 'lisp/hacks/embark-hacks.el' for more ideas
-  (setq embark-default-action-overrides
-	'(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
-	  ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
-	  ;; opens dired, and not even on right file.
-	  ;; note: same behavior as builtin find-file 'o' option.
-	  ((file . find-file) . find-file-other-window) 
-	  )
-	)
-  )
+;; (use-package embark
+;;   ;; :bind (:map minibuffer-mode-map
+;;   ;; note: can't be these, i use these as emacs editing commands in minibuffer
+;;   ;; (("C-e" . embark-act)
+;;   ;; ("C-a" . embark-dwim)))
+;;   :config
+;;   ;; my hack to use embark-dwim to do "other-window" stuff in 1 keypress.
+;;   ;; see 'lisp/hacks/embark-hacks.el' for more ideas
+;;   (setq embark-default-action-overrides
+;; 	    '(((buffer . switch-to-buffer) . switch-to-buffer-other-window) ;; works. must be 'buffer'
+;; 	      ((command . execute-extended-command) . describe-symbol) ;; this works!! wow!
+;; 	      ;; opens dired, and not even on right file.
+;; 	      ;; note: same behavior as builtin find-file 'o' option.
+;; 	      ((file . find-file) . find-file-other-window)
+;; 	      )
+;; 	    )
+;;   )
 
 (use-package visual-fill-column
   :hook (org-mode . visual-fill-column-mode)
   :config
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t))
+  (setq visual-fill-column-width 100))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language Packages
@@ -292,8 +279,8 @@
   ;; (setq lsp-ui-sideline-show-hover t) ;; just types, very noisy
 
   :hook (
-	 (go-mode . lsp) ;; maybe lsp-deferred?
-	 (typescript-ts-mode . lsp))
+	     (go-mode . lsp) ;; maybe lsp-deferred?
+	     (typescript-ts-mode . lsp))
   :commands (lsp lsp-deferred))
 (use-package lsp-ui :commands lsp-ui-mode)
 
@@ -332,32 +319,41 @@
 
 ;; frame: see 'early-init.el'
 
+(use-package modus-themes
+  :demand t
+  :bind (("s-t" . modus-themes-toggle))
+  :config
+  (setq modus-themes-common-palette-overrides
+        '(
+          ;; Mode line: borderless. Set to `unspecified' for a thinner border.
+          (border-mode-line-active bg-mode-line-active)
+          (border-mode-line-inactive bg-mode-line-inactive)
+          ;; Mode line colors.
+          (bg-mode-line-active bg-blue-subtle)
+          (fg-mode-line-active fg-main)
+
+	      ;; org heading 1 is color same as text. hard to read.
+          (fg-heading-1 cyan)
+          (fg-heading-5 fg-main)
+	      ;; (fg-heading-2 "#d2b580") ;; change operandi to vivendi-tinted
+          ))
+
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil
+        ;; my/modus-themes-pair '(modus-operandi modus-vivendi-tinted)
+        my/modus-themes-pair '(modus-operandi-tinted modus-vivendi-tinted)
+        modus-themes-to-toggle my/modus-themes-pair)
+  (modus-themes-load-theme (car my/modus-themes-pair)))
+
+
 ;; modeline
 (load-file "~/.emacs.d/lisp/themes/modeline.el")
 
-;; prot theme
-(use-package modus-themes
-  :config
-  ;; todo
-
-  (setq modus-themes-common-palette-overrides
-        '(
-	  ;; mode line: borderless - set to "unspecified" for thinner border
-	  (border-mode-line-active bg-mode-line-active)
-          (border-mode-line-inactive bg-mode-line-inactive)
-          ;; mode line: color
-	  (bg-mode-line-active bg-blue-subtle)
-          (fg-mode-line-active fg-main)
-          ;; (border-mode-line-active blue-intense)
-	  ))
-
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs nil) ;; testing
-
-  (modus-themes-load-theme 'modus-operandi)
-  )
-
-;; (load-file "~/.emacs.d/lisp/hacks/term-color-hacks.el")
+;; Hide continuation arrows in the fringe without affecting other indicators.
+(setq-default fringe-indicator-alist
+              (let ((alist (copy-tree fringe-indicator-alist)))
+                (setcdr (assq 'continuation alist) '(nil nil))
+                alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Binds
@@ -367,9 +363,9 @@
 (load-file "~/.emacs.d/lisp/mystuff.el")
 
 ;; use XFK functions, discard all mappings
-(setq xah-fly-use-control-key nil)
-(setq xah-fly-use-meta-key nil)
-(setq xah-fly-use-isearch-arrows nil)
+;; (setq xah-fly-use-control-key nil)
+;; (setq xah-fly-use-meta-key nil)
+;; (setq xah-fly-use-isearch-arrows nil)
 ;; (load-file "~/.emacs.d/lisp/pedagogy/xah-fly-keys.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -423,6 +419,7 @@
 
 ;; misc
 (winner-mode 1)
+(setq which-key-idle-delay 0.2)
 (which-key-mode 1)
 (savehist-mode 1)
 

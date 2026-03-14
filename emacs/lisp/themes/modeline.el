@@ -87,7 +87,8 @@
    (format-mode-line mode-line-buffer-identification)))
 
 (defun my/ml-line-col ()
-  (format " %-7s" (format-mode-line "%l:%c")))
+  ;; (format " %-7s" (format-mode-line "%l:%c")))
+  (format " %-3s" (format-mode-line "%l")))
 
 (defun my/ml-percent ()
   (format-mode-line " %p  "))

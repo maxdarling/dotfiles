@@ -2,12 +2,24 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
-  (filename . "~/org/journal.org")
-  (front-context-string . "**** 11:06\n\nAnot")
-  (rear-context-string . "entry. poggers.\n")
-  (position . 153)
-  (last-modified 27060 10263 325709 0))
+(("theme.el"
+  (filename . "~/code/dotfiles/emacs/lisp/themes/theme.el")
+  (front-context-string . ";; -*- lexical-b")
+  (rear-context-string)
+  (position . 1)
+  (last-modified 27060 32564 71187 0))
+("modeline.el"
+ (filename . "~/code/dotfiles/emacs/lisp/themes/modeline.el")
+ (front-context-string . ";; -*- lexical-b")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27060 30906 878687 0))
+("org-capture-last-stored"
+ (filename . "~/org/journal.org")
+ (front-context-string . "**** 11:06\n\nAnot")
+ (rear-context-string . "entry. poggers.\n")
+ (position . 153)
+ (last-modified 27060 10263 325709 0))
 ("early-init.el"
  (filename . "~/code/dotfiles/emacs/early-init.el")
  (front-context-string . ";; frame  -*- le")

@@ -217,7 +217,8 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 ;; Org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (evil-define-key '(normal visual motion emacs insert) org-mode-map
-  (kbd "C-c j") #'consult-org-headings)
+  (kbd "C-c C-j") #'consult-org-heading
+  (kbd "C-c j") #'consult-org-heading)
 
 (evil-define-key 'normal org-mode-map
   (kbd "SPC") (my/evil-normal-binding "SPC")
@@ -233,17 +234,15 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 
   ;; adjustments
 
-  ;; better movement on wrapped lines
+  ;; visual j/k, since visual-line-mode is best for org prose.
   "j" #'evil-next-visual-line
   "k" #'evil-previous-visual-line
 
-  ;; move by org elements (lists, blocks, paragraphs, tables, etc.)
+  ;; navigation (testing)
   (kbd "}") #'org-forward-element
   (kbd "{") #'org-backward-element
-
-  ;; heading navigation
-  (kbd "]]") #'org-next-visible-heading
-  (kbd "[[") #'org-previous-visible-heading
+  (kbd "]") #'org-next-visible-heading
+  (kbd "[") #'org-previous-visible-heading
   )
 
 (evil-define-key 'insert org-mode-map

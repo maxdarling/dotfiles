@@ -206,3 +206,8 @@ Vim-ish point behavior:
                                 t))
     (insert "**** Notes\n\n"))
   (goto-char (point-max)))
+
+(defun my/open-mandarin-org ()
+  "Open the Mandarin org file."
+  (interactive)
+  (find-file "~/org/mandarin/mandarin.org"))

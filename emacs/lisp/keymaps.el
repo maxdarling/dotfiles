@@ -6,6 +6,15 @@
 ;; C-o prefix
 (define-prefix-command 'my/c-o-map)
 
+;; leader-a prefix
+(define-prefix-command 'my/leader-a-map)
+;; (define-prefix-command 'my/leader-a-m-map)
+
+(define-key my/leader-a-map (kbd "j") #'my/journal)
+(define-key my/leader-a-map (kbd "o") #'bookmark-jump)
+;; (define-key my/leader-a-map (kbd "m") my/leader-a-m-map)
+(define-key my/leader-a-map (kbd "m") #'my/open-mandarin-org)
+
 ;; philosophy (top-level)
 ;; - speed + ergonomics
 ;; - consider omni-modal vs. vim-only
@@ -192,11 +201,13 @@
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer
   (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. embark?
-  (kbd "<leader>a") 'find-file
+  (kbd "<leader>a") my/leader-a-map
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump
   (kbd "<leader>D") 'dired-jump-other-window
   (kbd "<leader>x") 'my/run-file
+
+  (kbd "<leader>ia") 'find-file
 
   ;; org (testing)
   (kbd "<leader>h") 'org-capture
@@ -307,6 +318,10 @@
   ;; (kbd "<S-return>") 'newline
 
   (kbd "M-<delete>") 'kill-word
+
+  (kbd "C-e") 'move-end-of-line
+  (kbd "C-a") 'move-beginning-of-line
+  (kbd "C-k") 'kill-line
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -360,4 +375,3 @@
 ;; - source: https://stackoverflow.com/questions/916797/emacs-global-set-key-to-c-tab
 (define-key input-decode-map [(control ?i)] [control-i])
 (define-key input-decode-map [(control ?I)] [(shift control-i)])
-
