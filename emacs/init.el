@@ -151,7 +151,7 @@
   (setq agent-shell-cwd-function nil)
 
   (setq agent-shell-dot-subdir-function
-	(lambda (subdir)
+	    (lambda (subdir)
           (expand-file-name
            (file-name-concat
             subdir)
@@ -160,7 +160,7 @@
                     (directory-file-name
                      (or (when-let ((proj (project-current nil)))
                            (project-root proj))
-			 default-directory))))))))
+			             default-directory))))))))
 
 (use-package avy
   :config
@@ -191,7 +191,7 @@
   (use-package cape)
   :config
   (setq corfu-auto t
-	corfu-auto-delay .1) ;; .2 default
+	    corfu-auto-delay .1) ;; .2 default
   (add-to-list 'completion-styles 'flex)
 
   ;; order matters (first in list = highest priority)
@@ -288,10 +288,13 @@
           (bg-mode-line-active bg-blue-subtle)
           (fg-mode-line-active fg-main)
 
-	      ;; org heading 1 is color same as text. hard to read.
-          (fg-heading-1 cyan)
-          (fg-heading-5 fg-main)
-	      ;; (fg-heading-2 "#d2b580") ;; change operandi to vivendi-tinted
+          ;; color notes:
+	      ;; - org heading 1 is color same as text. hard to read.
+          ;; - color is just hard to see on a light background. i've given up on light mode.
+          (fg-heading-1 "systemMintColor")
+          ;; (fg-heading-1 "Cyan3")
+          ;; (fg-heading-1 "Cyan4")
+          ;; (fg-heading-1 "DarkSeaGreen2")
           ))
 
   (setq modus-themes-italic-constructs t
@@ -307,7 +310,7 @@
 
 ;; Hide continuation arrows in the fringe without affecting other indicators.
 (setq-default fringe-indicator-alist
-              (let ((alist (copy-tree fringe-indicator-alist)))
+	          (let ((alist (copy-tree fringe-indicator-alist)))
                 (setcdr (assq 'continuation alist) '(nil nil))
                 alist))
 
