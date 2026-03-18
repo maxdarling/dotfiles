@@ -144,16 +144,23 @@
   ;; Add agent installation configs here
   ((codex . "brew intstall codex")
    (codex-acp . "brew install codex-acp"))
-;; ((claude . "brew install claude-code")
-;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
+  ;; ((claude . "brew install claude-code")
+  ;; (claude-agent-acp . "npm install -g @zed-industries/claude-agent-acp")))
 
   :config
-  (setq agent-shell-cwd-function
-      (lambda ()
-        (expand-file-name
-         (concat "~/.cache/agent-shell/"
-                 (file-name-nondirectory
-                  (directory-file-name default-directory)))))))
+  (setq agent-shell-cwd-function nil)
+
+  (setq agent-shell-dot-subdir-function
+	(lambda (subdir)
+          (expand-file-name
+           (file-name-concat
+            subdir)
+           (concat "~/.cache/agent-shell/"
+                   (file-name-nondirectory
+                    (directory-file-name
+                     (or (when-let ((proj (project-current nil)))
+                           (project-root proj))
+			 default-directory))))))))
 
 (use-package avy
   :config
@@ -184,7 +191,7 @@
   (use-package cape)
   :config
   (setq corfu-auto t
-	    corfu-auto-delay .1) ;; .2 default
+	corfu-auto-delay .1) ;; .2 default
   (add-to-list 'completion-styles 'flex)
 
   ;; order matters (first in list = highest priority)
@@ -192,12 +199,9 @@
   ;; (defalias 'defensive-cape-line (cape-capf-inside-code #'cape-line))
   ;; (add-to-list 'completion-at-point-functions #'defensive-cape-line) ;; sometimes overpowers elisp?
   ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-history) ;; haven't tried.
+  (add-to-list 'completion-at-point-functions #'cape-history) ;; useful? it's bad in agent-shell
   (add-to-list 'completion-at-point-functions #'cape-file) ;; this is sick...
   (add-to-list 'completion-at-point-functions #'cape-dabbrev) ;; note: dabbrev capf doesn't work.
-
-  ;; todo? scheme keyword complete with prefix length 2 (currently 3)
-  ;; to get more completion in scheme mode.
   )
 
 ;; fido mode
