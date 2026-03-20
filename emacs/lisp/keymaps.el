@@ -8,11 +8,8 @@
 
 ;; leader-a prefix
 (define-prefix-command 'my/leader-a-map)
-;; (define-prefix-command 'my/leader-a-m-map)
-
 (define-key my/leader-a-map (kbd "j") #'my/journal)
-(define-key my/leader-a-map (kbd "o") #'bookmark-jump)
-;; (define-key my/leader-a-map (kbd "m") my/leader-a-m-map)
+(define-key my/leader-a-map (kbd "o") #'my/open-org-dir)
 (define-key my/leader-a-map (kbd "m") #'my/open-mandarin-org)
 
 ;; philosophy (top-level)

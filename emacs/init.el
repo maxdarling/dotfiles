@@ -28,7 +28,12 @@
 ;;     - yak shave reminder: this is essentially keybind planning, it makes me want the tool.
 
 ;; todo:
-;; - bug: fix transient-magit incompatibility (e.g. when pressing "d" to bring up a split diff)
+;; - bug: scroll percent in modeline not showing
+;; - bug: surround doesn't seem to work when there's unbalanced quotes in a file
+;;   - 3/19/26: paren motion wouldn't work. first time i'd seen that. then I checked the file
+;;     for balanced quotes. fixed it. and it worked. ???. ("no surrounding delimiters found").
+;; - try harpoon global option (i.e. not per-project)
+;;  - first, i need to find my harpoon package! wtf?
 ;; - cleanup keymaps + mode keymaps. total mess. too many old comments.
 ;; - get fill (M-q) to work for not just comments (didn't work for defun docstring)
 ;; - research autosave (and why .#init.el is being generated)
@@ -199,7 +204,7 @@
   ;; (defalias 'defensive-cape-line (cape-capf-inside-code #'cape-line))
   ;; (add-to-list 'completion-at-point-functions #'defensive-cape-line) ;; sometimes overpowers elisp?
   ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-history) ;; useful? it's bad in agent-shell
+  ;; (add-to-list 'completion-at-point-functions #'cape-history) ;; useful? it's bad in agent-shell
   (add-to-list 'completion-at-point-functions #'cape-file) ;; this is sick...
   (add-to-list 'completion-at-point-functions #'cape-dabbrev) ;; note: dabbrev capf doesn't work.
   )
@@ -300,7 +305,7 @@
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs nil
         ;; my/modus-themes-pair '(modus-operandi modus-vivendi-tinted)
-        my/modus-themes-pair '(modus-operandi-tinted modus-vivendi-tinted)
+        my/modus-themes-pair '(modus-vivendi-tinted modus-operandi-tinted)
         modus-themes-to-toggle my/modus-themes-pair)
   (modus-themes-load-theme (car my/modus-themes-pair)))
 

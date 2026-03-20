@@ -193,7 +193,7 @@ Vim-ish point behavior:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my/journal ()
   (interactive)
-  (find-file "~/org/journal.org")
+  (find-file "~/notes/journal.org")
   (org-datetree-find-date-create (calendar-current-date))
   (org-show-subtree)
   (org-end-of-subtree t t)
@@ -210,4 +210,9 @@ Vim-ish point behavior:
 (defun my/open-mandarin-org ()
   "Open the Mandarin org file."
   (interactive)
-  (find-file "~/org/mandarin/mandarin.org"))
+  (find-file "~/notes/mandarin/mandarin.org"))
+
+(defun my/open-org-dir ()
+  "Open the main org directory."
+  (interactive)
+  (dired "~/notes/"))

@@ -220,7 +220,7 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
   (kbd "C-c C-j") #'consult-org-heading
   (kbd "C-c j") #'consult-org-heading)
 
-(evil-define-key 'normal org-mode-map
+(evil-define-key '(normal visual) org-mode-map
   (kbd "SPC") (my/evil-normal-binding "SPC")
   "h" (my/evil-normal-binding "h")
 
