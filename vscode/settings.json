@@ -1,65 +1,107 @@
 {
-  "editor.accessibilitySupport": "off",
-  "redhat.telemetry.enabled": false,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "window.zoomLevel": 1,
-  // "[typescript]": {
-  //   "editor.defaultFormatter": "vscode.typescript-language-features"
-  // },
-  "[python]": {
-    "editor.formatOnType": true
-  },
-  "python.linting.pylintArgs": [
-    "--good-names=i,j,k,ex,Run,_,x,y,z,s,d"
-  ],
-  // Neovim todo:
-  // - use '[[' and ']]' for function navigation. for all languages!
-  // Neovim issues:
-  // - <C-u>/<C-d> not perfect.
-  //    - ideal impl scrolls half page and moves cursor same amount. the cursor stays on the same relative line
-  //      as you move around.
-  //    - sending keys to neovim only moves cursor, doesn't scroll. bad.
-  //    - extension just scrolls. this drags the cursor along, relative positon changing constantly.
-  //      and, at the ends of the buffer where there's no left to scroll, the cursor doesn't move. terrible!
-  //      AND, it sets the jump list...so bad! (https://github.com/vscode-neovim/vscode-neovim/issues/1084)
-  //    - this might be easily fixed, though? by sending to neovim, which does <C-u> AND sends back a vscode scroll cmd. or 'zz'.
-  //    - thread: https://github.com/vscode-neovim/vscode-neovim/pull/993 and https://github.com/vscode-neovim/vscode-neovim/issues/983
-  // - python unmatched opening braces ([{ in comments and strings cause indentation issues
-  //    - see https://github.com/nvim-treesitter/nvim-treesitter/issues/1573
-  //    - treesitter is builtin to neovim.
-  //    - too lazy to fix right now.
-  // - <C-^> can break...?
-  //    - mostly works. breaks when switching back to settings.json (whether via harpoon or cmd+,)
-  //    - viewing buffer list shows the issue. the plugin is maintaining mirrored 'vscode_userdata' files, which can't be switched to.
-  //    - ah. and this only really happens for viles navigable via commands like settings.json and keybindings.json
-  //    - fwiw, I can switch between __vscode_neovim__ files... huh
-  // - harpoon plugin opens preview windows
-  //    - this also means it can duplicate windows. repro: cmd+,, then harpoon goto settings.
-  // - gf to goto file doesn't work
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
-  "security.workspace.trust.untrustedFiles": "open",
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "explorer.confirmDelete": false,
-  "window.newWindowDimensions": "inherit",
-  "workbench.settings.editor": "json",
-  // needed for 'r'? idk... 'false' nice for splits.
-  // ah, but 'true' better for harpoon with splits...?
-  "workbench.editor.revealIfOpen": false,
-  "editor.lineNumbers": "off",
-  "workbench.colorCustomizations": {
-    // opacity can't be changed in Nvim! Big win.
-    "editor.lineHighlightBackground": "#49a35f1e",
-    //"editor.lineHighlightBorder": "#f6327d"
-  },
-  "editor.cursorSurroundingLines": 10,
-  "files.trimTrailingWhitespace": true,
-  "workbench.colorTheme": "Visual Studio Dark",
-  "workbench.editor.empty.hint": "hidden",
-  "go.toolsManagement.autoUpdate": true,
+  "window.commandCenter": true,
+  "editor.fontSize": 14,
   "editor.minimap.enabled": false,
-  "git.openRepositoryInParentFolders": "always",
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.settings.editor": "json",
+  // "editor.inlayHints.enabled": "off", // I find this annoying. but everyone else uses it...
+  "files.autoSave": "afterDelay",
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  // prettier
+  // - requiring config below forces/reminds me to setup a prettierrc and a pre-commit hook
+  // so I avoid the pain of split edits and formats across commits.
+  "prettier.requireConfig": true,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode" // i don't like this.
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one" // using this only to stop errmsg.
+  },
+  "[jsx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // vim stuff!
+  "vim.leader": "<space>",
+  "vim.useCtrlKeys": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"], // use native vscode undo/redo. buggy otherwise
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<C-r>"], // use native vscode undo/redo. buggy otherwise
+      "commands": ["redo"]
+    },
+    // todo: get "H" to work (my/comment-and-duplicate-dwim)
+    {
+      "before": ["h"],
+      "commands": ["editor.action.commentLine"]
+    },
+    // {
+    //   "before": ["r"],
+    //   "after": ["<C-^>"]
+    // },
+    {
+      "before": ["<C-t>"],
+      "after": ["<C-^>"]
+    },
+    {
+      "before": ["<C-p>"],
+      "after": ["<C-a>"]
+    },
+    {
+      "before": ["<C-P>"],
+      "after": ["<C-x>"]
+    },
+    {
+      "before": ["leader", "c"],
+      // "after": ["g", "c", "c"],
+      "commands": ["editor.action.commentLine"]
+    },
+    {
+      "before": ["s"],
+      "commands": ["code-jump.startJump"] // i now like this more than emacs avy-goto-char-timer
+    },
+    {
+      "before": ["S"],
+      "after": ["leader", "leader", "bdjk"] // easymotion line jump. doesn't work. sad.
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["h"],
+      "commands": ["editor.action.commentLine"]
+    },
+    {
+      "before": ["<leader>", "c"],
+      "commands": ["editor.action.commentLine"]
+    }
+  ],
+  "vim.easymotion": true
 }

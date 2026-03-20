@@ -21,8 +21,8 @@ hotkeys = hs.hotkey.modal.new({}, 'F20')
 hotkeys:bind({}, 'F4', function() hs.application.open('Google Chrome') end)
 hotkeys:bind('shift', 'F4', function() hs.application.open('Spotify') end)
 -- F5 = whispr key
-
-hotkeys:bind({}, 'F6', function() hs.application.open('Cursor') end)
+hotkeys:bind({}, 'F6', function() hs.application.open('Visual Studio Code') end)
+hotkeys:bind('shift', 'F6', function() hs.application.open('Cursor') end)
 hotkeys:bind({}, 'F7', function() hs.application.open('iTerm') end)
 hotkeys:bind('shift', 'F7', function() hs.application.open('Emacs') end)
 -- hotkeys:bind({}, 'F8', function() hs.application.open('IntelliJ IDEA CE') end)

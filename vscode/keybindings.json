@@ -1,86 +1,86 @@
 [
-    // Neovim
-    { "key": "ctrl+p", "command": "vscode-neovim.send", "args": "<c-p>", "when": "editorTextFocus && neovim.init" },
-    // necessary hack: bind <C-;> via VSCode, as it's not recognizeable in vim.
-    { "key": "ctrl+;", "command": "vscode-harpoon.gotoEditor4" },
-    { "key": "ctrl+u", "command": "vscode-neovim.send", "args": "<c-u>", "when": "editorTextFocus && neovim.init" },
-    { "key": "ctrl+d", "command": "vscode-neovim.send", "args": "<c-d>", "when": "editorTextFocus && neovim.init" },
-
-    // <C-u>/<C-d> fixes. Scrolloff helps 
-    // prime's screen is ~30 tall, mine is ~40. He does relnum jumps, I don't. I'll be just holding 'j' or 'k'
-    // to correct overjumps. So a smaller number for less margin of error is good for me, I think.
-    // As for centering screen on each jump 10 scrolloff is a workaround ("cursorSurroundingLines").
-    // No option for this natively. And having vim do <C-d>zz doesn't work, either. wtf.
-    // { "key": "ctrl-d", "command": "cursorMove", "args": { "to": "down", "by": "line", "value": 10 }, "when": "neovim.mode != insert && editorTextFocus" },
-    // { "key": "ctrl-u", "command": "cursorMove", "args": { "to": "up", "by": "line", "value": 10 }, "when": "neovim.mode != insert && editorTextFocus" },
-
-    // below should work... (not at file edges, though.) 
-    // { 
-    //     "key": "ctrl+d", 
-    //     "command": "runCommands", 
-    //     "args": {
-    //         "commands": [
-    //             //  { "command" : "editorScroll", "args" : {"to" : "up", "by" : "halfPage"} },
-    //              { "command": "cursorMove", "args": { "to": "viewPortCenter } },
-    //         ]
-    //     } 
-    // },
-
-    
-    // General
-    {
-        "key": "ctrl+=",
-        "command": "workbench.action.terminal.toggleTerminal",
-        "when": "terminal.active"
-    },
-    {
-        "key": "ctrl+`",
-        "command": "-workbench.action.terminal.toggleTerminal",
-        "when": "terminal.active"
-    },
-    {
-        "key": "cmd+left",
-        "command": "workbench.action.navigateBack"
-    },
-    {
-        "key": "ctrl+-",
-        "command": "-workbench.action.navigateBack"
-    },
-    {
-        "key": "cmd+right",
-        "command": "workbench.action.navigateForward"
-    },
-    {
-        "key": "ctrl+shift+-",
-        "command": "-workbench.action.navigateForward"
-    },
-    {
-        "key": "cmd+left",
-        "command": "-cursorHome",
-        "when": "textInputFocus"
-    },
-    {
-        "key": "cmd+left",
-        "command": "-list.collapseAll",
-        "when": "listFocus && !inputFocus"
-    },
-    {
-        "key": "cmd+left",
-        "command": "-workbench.action.terminal.sendSequence",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "cmd+left",
-        "command": "-extension.vim_cmd+left",
-        
-        "when": "editorTextFocus && vim.active && vim.use<D-left> && !inDebugRepl && vim.mode != 'Insert'"
-    },
-    {
-        "key": "shift+cmd+r",
-        "command": "workbench.action.tasks.runTask"
-    },
-    {
-        "key": "cmd+k cmd+j",
-        "command": "workbench.action.openGlobalKeybindingsFile"
-    }
+  // basics
+  {
+    "key": "cmd+right",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "cmd+left",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  // emacs key revamp phase 1
+  { "key": "ctrl+i", "command": "workbench.action.focusNextGroup" },
+  {
+    "key": "ctrl+k",
+    "command": "vim.remap",
+    "args": { "after": ["<C-^>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "vim.remap",
+    "args": { "after": ["<C-^>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // Note: the fzf file/dir commands (C-o C-u/C-c) don't make sense in vscode,
+  // which is workspace-based.
+  { "key": "ctrl+o ctrl+g", "command": "workbench.action.findInFiles" },
+  {
+    "key": "ctrl+p",
+    "command": "vim.remap",
+    "args": { "after": ["<C-a>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "vim.remap",
+    "args": { "after": ["<C-x>"] },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "alt+q", // mirror (for dotfiles bookkeeping)
+    "command": "rewrap.rewrapComment",
+    "when": "editorTextFocus"
+  },
+  //
+  // CURSOR DEFAULTS BELOW
+  //
+  {
+    "key": "cmd+i",
+    // "command": "workbench.view.extension.codexViewContainer"
+    // "command": "chatgpt.sidebarView.focus"
+    // "command": "chatgpt.sidebarSecondaryView.focus"
+    // above not working right. second opens but doesn't go back. i think i just want sidebar toggle.
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  {
+    "key": "ctrl+shift+-",
+    "command": "-workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-aichat.insertselectionintochat"
+  },
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus || terminalEditorFocus"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus || terminalEditorFocus"
+  },
+  {
+    "key": "alt+cmd+b",
+    "command": "-workbench.action.toggleAuxiliaryBar"
+  }
 ]

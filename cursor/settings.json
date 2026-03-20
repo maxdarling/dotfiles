@@ -1,7 +1,10 @@
 {
   "window.commandCenter": true,
   "editor.fontSize": 14,
-  "workbench.colorTheme": "Default Dark Modern",
+  "editor.minimap.enabled": false,
+  // "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.settings.editor": "json",
   "redhat.telemetry.enabled": false,
   "makefile.configureOnOpen": true,
   // "editor.inlayHints.enabled": "off", // I find this annoying. but everyone else uses it...
@@ -18,7 +21,6 @@
   "gopls": {
     "ui.semanticTokens": true
   },
-  "git.openRepositoryInParentFolders": "never",
   // prettier
   // - requiring config below forces/reminds me to setup a prettierrc and a pre-commit hook
   // so I avoid the pain of split edits and formats across commits.
