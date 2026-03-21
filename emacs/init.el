@@ -141,6 +141,7 @@
   (use-package evil-visualstar)
   (global-evil-visualstar-mode t)
   (setq evil-vsplit-window-right t)
+  (setopt evil-want-Y-yank-to-eol t)
   (load-file "~/.emacs.d/lisp/move-text.el"))
 
 (use-package agent-shell
