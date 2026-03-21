@@ -234,6 +234,14 @@ KEYS may be a kbd string (e.g. \"C-o\" or \"SPC\") or a key vector (e.g. (kbd \"
 
   ;; adjustments
 
+  ;; org M-up/down is a better dwim version of 'my/move-text-<up/down>
+  ;; - promote/demote subtree on headers
+  ;; - structure-aware list item promote/demote (mine can make tree invalid)
+  (kbd "M-<up>") 'org-metaup
+  (kbd "M-<down>") 'org-metadown
+  (kbd "M-S-<up>") 'org-shiftmetaup
+  (kbd "M-S-<down>") 'org-shiftmetadown
+
   ;; visual j/k, since visual-line-mode is best for org prose.
   "j" #'evil-next-visual-line
   "k" #'evil-previous-visual-line

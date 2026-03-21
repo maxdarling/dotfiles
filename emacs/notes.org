@@ -2,20 +2,39 @@
 #+author: MD
 #+date: 3/8/2026
 
-* TODOS
-** TODO org-boring-lists cleanup
-*** TODO package steps
-- test package vars and options
-  - i suspect that chat misunderstood my second ret-on-empty-item behavior. it matches [[https://stackedit.io/app#][online md editor]].
-
-*** TODO cleanup below information
-- S-TAB in insert mode should not call org-shifttab. rather, tab and S-tab
-  should just indent normally as in a md editor or gdocs
-- corfu completion accept with tab no longer works after new tab binds.
-  - a more verbose fix than id like but ok for now...
-- [ ] [[https://www.reddit.com/r/emacs/comments/qk15ru/cant_make_sense_of_orgmodes_indentation/][reddit]]
-  
+* general todo
 ** TODO copy emacs init comments to org doc (projects, todos, etc)
+
+** TODO scroll percent in modeline not showing
+
+** TODO try harpoon global option
+- first, i need to find my harpoon package! wtf?
+  
+** TODO close corfu popup when i exit insert mode
+
+** TODO think about what to do with DONE todos. move them to a shared file for archival reasons?
+
+** TODO cleanup mode-keymaps.el comments
+
+
+** TODO cleanup init file
+- research user-lisp-directory
+- outline mode?
+
+** TODO literate emacs config
+- C-C C-j to headings would be sick...
+- just gotta make sure it's fast...
+  
+** TODO bug: surround doesn't seem to work when there's unbalanced quotes in a file
+- 3/19/26: paren motion wouldn't work. first time i'd seen that. then I checked the file for balanced quotes. fixed it. and it worked. ???.
+  - errmsg: "no surrounding delimiters found"
+
+** TODO research autosave (and why .#init.el is being generated)
+
+** TODO setup format-on-save (a good pattern IMO)
+
+** TODO corfu show "src" next to popup (e.g. like in the screenshots here: https://github.com/minad/corfu)
+
 
 ** TODO learn org shortcuts
 - [ ] toggle checkbox: C-c C-c (prefix arg to toggle presence)
@@ -28,8 +47,45 @@
 - [ ] '@' in shell completes files with /standard/ mechanism
   (*completions* buffer).
 
+* org-boring-lists
+** TODO package steps
+- test package vars and options
+  - i suspect that chat misunderstood my second ret-on-empty-item behavior. it matches [[https://stackedit.io/app#][online md editor]].
+
+** TODO cleanup below information
+- S-TAB in insert mode should never call org-shifttab. rather, tab and S-tab should just be bound to indent like basic md editors
+- corfu completion accept with tab no longer works after new tab binds.
+  - a more verbose fix than id like but ok for now...
+- cite other users sharing my puzzlement over default behavior org indent behavior on [[https://www.reddit.com/r/emacs/comments/qk15ru/cant_make_sense_of_orgmodes_indentation/][reddit]]
+
+** recants
+1. only really needs to indent stuff in insert mode, tbh. doesn't need to in normal mode.
+   - since M-S-<left/right> is a powerful key that i can't find another spot for and that you sometimes might want --> might as well keep M-<left/right> (and i'm not finding this op common enough to justify improving it)  
+2. if implementing changes is too hard, i'm down disable the list-item continuation behavior.
+   - I'm also not loving how it works with numbered lists. its defaulting to using "a." for children, but I flip between wanting "-" and "a."
+     - meh, I can get probably used to this. maybe set "-" as default. and it's a quick M-backspace to delete it.
+
+** misc issues
+1. if you have a numbered list and you insert into it to dupe a number, can you have the rest of the list numbers update itself?
+2. starting new heading when indented
+   - edit: i wrote below having forgot about the RET behavior for this mode. that's a great way to "exit" a list as desired. but others still wouldn't hurt I guess.
+   - must delete all the way back to start column before starting a new header. *one char at a time*. this is terrible. others do better:
+     - cursor: package "markdown all in one" makes backspace de-indent the list (and del at top level).
+     - vscode (and online editor) defaults to deleting by indentation levels (and it doesn't continue lists on RET, btw)
+   - verdict: we should at least delete by indent, not 1 char at a time. and maybe some of the above.
+   - am i crazy, or do i recall a way where you can just type e.g. *** for the heading in the middle of the line and hit space and it'll indent it back correctly?
+4. S-TAB and TAB in insert mode are not symmetric.
+   - S-TAB cycles vis when not in a list, but TAB tries to indent and never cycles.
+   - we can probably just disable tab cycle in insert mode. don't see why you'd want this.
+   - this issue also gets a lot better if we do something similar to cursor plugin in above
+  
 * Keybinds
 ** todos
+*** TODO try removing corfu RET complete (TAB only)
+
+*** TODO consult project search bound to s-p (vscode style)
+- is there something better than I have now with project.el?
+
 ***  TODO try global SPC leader (incl. <E>)
 - prev blocker: term-like modes in <E>. you need SPC
 - proposal: S-SPC leader.
@@ -37,7 +93,7 @@
 
 this can be bound with no cost. which then enables us to implement some leader-seq style binds.
 
-** keybinds.el (draft)
+** keymaps.el
 *** philosophy (top-level)
 Main principles:
 1. top-level binds > vim binds
@@ -157,3 +213,41 @@ xah has a ton of commands. some that might provide inspo. below are some i marke
 # ("TAB g" . indent-rigidly)
 # ("TAB r" . indent-region)
 # ("TAB s" . indent-sexp)
+
+* Projects backlog
+** learn consult-grep and consult-fd
+
+** setup visual marks 
+- (e.g. IntelliJ style. highlight the line. or, use left "gutter", e.g. like bookmarks)
+
+** keyboard diagram visualizer
+
+** harpoon: show list in minibuffer (for better ergo looking down than up)
+
+** port code-jump from vscode 
+- (slightly superior to avy, imo! also an interesting exercise.)
+  
+** setup treesitter 
+- evil-treesitter-text-obj could be useful (read karthinks post)
+  
+** setup interactive abbrev completion system, like Xah
+- http://xahlee.info/emacs/emacs/emacs_interactive_abbrev.html
+
+** setup interactive shell command completion like Xenodoium
+- his first YT vid. a great demo! and his cmds are on github.
+
+** learn structural editing
+- paredit
+- use emacs transpose functionality. seems powerful. e.g. word, sexp, line with M-t, C-M-t, C-x C-t. seems evil has unbound these, though
+- use sexp-based movement. e.g. C-M-f forward-sexp (but, this doesn't go to next lines, wtf?
+  - note that C-M-b/n are related. b works nicely. but n won't let me skip to new lines, wtf.
+
+
+* Learning
+** what is xref?
+** compile commands
+** elisp fundamentals
+** recentf mode
+** imenu
+
+
