@@ -237,7 +237,8 @@
   :init
   (setq sml/theme nil
         sml/no-confirm-load-theme t
-        sml/use-projectile-p 'after-prefixes)
+        sml/use-projectile-p 'after-prefixes
+	sml/name-width 40)
   :config
   (sml/setup))
 ;; custom modeline must come after sml since the latter rewrites mode-line-format

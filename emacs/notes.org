@@ -7,7 +7,7 @@
 
 ** DONE scroll percent in modeline not showing
 
-** TODO reduce init time 
+** TODO reduce init time
 - routinely taking 4s now
 - just took 16s (a one-off)
   - "Warning: exec-path-from-shell execution took 5658ms. See the README for tips on reducing this."
@@ -15,16 +15,21 @@
 ** TODO try harpoon global option
 
 ** TODO more modeline customization
-- look at karthinks .emacs.d
-- setup smart-mode-line
-  - add padding to line num so changing column doesn't flicker rest of modeline str 
+- idea to remove <N>: show " -- {EMACS/NORMAL} -- " when i C-z toggle, just like visual and insert mode get.
+  - might be an upstream to evil-mode??
+- it'd actually be nice to R justify everything after path. but have a relatively short max width. so for laptop vertical split it's using all the horizontal space (this looks good). but on monitor it's too much.
+  - see sml readme. i think sml/name-width and sml/path-width are relevant.
+    
+** TODO steal karthinks UI
+- font
+- nice theme. very readable IMO. black, blue, cyan-ish, red. less colors = better! 
+- ideal: i do this all modularly so i can switch between it and my current modus setup
   
 ** TODO close corfu popup when i exit insert mode
 
 ** TODO think about what to do with DONE todos. move them to a shared file for archival reasons?
 
 ** TODO cleanup mode-keymaps.el comments
-
 
 ** TODO cleanup init file
 - research user-lisp-directory
@@ -43,18 +48,6 @@
 ** TODO setup format-on-save (a good pattern IMO)
 
 ** TODO corfu show "src" next to popup (e.g. like in the screenshots here: https://github.com/minad/corfu)
-
-
-** TODO learn org shortcuts
-- [ ] toggle checkbox: C-c C-c (prefix arg to toggle presence)
-  - it'd be nice if the dot command could repeat this! (or repeat mode?)
-- org-insert-todo-heading: M-S-<RET> (need to rebind)
-- C-# org-update-statistics-cookies
-- more structural navigation (e.g. "{", "[[". other good ones?)
-
-** TODO agent shell stuff
-- [ ] '@' in shell completes files with /standard/ mechanism
-  (*completions* buffer).
 
 * org-boring-lists
 ** TODO package steps
@@ -258,5 +251,13 @@ xah has a ton of commands. some that might provide inspo. below are some i marke
 ** elisp fundamentals
 ** recentf mode
 ** imenu
+
+** TODO learn org shortcuts
+- [ ] toggle checkbox: C-c C-c (prefix arg to toggle presence)
+  - it'd be nice if the dot command could repeat this! (or repeat mode?)
+- org-insert-todo-heading: M-S-<RET> (need to rebind)
+- C-# org-update-statistics-cookies
+- more structural navigation (e.g. "{", "[[". other good ones?)
+
 
 
