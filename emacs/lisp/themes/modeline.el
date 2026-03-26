@@ -10,11 +10,6 @@
 (setq mode-line-modes
       '("[" (:propertize mode-name face mode-line-buffer-id) "]"))
 
-;; Leaving this disabled for now: rewriting `mode-name` in terms of
-;; `(format-mode-line mode-name)` is self-referential.
-;; (setq-default mode-name
-;;               '(:eval (replace-regexp-in-string "/l\\'" "" (format-mode-line mode-name))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Notes (chrichton + karthinks v1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -22,13 +17,6 @@
 ;;;; - https://www.youtube.com/watch?v=bnnacleqg6k
 ;;;; - https://karthinks.com/software/it-bears-repeating/
 ;;;;
-;;;; todo
-;;;; - COLORS! (see prot examples?)
-;;;; - add path prefix to the filename in projects
-;;;; - trim the lexical mode on elisp?
-;;;;
-;;;; backlog:
-;;;; - crichton: pads line and col separately? https://youtu.be/bnnacleqg6k?si=la7G6oNCJLLA99Pz&t=469
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Faces
@@ -41,11 +29,6 @@
 (defface my-modeline-project-face
   '((t :inherit mode-line))
   "Face for project segment.")
-
-(defface my-modeline-buffer-face
-  '((t :inherit mode-line
-       :weight bold))
-  "Face for buffer name.")
 
 (defface my-modeline-evil-face
   '((t :inherit mode-line
@@ -84,11 +67,11 @@
          (format "[%s]" (my/ml--truncate name 18)))))))
 
 (defun my/ml-buffer-name ()
-  (my/ml--with-face
-   'my-modeline-buffer-face
-   (my/ml--truncate
-    (format-mode-line mode-line-buffer-identification)
-    40)))
+  (my/ml--truncate
+   (if (fboundp 'sml/generate-buffer-name)
+       (sml/generate-buffer-name)
+     (format-mode-line mode-line-buffer-identification))
+   40))
 
 ;; note: i have a feeling there's a more builtin way to do this, e.g.
 ;; via mode-line-modified and/or mule-info.
@@ -110,9 +93,12 @@
 
 (defun my/ml-vc-branch ()
   (when vc-mode
-    (my/ml--with-face
-     'my-modeline-vc-face
-     (concat ":" (substring-no-properties vc-mode 5)))))
+    (let* ((branch (substring-no-properties vc-mode))
+           (branch (replace-regexp-in-string "\\`[[:space:]]*[-:@!\\?]+" "" branch)))
+      (when (not (string-empty-p branch))
+        (my/ml--with-face
+         'my-modeline-vc-face
+         (concat ":" branch))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Assembly
@@ -124,7 +110,6 @@
    (:eval (my/ml-line-col))
    " "
    (:eval (my/ml-file-state))
-   (:eval (my/ml-project))
    (:eval (my/ml-buffer-name))
    "    "
    " %p  "

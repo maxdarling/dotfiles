@@ -98,6 +98,10 @@
 
 (use-package magit)
 
+(use-package projectile
+  :init
+  (projectile-mode 1))
+
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x))
@@ -229,6 +233,14 @@
 
 
 ;; modeline
+(use-package smart-mode-line
+  :init
+  (setq sml/theme nil
+        sml/no-confirm-load-theme t
+        sml/use-projectile-p 'after-prefixes)
+  :config
+  (sml/setup))
+;; custom modeline must come after sml since the latter rewrites mode-line-format
 (load-file "~/.emacs.d/lisp/themes/modeline.el")
 
 ;; Hide continuation arrows in the fringe without affecting other indicators.

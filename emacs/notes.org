@@ -16,10 +16,8 @@
 
 ** TODO more modeline customization
 - look at karthinks .emacs.d
-  - make project a color
-  - make buffer a color
-  - paths: add project-relative path before buffer/file name.
-    - if no project, do a full filesystem path
+- setup smart-mode-line
+  - add padding to line num so changing column doesn't flicker rest of modeline str 
   
 ** TODO close corfu popup when i exit insert mode
 
