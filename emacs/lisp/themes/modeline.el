@@ -30,7 +30,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun my/ml-evil-state ()
-  (when (boundp 'evil-mode-line-tag)
+  (when (and (boundp 'evil-mode-line-tag)
+             (evil-emacs-state-p))
     (my/ml--with-face
      '(:weight bold)
      (format-mode-line (or evil-mode-line-tag " ")))))

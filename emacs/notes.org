@@ -15,8 +15,6 @@
 ** TODO try harpoon global option
 
 ** TODO more modeline customization
-- idea to remove <N>: show " -- {EMACS/NORMAL} -- " when i C-z toggle, just like visual and insert mode get.
-  - might be an upstream to evil-mode??
 - it'd actually be nice to R justify everything after path. but have a relatively short max width. so for laptop vertical split it's using all the horizontal space (this looks good). but on monitor it's too much.
   - see sml readme. i think sml/name-width and sml/path-width are relevant.
     

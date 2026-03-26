@@ -59,6 +59,23 @@
   (global-evil-visualstar-mode t)
   (setq evil-vsplit-window-right t)
   (setopt evil-want-Y-yank-to-eol t)
+  ;; 3/26/26: wanted to echo emacs and normal state switches so i can remove the evil
+  ;; state indicator from the modeline. but simpler for now is to only ever show <E>.
+  ;; (setq evil-emacs-state-message nil)
+  ;; (defvar my/evil-left-emacs-state nil)
+  ;; (defun my/evil-echo-emacs-state ()
+    ;; (when evil-echo-state
+      ;; (evil-echo "-- EMACS --")))
+  ;; (defun my/evil-mark-left-emacs-state ()
+    ;; (setq my/evil-left-emacs-state t))
+  ;; (defun my/evil-echo-normal-after-emacs ()
+    ;; (when (and evil-echo-state
+               ;; my/evil-left-emacs-state)
+      ;; (setq my/evil-left-emacs-state nil)
+      ;; (evil-echo "-- NORMAL --")))
+  ;; (add-hook 'evil-emacs-state-entry-hook #'my/evil-echo-emacs-state)
+  ;; (add-hook 'evil-emacs-state-exit-hook #'my/evil-mark-left-emacs-state)
+  ;; (add-hook 'evil-normal-state-entry-hook #'my/evil-echo-normal-after-emacs)
   (load-file "~/.emacs.d/lisp/move-text.el"))
 
 (use-package agent-shell
