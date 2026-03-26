@@ -48,8 +48,8 @@ killports() {
     done
 }
 
-# api keys: i use macOS keychain for github, openai, etc.
-# openAI
+# github: i use 'gh auth login'
+# openAI (i use keychain)
 if command -v security >/dev/null; then
   # note: might have to keychain access -> access control -> 
   # cmd+shfit+G to add /usr/bin/security

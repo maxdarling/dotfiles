@@ -244,16 +244,9 @@
 (load-file "~/.emacs.d/lisp/mode-keymaps.el")
 (load-file "~/.emacs.d/lisp/mystuff.el")
 
-;; use XFK functions, discard all mappings
-;; (setq xah-fly-use-control-key nil)
-;; (setq xah-fly-use-meta-key nil)
-;; (setq xah-fly-use-isearch-arrows nil)
-;; (load-file "~/.emacs.d/lisp/pedagogy/xah-fly-keys.el")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (load-file "~/.emacs.d/lisp/hacks/org-hacks.el")
 (load-file "~/.emacs.d/lisp/packages/org-boring-lists.el") ;; do i need this and the require below?
 (require 'org-boring-lists)
 (add-hook 'org-mode-hook #'org-boring-lists-mode)

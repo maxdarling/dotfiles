@@ -23,7 +23,6 @@
   (kbd "<control-i>") 'evil-window-next
   (kbd "C-t") 'evil-buffer ;; testing
   (kbd "s-e") 'evil-buffer ;; testing
-  (kbd "C-k") 'evil-buffer 
 
   (kbd "C-o") my/c-o-map
 

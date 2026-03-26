@@ -3,9 +3,15 @@
 #+date: 3/8/2026
 
 * general todo
-** TODO copy emacs init comments to org doc (projects, todos, etc)
+** DONE copy emacs init comments to org doc (projects, todos, etc)
+
+** TODO reduce init time 
+- just took 16s.
+  - "Warning: exec-path-from-shell execution took 5658ms. See the README for tips on reducing this."
 
 ** TODO scroll percent in modeline not showing
+- agent tried replacing %p but no luck.
+- tried again, still no luck. if evals looked good, maybe it's getting truncated? but i have no idea.
 
 ** TODO try harpoon global option
 - first, i need to find my harpoon package! wtf?
