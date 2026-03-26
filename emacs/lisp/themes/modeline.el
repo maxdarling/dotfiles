@@ -90,9 +90,23 @@
     (format-mode-line mode-line-buffer-identification)
     40)))
 
+;; note: i have a feeling there's a more builtin way to do this, e.g.
+;; via mode-line-modified and/or mule-info.
+;; karthinks might do this much more cleanly...
+(defun my/ml-file-state ()
+  (let* ((eol (coding-system-eol-type buffer-file-coding-system))
+         (coding
+          (pcase eol
+            (0 "U")
+            (1 "D")
+            (2 "M")
+            (_ "-")))
+         (read-only (if buffer-read-only "R" "-"))
+         (modified (if (buffer-modified-p) "*" "-")))
+    (format "%s%s%s" coding read-only modified)))
+
 (defun my/ml-line-col ()
-  ;; (format " %-7s" (format-mode-line "%l:%c"))
-  (format " %-3s" (format-mode-line "%l")))
+  (format " %s" (format-mode-line "%l:%c")))
 
 (defun my/ml-vc-branch ()
   (when vc-mode
@@ -106,13 +120,13 @@
 (setq-default
  mode-line-format
  '("%e"
-   mode-line-modified
-   " "
    (:eval (my/ml-evil-state))
+   (:eval (my/ml-line-col))
+   " "
+   (:eval (my/ml-file-state))
    (:eval (my/ml-project))
    (:eval (my/ml-buffer-name))
    "    "
-   (:eval (my/ml-line-col))
    " %p  "
    (:eval (my/ml-vc-branch))
    "  "
