@@ -1,8 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-(setq my/init-file "~/.emacs.d/init.el")
-(setq initial-buffer-choice my/init-file)
+(setq my/emacs-init-loc "~/code/dotfiles/emacs/init.el")
+(setq my/code-dir "~/code")
+(setq initial-buffer-choice my/code-dir)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Setup
@@ -34,7 +35,6 @@
          (dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
-  ;; (setq diff-hl-fringe-bmp-function #'diff-hl-fringe-bmp-from-type) ;; adds symbols. bad.
   (setq diff-hl-update-async t)
   (setq diff-hl-draw-borders nil)
   ;; to test:
@@ -64,15 +64,15 @@
   ;; (setq evil-emacs-state-message nil)
   ;; (defvar my/evil-left-emacs-state nil)
   ;; (defun my/evil-echo-emacs-state ()
-    ;; (when evil-echo-state
-      ;; (evil-echo "-- EMACS --")))
+  ;; (when evil-echo-state
+  ;; (evil-echo "-- EMACS --")))
   ;; (defun my/evil-mark-left-emacs-state ()
-    ;; (setq my/evil-left-emacs-state t))
+  ;; (setq my/evil-left-emacs-state t))
   ;; (defun my/evil-echo-normal-after-emacs ()
-    ;; (when (and evil-echo-state
-               ;; my/evil-left-emacs-state)
-      ;; (setq my/evil-left-emacs-state nil)
-      ;; (evil-echo "-- NORMAL --")))
+  ;; (when (and evil-echo-state
+  ;; my/evil-left-emacs-state)
+  ;; (setq my/evil-left-emacs-state nil)
+  ;; (evil-echo "-- NORMAL --")))
   ;; (add-hook 'evil-emacs-state-entry-hook #'my/evil-echo-emacs-state)
   ;; (add-hook 'evil-emacs-state-exit-hook #'my/evil-mark-left-emacs-state)
   ;; (add-hook 'evil-normal-state-entry-hook #'my/evil-echo-normal-after-emacs)
@@ -91,7 +91,7 @@
   (setq agent-shell-cwd-function nil)
 
   (setq agent-shell-dot-subdir-function
-	    (lambda (subdir)
+	(lambda (subdir)
           (expand-file-name
            (file-name-concat
             subdir)
@@ -100,7 +100,7 @@
                     (directory-file-name
                      (or (when-let ((proj (project-current nil)))
                            (project-root proj))
-			             default-directory))))))))
+			 default-directory))))))))
 
 (use-package avy
   :config
@@ -129,13 +129,18 @@
 
 (use-package wgrep)
 
+(use-package harpoon
+  :config
+  (setq harpoon-project-package nil
+        harpoon-without-project-function (lambda () "global")))
+
 (use-package corfu
   :init
   (global-corfu-mode)
   (use-package cape)
   :config
   (setq corfu-auto t
-	    corfu-auto-delay .1) ;; .2 default
+	corfu-auto-delay .1) ;; .2 default
   (add-to-list 'completion-styles 'flex)
 
   ;; order matters (first in list = highest priority)
@@ -158,7 +163,22 @@
 ;; :init
 ;; (vertico-mode 1))
 
-(use-package consult)
+(use-package consult
+  :config
+  (setq consult-narrow-key (kbd "<")))
+
+(use-package beframe
+  :after consult
+  :config
+  (setq beframe-create-frame-scratch-buffer nil)
+  (beframe-mode 1)
+
+  (defun my/consult-beframe-buffer-list (&optional frame)
+    "Return buffers for FRAME sorted by visibility."
+    (beframe-buffer-list frame :sort #'beframe-buffer-sort-visibility))
+
+  (setq consult-buffer-list-function #'my/consult-beframe-buffer-list))
+
 
 ;; (use-package embark
 ;;   ;; :bind (:map minibuffer-mode-map
@@ -203,6 +223,9 @@
 
 (blink-cursor-mode -1)
 
+(use-package keycast)
+(keycast-header-line-mode 1)
+
 ;; hl line (not in some buffers)
 (global-hl-line-mode 1)
 (dolist (hook '(ediff-control-mode-hook
@@ -233,7 +256,7 @@
           (fg-mode-line-active fg-main)
 
           ;; color notes:
-	      ;; - org heading 1 is color same as text. hard to read.
+	  ;; - org heading 1 is color same as text. hard to read.
           ;; - color is just hard to see on a light background. i've given up on light mode.
           (fg-heading-1 "systemMintColor")
           ;; (fg-heading-1 "Cyan3")
@@ -263,7 +286,7 @@
 
 ;; Hide continuation arrows in the fringe without affecting other indicators.
 (setq-default fringe-indicator-alist
-	          (let ((alist (copy-tree fringe-indicator-alist)))
+	      (let ((alist (copy-tree fringe-indicator-alist)))
                 (setcdr (assq 'continuation alist) '(nil nil))
                 alist))
 

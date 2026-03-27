@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 (evil-set-leader '(normal visual motion) (kbd "SPC"))
+(evil-set-leader '(emacs) (kbd "S-SPC"))
 
 ;; C-o prefix
 (define-prefix-command 'my/c-o-map)
@@ -75,7 +76,11 @@
   ;; "\C-w" 'evil-window-map
 
   ;; * Core Nav *
-  (kbd "s-,") (lambda () (interactive) (switch-to-buffer "init.el"))
+  (kbd "s-,") (lambda () (interactive) (find-file my/emacs-init-loc))
+  (kbd "s-N") (lambda ()
+                (interactive)
+                (select-frame-set-input-focus (make-frame))
+                (find-file my/code-dir))
   (kbd "s-<left>") 'evil-jump-backward  ;; testing
   (kbd "s-<right>")  'evil-jump-forward ;; testing
 
@@ -91,7 +96,8 @@
 
   ;; * Buffers/Files *
   (kbd "<leader>e") 'switch-to-buffer
-  (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. embark?
+  (kbd "<leader>E") 'consult-buffer
+  ;; (kbd "<leader>E") 'switch-to-buffer-other-window ;; ideally, i could press C-o or S-RET in the minibuffer. embark?
   (kbd "<leader>a") my/leader-a-map
   (kbd "<leader>o") 'bookmark-jump
   (kbd "<leader>d") 'dired-jump

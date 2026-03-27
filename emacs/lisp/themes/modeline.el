@@ -57,15 +57,12 @@
     (format "%s%s%s" coding read-only modified)))
 
 (defun my/ml-line-col ()
-  ;; crichton bolds line num, but it only looks good because the default font is
-  ;; de-emphasized.
-  ;; (concat
-  ;; (propertize (format " %4s" (format-mode-line "%l"))
-  ;; 'face 'bold)
-  ;; (format ":%-3s" (format-mode-line "%c"))))
-  (format " %4s:%-3s"
-	  (format-mode-line "%l")
-	  (format-mode-line "%c")))
+  (if (derived-mode-p 'prog-mode)
+      (format "%4s:%-3s"
+              (format-mode-line "%l")
+              (format-mode-line "%c"))
+    (format "%4s"
+            (format-mode-line "%l"))))
 
 (defun my/ml-vc ()
   (when vc-mode
@@ -84,7 +81,7 @@
    (:eval (my/ml-file-state))
    (:eval (my/ml-buffer-name))
    "    "
-   " %p  "
+   " %p "
    (:eval (my/ml-vc))
    "  "
    mode-line-modes

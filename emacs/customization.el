@@ -7,10 +7,10 @@
  '(custom-safe-themes
    '("8fbf2d585f1138caaafa9e523fa3a20614c1d1dcc6002c9808c3e40028e21df4" default))
  '(package-selected-packages
-   '(agent-shell avy cape consult corfu diff-hl embark evil-surround evil-visualstar
-		 exec-path-from-shell fireplace flycheck go-mode harpoon hcl-mode lsp-ui
-		 magit modus-themes ox-hugo rg smartparens vertico visual-fill-column
-		 vterm yasnippet))
+   '(agent-shell avy beframe cape consult corfu diff-hl embark evil-surround evil-visualstar
+		 exec-path-from-shell fireplace flycheck go-mode harpoon hcl-mode keycast
+		 lsp-ui magit modus-themes ox-hugo rg smartparens vertico
+		 visual-fill-column vterm yasnippet))
  '(project-mode-line 'non-remote))
 
 (custom-set-faces

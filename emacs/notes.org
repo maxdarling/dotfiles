@@ -2,50 +2,52 @@
 #+author: MD
 #+date: 3/8/2026
 
-* general todo
+* general todo (easy)
 ** DONE copy emacs init comments to org doc (projects, todos, etc)
 
 ** DONE scroll percent in modeline not showing
+
+** DONE slick modeline
+
+** DONE setup beframe
+    
+** DONE try harpoon global option
+
+** TODO cleanup init file
+- research user-lisp-directory
+- outline mode?
+
+** TODO cleanup mode-keymaps.el comments
+
+** TODO close corfu popup when i exit insert mode
+
+** TODO research autosave (and why .#init.el is being generated)
+- or, maybe backup files are fine but i don't want to deal with them being dropped in every project that i work on, so can i centralize them?
+
+** TODO setup format-on-save (a good pattern IMO)
+
+** TODO corfu show "src" next to popup (e.g. like in the screenshots here: https://github.com/minad/corfu)
+
+** TODO think about what to do with DONE todos. move them to a shared file for archival reasons?
+
+* general todo (harder)
+** TODO literate emacs config
+- C-C C-j to headings would be sick...
+- just gotta make sure it's fast...
+
+** TODO bug: surround doesn't seem to work when there's unbalanced quotes in a file
+- 3/19/26: paren motion wouldn't work. first time i'd seen that. then I checked the file for balanced quotes. fixed it. and it worked. ???.
+  - errmsg: "no surrounding delimiters found"
 
 ** TODO reduce init time
 - routinely taking 4s now
 - just took 16s (a one-off)
   - "Warning: exec-path-from-shell execution took 5658ms. See the README for tips on reducing this."
 
-** TODO try harpoon global option
-
-** TODO more modeline customization
-- it'd actually be nice to R justify everything after path. but have a relatively short max width. so for laptop vertical split it's using all the horizontal space (this looks good). but on monitor it's too much.
-  - see sml readme. i think sml/name-width and sml/path-width are relevant.
-    
 ** TODO steal karthinks UI
 - font
 - nice theme. very readable IMO. black, blue, cyan-ish, red. less colors = better! 
 - ideal: i do this all modularly so i can switch between it and my current modus setup
-  
-** TODO close corfu popup when i exit insert mode
-
-** TODO think about what to do with DONE todos. move them to a shared file for archival reasons?
-
-** TODO cleanup mode-keymaps.el comments
-
-** TODO cleanup init file
-- research user-lisp-directory
-- outline mode?
-
-** TODO literate emacs config
-- C-C C-j to headings would be sick...
-- just gotta make sure it's fast...
-  
-** TODO bug: surround doesn't seem to work when there's unbalanced quotes in a file
-- 3/19/26: paren motion wouldn't work. first time i'd seen that. then I checked the file for balanced quotes. fixed it. and it worked. ???.
-  - errmsg: "no surrounding delimiters found"
-
-** TODO research autosave (and why .#init.el is being generated)
-
-** TODO setup format-on-save (a good pattern IMO)
-
-** TODO corfu show "src" next to popup (e.g. like in the screenshots here: https://github.com/minad/corfu)
 
 * org-boring-lists
 ** TODO package steps
