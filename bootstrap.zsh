@@ -38,6 +38,7 @@ brew install pure
 #######################
 # link my zshrc
 ln -sf "$(pwd)/zsh/zshrc.zsh" ~/.zshrc
+ln -sf "$(pwd)/zsh/zprofile" ~/.zprofile
 
 #######################
 # CURSOR
@@ -50,11 +51,7 @@ ln -sf "$(pwd)/cursor/keybindings.json" ~/Library/Application\ Support/Cursor/Us
 #######################
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@31
-ln -sf "$(pwd)/emacs/init.el" ~/.emacs.d/init.el
-ln -sf "$(pwd)/emacs/customization.el" ~/.emacs.d/init.el
-ln -sF "$(pwd)/emacs/lisp" ~/.emacs.d
-ln -sF "$(pwd)/emacs/bookmarks" ~/.emacs.d
-ln -sF "$(pwd)/emacs/snippets" ~/.emacs.d
+# note: emacs config at ~/.emacs.d/
 
 #######################
 # VIM

@@ -1,21 +1,18 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# note: this file is for interactive term features.
+# .zprofile contains non-interactive stuff (e.g. PATH)
+# (did this 3/29/26 so emacs exec-path-from-shell starts faster)
 typeset -gU path fpath cdpath mailpath
 bindkey -e
 unsetopt correct
-export LANG='en_US.UTF-8'
-export LESS='-g -i -M -R -S -w -X -z-4'
-export VISUAL="emacsclient -c"
-export EDITOR="$VISUAL"
 alias e="$VISUAL"
 alias v=nvim
 
 # ** ALIASES, ETC. **
 alias zrc="$EDITOR ~/.zshrc && source ~/.zshrc"
+alias co="codex"
 # personal projects
 alias code="cdls ~/code -l"
 alias dot="cdls ~/code/dotfiles -l"
-alias sicp="cdls ~/code/sicp"
-alias site="cdls ~/code/maxdarling.github.io"
 alias pico8="/Applications/PICO-8.app/Contents/MacOS/pico8 -root_path ~/code/pico8"
 
 # git
@@ -49,15 +46,6 @@ killports() {
 }
 
 # github: i use 'gh auth login'
-# openAI (i use keychain)
-if command -v security >/dev/null; then
-  # note: might have to keychain access -> access control -> 
-  # cmd+shfit+G to add /usr/bin/security
-  key=$(security find-generic-password -s openai_api_key -w 2>/dev/null)
-  if [[ -n "$key" ]]; then
-    export OPENAI_API_KEY="$key"
-  fi
-fi
 
 # for typing practice (can paste into monkeytype)
 generate_random_words () {
@@ -94,40 +82,10 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # fzf
 source <(fzf --zsh)
 
-# ** BELOW: PATH STUFF ONLY **
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# jenv
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-# Cursor Agent
-export PATH="$HOME/.local/bin:$PATH"
-
-# Go
-export GOPATH="$HOME/go"
-export GOBIN="$GOPATH/bin"
-export PATH="$PATH:$GOBIN"
-
 # direnv
-eval "$(direnv hook zsh)"
+if [[ -o interactive ]]; then
+  eval "$(direnv hook zsh)"
 
-# bun completions
-[ -s "/Users/mhd/.bun/_bun" ] && source "/Users/mhd/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+  # bun completions
+  [ -s "/Users/mhd/.bun/_bun" ] && source "/Users/mhd/.bun/_bun"
+fi
